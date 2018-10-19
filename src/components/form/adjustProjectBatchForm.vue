@@ -374,5 +374,5 @@ export default {
   }
 </style>
 <style>
-  @import '../../styles/common.css';
+  @import '../../styles/common2.css';
 </style>

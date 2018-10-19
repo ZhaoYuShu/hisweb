@@ -8,10 +8,14 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import '../static/css/iconfont/1.0.0/index.css' /* icofont*/
+import {
+  loadStyle
+} from './utils/util'
 
 // css
 import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 import '@/styles/index.scss' // global css
+import '@/styles/common2.css'
 // 右键菜单
 import contentmenu from 'v-contextmenu'
 // import 'v-contextmenu/dist/index.css'
@@ -21,7 +25,6 @@ import './errorLog'// error log
 // font-awesome
 import '@/assets/library/font-awesome-4.7.0/css/font-awesome.min.css'
 
-import App from './App'
 
 import router from './router'
 
@@ -30,9 +33,7 @@ import store from './store'
 // Internationalization
 import i18n from './lang'
 import { global } from '@/global/global'
-import {
-  loadStyle
-} from './utils/util'
+
 import {
   iconfontUrl,
   iconfontVersion
@@ -43,6 +44,8 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 import * as filters from './filters' // global filters
+
+import App from './App'
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

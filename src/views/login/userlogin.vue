@@ -78,10 +78,11 @@ export default {
         : (this.passwordType = '')
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      let that = this;
+      that.$refs.loginForm.validate(valid => {
         if (valid) {
           // this.$store.dispatch('Login', this.loginForm)
-          http.login(this.loginForm).then(response => {
+          http.login(that.loginForm).then(response => {
             console.log(response);
             if (response.status === 200 && response.data.result === '00000000') {
               const menuList = JSON.stringify(response.data.data.menuList);
@@ -93,7 +94,7 @@ export default {
               localStorage.setItem('user', user);
               localStorage.setItem('token', token);
               console.log((this.$router));
-              this.$router.push({ path: '/' })
+              that.$router.push({ path: '/' })
               // this.$router.go()
             } else {
               that.$message({

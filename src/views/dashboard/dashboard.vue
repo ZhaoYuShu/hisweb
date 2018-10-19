@@ -261,6 +261,11 @@ export default {
   created() {},
   watch: {},
   mounted() {
+    let token = localStorage.getItem("token");
+    console.log(token);
+    if (!token) {
+      this.$router.push({path: '/login'});
+    }
   },
   computed: {}
 }

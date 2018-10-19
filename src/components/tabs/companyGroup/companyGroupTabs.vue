@@ -39,7 +39,7 @@ export default {
     padding-left:1%;
     overflow:hidden;
   }
-  .el-tab-pane{
+  >>>.el-tab-pane{
     width:100%;
     height:100%;
     overflow:auto;

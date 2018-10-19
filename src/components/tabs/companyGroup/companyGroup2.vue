@@ -139,6 +139,7 @@ export default {
   >>>.el-transfer-panel{
     width:300px;
     height:400px;
+    margin-top:0;
   }
   >>>.el-transfer-panel__body{
     height:100%;

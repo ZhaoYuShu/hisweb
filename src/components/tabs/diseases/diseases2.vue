@@ -99,7 +99,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .rightForm{
     width:100%;
     height:100%;
@@ -108,26 +108,27 @@ export default {
     padding-top:1%;
     overflow:auto;
   }
-  .el-transfer-panel{
+  >>>.el-transfer-panel{
     width:30%;
     height:390px;
+    margin-top:0;
   }
-  .el-transfer-panel__body{
+  >>>.el-transfer-panel__body{
     height:70%;
   }
-  .el-transfer-panel__list.is-filterable{
+  >>>.el-transfer-panel__list.is-filterable{
     height:100%;
   }
-  .row{
+  >>>.row{
     margin-top:10px;
     position:absolute;
     right:30px;
     top:0;
   }
-  .save{
+  >>>.save{
     float:right;
   }
-  .el-input{
+  >>>.el-input{
     width:90%;
   }
 </style>

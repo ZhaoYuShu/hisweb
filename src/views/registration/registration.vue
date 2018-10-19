@@ -678,40 +678,84 @@ export default {
     font-size:12px;
   }
 </style>
-<style>
-  @import '../../styles/common.css';
+<style scoped>
+  >>>.el-form-item__label{
+    font-size:12px;
+  }
+  >>>.el-input__inner{
+    height:30px;
+    line-height:30px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__increase{
+    height:15px;
+    top:5px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__decrease{
+    height:15px;
+    bottom:5px;
+  }
+  >>>.el-form-item{
+    margin-bottom:15px;
+  }
+  >>>.el-date-editor.el-input, >>>.el-date-editor.el-input__inner{
+    width:100%;
+  }
+  >>>.el-select{
+    width:100%;
+  }
+  >>>.el-table{
+    font-size:12px;
+  }
+  >>>.el-table td, >>>.el-table th{
+    padding:0.8vh 0;
+  }
+  >>>.el-tree-node__label{
+    font-size:12px;
+  }
+  >>>.el-radio__label{
+    font-size:12px;
+  }
+  >>>.el-checkbox+.el-checkbox{
+    display:block;
+  }
+  >>>.el-transfer-panel__item.el-checkbox{
+    margin-left:30px;
+  }
+
 </style>
+
 <style scoped>
   >>>.el-date-editor{
-    width:90%;
+    width:90%!important;
   }
 </style>
-<style>
-  .el-transfer{
+<style scoped>
+  >>>.el-transfer{
     width:100%;
     height:90%;
   }
-  .el-transfer-panel{
+  >>>.el-transfer-panel{
     width:35%;
     height:100%;
+    margin-top:0;
   }
-  .el-transfer-panel__body{
+  >>>.el-transfer-panel__body{
     height:80%;
   }
-  .el-transfer-panel__list.is-filterable{
+  >>>.el-transfer-panel__list.is-filterable{
     height:82%;
   }
-  .el-table td, .el-table th{
+  >>>.el-table td, >>>.el-table th{
     padding:0.8vh 0;
   }
-  .el-form-item__label{
+  >>>.el-form-item__label{
     font-size:12px;
   }
-  .el-input__inner{
+  >>>.el-input__inner{
     height:35px;
     line-height:35px;
   }
-  .el-checkbox__label{
+  >>>.el-checkbox__label{
     font-size:12px;
   }
 </style>

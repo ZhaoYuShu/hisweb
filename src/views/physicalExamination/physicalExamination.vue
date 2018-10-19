@@ -4,7 +4,7 @@
     <el-dialog title="常见结果" :visible.sync="dialogFormVisible">
       <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-form">
         <el-form-item label="常见结果" prop="commonResults">
-          <el-select v-model="form.commonResults">
+          <el-select v-model="form.commonResults" @change="handleSelect">
             <el-option
               v-for="item in commonResults"
               :key="item.id"
@@ -16,7 +16,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false" size="small">确 定</el-button>
+        <el-button type="primary" @click="confirm" size="small">确 定</el-button>
       </div>
     </el-dialog>
     <div class="div1">
@@ -159,7 +159,7 @@
             width="500"
             align="left">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.defaultValue" @dblclick.native="bbb"></el-input>
+              <el-input v-model="scope.row.defaultValue" @dblclick.native="commonResult(scope.row)"></el-input>
             </template>
           </el-table-column>
           <el-table-column
@@ -243,6 +243,7 @@ export default {
       tableData2: [],
       tableData3: [],
       summary: '',
+      commonResults: [],
       sex: [
         {id: 1, value: '男'},
         {id: 2, value: '女'},
@@ -254,7 +255,9 @@ export default {
       currentCode: '', // 当前点击的组合项目
       currentName: '', // 当前点击的组合项目名称
       currentNode: '', // 当前点击的组合项目小结
-      currentResultID: '' // 当前点击的组合项目resultid
+      currentResultID: '', // 当前点击的组合项目resultid
+      result: '', // 结果
+      row: {}
     }
   },
   methods: {
@@ -384,9 +387,28 @@ export default {
         console.log(error);
       });
     },
-    bbb () {
+    // 双击输入框弹出常见结果下拉框
+    commonResult (row) {
       this.dialogFormVisible = true;
-      console.log(6666);
+      console.log(row);
+      this.commonResults = row.commonResults;
+      this.row = row;
+    },
+    // 选择常见结果
+    handleSelect (value) {
+      console.log(value);
+      let that = this;
+      for (let i = 0; i < that.commonResults.length; i++) {
+        if (that.commonResults[i].id === value) {
+          that.result = that.commonResults[i].name;
+          break;
+        }
+      }
+    },
+    // 确定选择常见结果
+    confirm () {
+      this.row.defaultValue = this.result;
+      this.dialogFormVisible = false;
     }
   },
   mounted () {
@@ -491,6 +513,48 @@ export default {
     width:100%;
   }
 </style>
-<style>
-  @import '../../styles/common.css';
+<style scoped>
+  >>>.el-form-item__label{
+    font-size:12px;
+  }
+  >>>.el-input__inner{
+    height:30px;
+    line-height:30px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__increase{
+    height:15px;
+    top:5px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__decrease{
+    height:15px;
+    bottom:5px;
+  }
+  >>>.el-form-item{
+    margin-bottom:15px;
+  }
+  >>>.el-date-editor.el-input, >>>.el-date-editor.el-input__inner{
+    width:100%;
+  }
+  >>>.el-select{
+    width:100%;
+  }
+  >>>.el-table{
+    font-size:12px;
+  }
+  >>>.el-table td, >>>.el-table th{
+    padding:0.8vh 0;
+  }
+  >>>.el-tree-node__label{
+    font-size:12px;
+  }
+  >>>.el-radio__label{
+    font-size:12px;
+  }
+  >>>.el-checkbox+.el-checkbox{
+    display:block;
+  }
+  >>>.el-transfer-panel__item.el-checkbox{
+    margin-left:30px;
+  }
+
 </style>

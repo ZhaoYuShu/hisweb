@@ -53,8 +53,8 @@ export default {
     overflow:hidden;
   }
 </style>
-<style>
-  .el-tabs__content{
+<style scoped>
+  >>>.el-tabs__content{
     width:100%;
     height:90%;
     overflow:hidden;

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
-let web = 'http://192.168.43.16:8081';
+let web = 'http://192.168.0.109:8081';
 // let web = 'http://a7958454.ngrok.io';
 let token = localStorage.getItem('token');
 let header = {'Authorization': token};
@@ -665,6 +665,11 @@ let saveExamResult = (data) => http.post(web + '/api/examResult', data);
 // 保存单条结果
 let saveExamResultItem = (data) => http.post(web + '/api/examResult/examGroupItem', data);
 
+/* 总检诊台 */
+
+// 根据体检编号获取总检信息
+let checkoutInfo = (data) => http.get(web + '/api/examRecord/' + data);
+
 export default {
   login,
   officeTree,
@@ -862,5 +867,6 @@ export default {
   examRecordUser2,
   examResult,
   saveExamResult,
-  saveExamResultItem
+  saveExamResultItem,
+  checkoutInfo
 }

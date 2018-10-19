@@ -85,30 +85,31 @@ export default {
 }
 </script>
 
-<style>
-  .el-transfer-panel{
+<style scoped>
+  >>>.el-transfer-panel{
     width:300px;
     height:400px;
+    margin-top:0;
   }
-  .el-transfer-panel__body{
+  >>>.el-transfer-panel__body{
     height:100%;
     overflow:hidden;
   }
-  .el-transfer-panel__list.is-filterable{
+  >>>.el-transfer-panel__list.is-filterable{
     height:76%;
     padding-top:0;
     overflow:auto;
   }
-  .row{
+  >>>.row{
     margin-top:10px;
     position:absolute;
     right:30px;
     top:0;
   }
-  .save{
+  >>>.save{
     float:right;
   }
-  .el-input{
+  >>>.el-input{
     width:90%;
   }
 </style>

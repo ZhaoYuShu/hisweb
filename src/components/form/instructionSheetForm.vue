@@ -191,7 +191,7 @@ export default {
       //   console.log(error);
       // });
       // location.href = 'http://192.168.0.101:8081/api/reports/zy_report_A4?format=pdf&examCode=100001&examTimes=1';
-      let web = 'http://192.168.0.104:8081'
+      let web = 'http://192.168.0.107:8080'
       window.open(web + '/api/reports/zy_report_A4?format=pdf&examCode=' + this.examCode + '&examTimes=' + this.examTimes);
     },
     // 刷新树结构
@@ -283,6 +283,49 @@ export default {
     font-size:12px;
   }
 </style>
-<style>
-  @import '../../styles/common.css';
+<style scoped>
+  >>>.el-form-item__label{
+    font-size:12px;
+  }
+  >>>.el-input__inner{
+    height:30px;
+    line-height:30px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__increase{
+    height:15px;
+    top:5px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__decrease{
+    height:15px;
+    bottom:5px;
+  }
+  >>>.el-form-item{
+    margin-bottom:15px;
+  }
+  >>>.el-date-editor.el-input, >>>.el-date-editor.el-input__inner{
+    width:100%;
+  }
+  >>>.el-select{
+    width:100%;
+  }
+  >>>.el-table{
+    font-size:12px;
+  }
+  >>>.el-table td, >>>.el-table th{
+    padding:0.8vh 0;
+  }
+  >>>.el-tree-node__label{
+    font-size:12px;
+  }
+  >>>.el-radio__label{
+    font-size:12px;
+  }
+  >>>.el-checkbox+.el-checkbox{
+    display:block;
+  }
+  >>>.el-transfer-panel__item.el-checkbox{
+    margin-left:30px;
+  }
+
 </style>
+

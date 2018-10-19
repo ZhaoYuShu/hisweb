@@ -100,6 +100,49 @@ export default {
     margin:0 auto;
   }
 </style>
-<style>
-  @import '../../styles/common.css';
+<style scoped>
+  >>>.el-form-item__label{
+    font-size:12px;
+  }
+  >>>.el-input__inner{
+    height:30px;
+    line-height:30px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__increase{
+    height:15px;
+    top:5px;
+  }
+  >>>.el-input-number.is-controls-right .el-input-number__decrease{
+    height:15px;
+    bottom:5px;
+  }
+  >>>.el-form-item{
+    margin-bottom:15px;
+  }
+  >>>.el-date-editor.el-input, >>>.el-date-editor.el-input__inner{
+    width:100%;
+  }
+  >>>.el-select{
+    width:100%;
+  }
+  >>>.el-table{
+    font-size:12px;
+  }
+  >>>.el-table td, >>>.el-table th{
+    padding:0.8vh 0;
+  }
+  >>>.el-tree-node__label{
+    font-size:12px;
+  }
+  >>>.el-radio__label{
+    font-size:12px;
+  }
+  >>>.el-checkbox+.el-checkbox{
+    display:block;
+  }
+  >>>.el-transfer-panel__item.el-checkbox{
+    margin-left:30px;
+  }
+
 </style>
+
