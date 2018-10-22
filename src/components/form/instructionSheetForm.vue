@@ -71,7 +71,7 @@
     <div class="bottom">
       <el-row>
         <el-col>
-          <p class="title">查询结果</p>
+          <p class="title">查询结果<span style="color:red;">(共{{people}}人)</span></p>
         </el-col>
       </el-row>
       <el-table
@@ -173,7 +173,8 @@ export default {
       tableData: [],
       examCode: '',
       examTimes: '',
-      format: 'pdf'
+      format: 'pdf',
+      people: 0
     }
   },
   methods: {
@@ -191,7 +192,7 @@ export default {
       //   console.log(error);
       // });
       // location.href = 'http://192.168.0.101:8081/api/reports/zy_report_A4?format=pdf&examCode=100001&examTimes=1';
-      let web = 'http://192.168.0.107:8080'
+      let web = 'http://localhost:8081'
       window.open(web + '/api/reports/zy_report_A4?format=pdf&examCode=' + this.examCode + '&examTimes=' + this.examTimes);
     },
     // 刷新树结构

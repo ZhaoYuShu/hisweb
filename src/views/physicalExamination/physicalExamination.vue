@@ -70,11 +70,6 @@
                 <el-input v-model="ruleForm.examType" disabled></el-input>
               </el-form-item>
             </el-col>
-            <!--<el-col :span="6">-->
-            <!--<el-form-item label="人员类别" prop="personnelType">-->
-            <!--<el-input v-model="ruleForm.personnelType" disabled></el-input>-->
-            <!--</el-form-item>-->
-            <!--</el-col>-->
             <el-col :span="4">
               <el-form-item label="单位名称" prop="companyName">
                 <el-input v-model="ruleForm.companyName" disabled></el-input>
@@ -107,14 +102,6 @@
           </el-row>
         </el-form>
       </div>
-      <!--<div class="buttons">-->
-        <!--<el-row>-->
-          <!--<el-button></el-button>-->
-          <!--<el-button></el-button>-->
-          <!--<el-button></el-button>-->
-          <!--<el-button></el-button>-->
-        <!--</el-row>-->
-      <!--</div>-->
     </div>
     <div class="div2">
       <div class="groups">

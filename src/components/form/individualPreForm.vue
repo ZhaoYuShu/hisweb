@@ -200,16 +200,23 @@
       <div class="bottom">
         <el-row :gutter="20">
           <el-col :span="24">
-            <p class="title">人员查询结果</p>
+            <p class="title">人员查询结果<span style="color:red;">(共{{people}}人)</span></p>
           </el-col>
         </el-row>
         <el-table
+          ref="tables"
           :data="tableData"
           border
           height="86%"
           style="width:98%;margin:0 auto;"
           @row-click="handleRowClick"
           :highlight-current-row="true">
+          <!--<el-table-column-->
+            <!--width="60">-->
+            <!--<template slot-scope="scope">-->
+              <!--<el-radio class="radio" v-model="radio" :label="scope.$index"></el-radio>-->
+            <!--</template>-->
+          <!--</el-table-column>-->
           <el-table-column
             prop="companyName"
             label="单位"
@@ -369,7 +376,8 @@ export default {
       isDisabled: false,
       saveDisabled: false,
       deleteDisabled: true,
-      updateDisabled: true
+      updateDisabled: true,
+      people: 0
     }
   },
   methods: {
@@ -686,6 +694,7 @@ export default {
       let that = this;
       that.isDisabled = true;
       that.registrationNo = row.registrationNo;
+      that.$refs.tables.setCurrentRow(row);
       http.registrationDetail(row.registrationNo).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
@@ -751,6 +760,9 @@ export default {
     });
     Bus.$on("updateDisabledIndividual", (e) => {
       this.updateDisabled = e;
+    });
+    Bus.$on("people", (e) => {
+      this.people = e;
     });
   }
 }

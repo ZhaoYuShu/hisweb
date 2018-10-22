@@ -1,146 +1,150 @@
 <template>
-    <div class="rightForm">
-      <div class="top">
-        <el-row>
-          <el-col>
-            <p class="title">查询条件</p>
-          </el-col>
-        </el-row>
-        <el-form
-          :model="ruleForm"
-          :rules="rules"
-          ref="ruleForm"
-          class="demo-ruleForm"
-          label-width="100px">
-          <el-row :gutter="20">
-            <el-col :span="11">
-              <el-form-item label="姓名" prop="userName">
-                <el-input v-model="ruleForm.userName" placeholder="请输入姓名"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="11">
-              <el-form-item label="公司名称" prop="companyCode">
-                <el-select v-model="ruleForm.companyCode" placeholder="请选择公司名称">
-                  <el-option
-                    v-for="item in group"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.code">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="11">
-              <el-form-item label="登记流水号" prop="orderNo">
-                <el-input v-model="ruleForm.orderNo" class="code" placeholder="请输入登记流水号"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="11">
-              <el-form-item label="——" prop="orderNo2">
-                <el-input v-model="ruleForm.orderNo2" class="number" placeholder="请输入登记流水号"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <div class="options">
-          <el-row>
-            <el-col :span="24" style="display:flex;justify-content: center;">
-              <el-button type="primary" size="small" @click="query">查询</el-button>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-radio-group v-model="ruleForm.status">
-                <el-col :span="24" v-for="item in registered" :key="item.id">
-                  <el-radio
-                    :key="item.id"
-                    :label="item.id">
-                    {{item.value}}
-                  </el-radio>
-                </el-col>
-              </el-radio-group>
-            </el-col>
-          </el-row>
-        </div>
-      </div>
-      <div class="bottom">
-        <el-row>
-          <el-col>
-            <p class="title">查询结果</p>
-          </el-col>
-        </el-row>
-        <el-table
-          ref="multipleTable"
-          :data="tableData"
-          border
-          height="85%"
-          style="width:98%;margin:0 auto;"
-          @select="handleSelectionChange"
-          @select-all="handleSelectionAll">
-          <el-table-column
-            type="selection"
-            width="55"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            prop="registrationNo"
-            label="预约编号"
-            width="200"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="姓名"
-            width="100"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            prop="sex"
-            label="性别"
-            width="100"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            prop="age"
-            label="年龄"
-            width="100"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            prop="examDate"
-            label="体检日期"
-            width="160"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            prop="balanceType"
-            label="结算方式"
-            width="120"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            prop="jobTitle"
-            label="职称"
-            width="160"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            v-if="isShow"
-            label="操作"
-            fixed="right">
-            <template slot-scope="scope">
-              <el-button @click="printSheet1(scope.row, scope.index)" type="text" size="small">打印指引单</el-button>
-              <el-button @click="printSheet2(scope.row, scope.index)" type="text" size="small">打印检验单</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <el-row class="buttons" type="flex" justify="center" v-if="!isShow">
-        <el-button @click="confirm" type="primary" size="small" :disabled="isDisabled">确定登记</el-button>
+  <div class="rightForm">
+    <div class="top">
+      <el-row>
+        <el-col>
+          <p class="title">查询条件</p>
+        </el-col>
       </el-row>
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        class="demo-ruleForm"
+        label-width="100px">
+        <el-row :gutter="20">
+          <el-col :span="11">
+            <el-form-item label="姓名" prop="userName">
+              <el-input v-model="ruleForm.userName" placeholder="请输入姓名"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="公司名称" prop="companyCode">
+              <el-select v-model="ruleForm.companyCode" placeholder="请选择公司名称">
+                <el-option
+                  v-for="item in group"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.code">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="11">
+            <el-form-item label="登记流水号" prop="orderNo">
+              <el-input v-model="ruleForm.orderNo" class="code" placeholder="请输入登记流水号"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="——" prop="orderNo2">
+              <el-input v-model="ruleForm.orderNo2" class="number" placeholder="请输入登记流水号"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div class="options">
+        <el-row>
+          <el-col :span="24" style="display:flex;justify-content: center;">
+            <el-button type="primary" size="small" @click="query">查询</el-button>
+            <el-button type="primary" size="small" @click="printSheetBatch">批量打印指引单</el-button>
+            <el-button type="primary" size="small" @click="printSheetBatch2">批量打印检验单</el-button>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-radio-group v-model="ruleForm.status">
+              <el-col :span="24" v-for="item in registered" :key="item.id">
+                <el-radio
+                  :key="item.id"
+                  :label="item.id">
+                  {{item.value}}
+                </el-radio>
+              </el-col>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+      </div>
     </div>
+    <div class="bottom">
+      <el-row>
+        <el-col>
+          <p class="title">查询结果<span style="color:red;">(共{{people}}人)</span></p>
+        </el-col>
+      </el-row>
+      <el-table
+        ref="multipleTable"
+        :data="tableData"
+        border
+        height="90%"
+        style="width:98%;margin:0 auto;"
+        @select="handleSelectionChange"
+        @select-all="handleSelectionAll"
+        v-loading="loading1">
+        <el-table-column
+          type="selection"
+          width="55"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="registrationNo"
+          label="预约编号"
+          width="200"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+          width="100"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="sex"
+          label="性别"
+          width="100"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="age"
+          label="年龄"
+          width="100"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="examDate"
+          label="体检日期"
+          width="160"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="balanceType"
+          label="结算方式"
+          width="120"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          prop="jobTitle"
+          label="职称"
+          width="160"
+          align="left">
+        </el-table-column>
+        <el-table-column
+          v-if="isShow"
+          label="操作"
+          fixed="right"
+          width="300">
+          <template slot-scope="scope">
+            <el-button @click="printSheet1(scope.row, scope.$index)" type="text" size="small">打印指引单</el-button>
+            <el-button @click="printSheet2(scope.row, scope.$index)" type="text" size="small">打印检验单</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <el-row class="buttons" type="flex" justify="center" v-if="!isShow">
+      <el-button @click="confirm" type="primary" size="small" :disabled="isDisabled" v-loading.fullscreen.lock="loading2">确定登记</el-button>
+    </el-row>
+  </div>
 </template>
 
 <script>
@@ -172,13 +176,22 @@ export default {
       tableData: [],
       ids: [],
       isShow: false,
-      isDisabled: true
+      isShow2: false,
+      isDisabled: true,
+      people: 0,
+      loading1: false,
+      loading2: false,
+      codeArray: [],
+      registrationNo: '',
+      web: 'http://localhost:8081',
+      url: ''
     }
   },
   methods: {
     // 确定登记
     confirm () {
       let that = this;
+      that.loading2 = true;
       console.log(that.ids);
       http.officialRegistration(that.ids).then(response => {
         console.log(response);
@@ -187,6 +200,7 @@ export default {
             message: '正式登记成功！',
             type: 'success'
           });
+          that.loading2 = false;
           that.isDisabled = true;
           that.query();
         } else {
@@ -203,11 +217,14 @@ export default {
     handleSelectionChange (selection, row) {
       console.log(selection, row);
       let arr = [];
+      let arr2 = [];
       for (let i = 0; i < selection.length; i++) {
         arr.push(selection[i].id);
+        arr2.push(selection[i].registrationNo);
       }
       console.log(arr);
       this.ids = arr;
+      this.codeArray = arr2;
       if (this.ids.length > 0) {
         this.isDisabled = false;
       } else {
@@ -218,11 +235,14 @@ export default {
     handleSelectionAll (selection) {
       console.log(selection);
       let arr = [];
+      let arr2 = [];
       for (let i = 0; i < selection.length; i++) {
         arr.push(selection[i].id);
+        arr2.push(selection[i].registrationNo);
       }
       console.log(arr);
       this.ids = arr;
+      this.codeArray = arr2;
       if (this.ids.length > 0) {
         this.isDisabled = false;
       } else {
@@ -250,6 +270,7 @@ export default {
     // 查询人员信息
     query () {
       let that = this;
+      that.loading1 = true;
       if (that.ruleForm.status === 0) {
         that.isShow = false;
       } else if (that.ruleForm.status === 1) {
@@ -281,6 +302,8 @@ export default {
             response.data.data[i].examDate = formatDate(response.data.data[i].examDate);
           }
           that.tableData = response.data.data;
+          that.people = response.data.data.length;
+          that.loading1 = false;
         }
       }).catch(error => {
         console.log(error);
@@ -289,12 +312,22 @@ export default {
     // 打印指引单
     printSheet1 (row, index) {
       console.log(row, index);
-      let web = 'http://192.168.0.107:8080'
-      window.open(web + '/api/reports/zy_report_A4?format=pdf&examCode=' + row.examCode + '&examTimes=' + row.examTimes);
+      window.open(this.web + '/api/reports/zy_report_A4?format=pdf&examCode=' + row.examCode + '&examTimes=' + row.examTimes);
+      this.$refs.multipleTable.toggleRowSelection(row, true);
+    },
+    // 批量打印指引单
+    printSheetBatch () {
+      window.open(this.web + '/api/reports/pdf?regCodes=' + this.codeArray);
     },
     // 打印检验单
     printSheet2 (row, index) {
       console.log(row, index);
+      window.open(this.web + '/api/reports/applyPage?examCode=' + row.examCode + "&examTimes=" + row.examTimes);
+      this.$refs.multipleTable.toggleRowSelection(row, true);
+    },
+    // 批量打印检验单
+    printSheetBatch2 () {
+      window.open(this.web + '/api/reports/applyPage?regCodes=' + this.codeArray);
     }
   },
   mounted () {
@@ -319,12 +352,8 @@ export default {
   }
   .rightForm .bottom{
     width:100%;
-    height:60%;
+    height:69%;
   }
-  /*.rightForm .buttons{*/
-    /*width:100%;*/
-    /*height:3%;*/
-  /*}*/
   .rightForm .title{
     text-align:left;
     text-indent:20px;
@@ -342,12 +371,6 @@ export default {
     height:100%;
     float:right;
   }
-  /*.rightForm .code{*/
-    /*width:40%;*/
-  /*}*/
-  /*.rightForm .number{*/
-    /*width:40%;*/
-  /*}*/
   .rightForm .el-date-editor{
     width:40%;
   }
@@ -413,6 +436,8 @@ export default {
   >>>.el-transfer-panel__item.el-checkbox{
     margin-left:30px;
   }
-
+  >>>.current-row{
+    background:#000;
+  }
 </style>
 

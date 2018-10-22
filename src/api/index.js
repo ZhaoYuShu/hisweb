@@ -1,6 +1,6 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
-let web = 'http://192.168.0.109:8081';
+let web = 'http://localhost:8081';
 // let web = 'http://a7958454.ngrok.io';
 let token = localStorage.getItem('token');
 let header = {'Authorization': token};
@@ -647,6 +647,8 @@ let getAuth = (data) => http.get(web + '/api/userToRole/roles/' + data);
 
 // 根据体检编号，体检次数打印指引单
 // let printInstructionSheet = (examCode, examTimes) => axios.get(web + '/api/reports/zy_report_A4?format=pdf&examCode=' + examCode + '&examTimes=' + examTimes, {headers: header});
+// 根据登记流水号批量打印指引单
+let printSheetBatch = (data) => http.post(web + '/api/reports/pdf', data);
 
 /* 体检医生诊断 */
 
@@ -868,5 +870,6 @@ export default {
   examResult,
   saveExamResult,
   saveExamResultItem,
-  checkoutInfo
+  checkoutInfo,
+  printSheetBatch
 }

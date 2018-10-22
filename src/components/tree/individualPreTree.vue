@@ -38,6 +38,7 @@ export default {
             Bus.$emit("saveDisabledIndividual", false);
             Bus.$emit("deleteDisabledIndividual", true);
             Bus.$emit("updateDisabledIndividual", true);
+            Bus.$emit("people", response.data.data.length);
           }
         }).catch(error => {
           console.log(error);
