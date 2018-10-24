@@ -187,7 +187,7 @@
       <el-table
         :data="tableData"
         border
-        height="75%"
+        height="80%"
         style="width:98%;margin:0 auto;"
         @row-click="handleRowClick">
         <el-table-column
@@ -243,7 +243,6 @@
         <el-table-column
           label="交费方式"
           prop="balanceType"
-          width="150"
           align="left">
         </el-table-column>
       </el-table>
@@ -317,7 +316,7 @@
         label-width="100px"
         class="demo-ruleForm">
         <el-row :gutter="10">
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="收费种类" prop="chargeType">
               <el-select v-model="ruleForm.chargeType">
                 <el-option
@@ -329,58 +328,56 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="体检编号" prop="code">
               <el-input v-model="ruleForm.code" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="姓名" prop="name">
               <el-input v-model="ruleForm.name" disabled></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="套餐金额" prop="packageMoney">
               <el-input v-model="ruleForm.packageMoney" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :span="6">
             <el-form-item label="打折" prop="discount1">
               <el-input v-model="ruleForm.discount1" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="套餐应收" prop="packageReceivable">
               <el-input v-model="ruleForm.packageReceivable" disabled></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="总计金额" prop="totalAmount">
               <el-input v-model="ruleForm.totalAmount" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="打折" prop="discount3">
               <el-input v-model="ruleForm.discount3" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :span="6">
             <el-form-item label="应收金额" prop="receivableMoney">
               <el-input v-model="ruleForm.receivableMoney" disabled></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="实收金额" prop="paidMoney">
               <el-input v-model="ruleForm.paidMoney"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="找零金额" prop="changeAmount">
               <el-input v-model="ruleForm.changeAmount" disabled></el-input>
             </el-form-item>
@@ -629,15 +626,15 @@ export default {
     margin-bottom:1%;
   }
   .container .info{
-    width:60%;
-    height:60%;
+    width:70%;
+    height:55%;
     background:#fff;
     float:left;
     margin-bottom:1%;
   }
   .container .project{
-    width:39%;
-    height:60%;
+    width:29%;
+    height:55%;
     background:#fff;
     float:right;
     margin-bottom:1%;

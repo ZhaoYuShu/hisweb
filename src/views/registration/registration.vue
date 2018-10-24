@@ -2,23 +2,28 @@
 <template>
   <div class="container">
     <div class="package">
-      <el-row :gutter="20" style="display:flex;align-items:center;">
-        <el-col :span="6">
-          <h5 class="title">已选套餐</h5>
-        </el-col>
-        <el-col :span="17">
-          <el-input v-model="selectedPackage" placeholder="请选择套餐"></el-input>
-        </el-col>
-      </el-row>
+      <!--<el-row :gutter="20" style="display:flex;align-items:center;">-->
+        <!--<el-col :span="6">-->
+          <!--<h5 class="title">已选套餐</h5>-->
+        <!--</el-col>-->
+        <!--<el-col :span="17">-->
+          <!--<el-input v-model="selectedPackage" placeholder="请选择套餐"></el-input>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
       <el-table
-        height="80%"
+        height="90%"
         :data="tableData"
-        style="width:96%;margin:0 auto;"
-        border
-        @row-dblclick="handleDbClick">
+        style="width:96%;margin:0 auto;margin-top:20px;"
+        border>
+        <el-table-column
+          width="60">
+          <template slot-scope="scope">
+            <el-radio :label="scope.$index" v-model="radio" @change.native="getCurrentRow(scope.$index, scope.row)">&nbsp;</el-radio>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="name"
-          label="未选套餐"
+          label="可选套餐"
           align="left">
         </el-table-column>
       </el-table>
@@ -50,7 +55,7 @@
         <el-table-column
           label="体检项目"
           prop="name"
-          width="320"
+          width="200"
           align="left">
         </el-table-column>
         <el-table-column
@@ -62,11 +67,8 @@
     </div>
     <div class="message">
       <el-row style="display:flex;align-items:center;margin-bottom:10px;">
-        <el-col :span="22">
+        <el-col :span="24">
           <p class="title">人员信息</p>
-        </el-col>
-        <el-col :span="2">
-          <el-button type="primary" size="small" @click="submitRegistration('ruleForm')">保存</el-button>
         </el-col>
       </el-row>
       <el-form
@@ -76,24 +78,22 @@
         label-width="100px"
         class="demo-ruleForm">
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="身份证号" prop="idCard">
-              <el-input v-model="ruleForm.idCard" placeholder="请输入身份证号" @blur="getMessages"></el-input>
+              <el-input v-model="ruleForm.idCard" placeholder="请输入身份证号" @keyup.enter.native="getMessages"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="体检编号" prop="code">
               <el-input v-model="ruleForm.code" disabled></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="体检次数" prop="examTimes">
               <el-input v-model="ruleForm.examTimes" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="体检日期" prop="preExamDay">
               <el-date-picker
                 v-model="ruleForm.preExamDay"
@@ -104,12 +104,12 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="姓名" prop="name">
               <el-input v-model="ruleForm.name" placeholder="请输入姓名"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="性别" prop="sex">
               <el-select v-model="ruleForm.sex" placeholder="请选择性别">
                 <el-option
@@ -121,9 +121,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="出生日期" prop="birthday">
               <el-date-picker
                 v-model="ruleForm.birthday"
@@ -132,57 +130,54 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="年龄" prop="age">
               <el-input v-model="ruleForm.age" placeholder="请输入年龄"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="单位" prop="companyCode">
               <el-input v-model="companyName" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="单位分组" prop="groupCode">
               <el-input v-model="groupName" disabled></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="是否为VIP" prop="isVip">
               <el-radio-group v-model="ruleForm.isVip">
                 <el-radio
                   v-for="item in isVip"
                   :key="item.id"
-                  :label="item.id">
+                  :label="item.id"
+                  @change="handleChange">
                   {{item.value}}
                 </el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="联系电话" prop="phone">
               <el-input v-model="ruleForm.phone" placeholder="请输入联系电话"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="联系地址" prop="address">
               <el-input v-model="ruleForm.address" placeholder="请输入联系地址"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="标签个数" prop="labelNum">
               <el-input v-model="ruleForm.labelNum" placeholder="请输入标签个数"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="婚姻状况" prop="isMarried">
               <el-select v-model="ruleForm.isMarried" placeholder="请选择婚姻状况">
                 <el-option
@@ -194,19 +189,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="介绍人" prop="referrer">
-              <el-input v-model="ruleForm.referrer" placeholder="请输入介绍人"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="Email" prop="email">
-              <el-input v-model="ruleForm.email" placeholder="请输入Email"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="人员类别" prop="personnelType">
               <el-select v-model="ruleForm.personnelType">
                 <el-option
@@ -220,7 +203,7 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="体检类别" prop="examType">
               <el-select v-model="ruleForm.examType">
                 <el-option
@@ -232,26 +215,19 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <!--<el-col :span="12">-->
-            <!--<el-form-item label="是否医保" prop="medicalInsurance">-->
-              <!--<el-radio-group v-model="ruleForm.medicalInsurance">-->
-                <!--<el-radio-->
-                  <!--v-for="item in medicalInsurance"-->
-                  <!--:key="item.id"-->
-                  <!--:label="item.id">{{item.value}}</el-radio>-->
-              <!--</el-radio-group>-->
-            <!--</el-form-item>-->
-          <!--</el-col>-->
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="打折比例" prop="discount">
-              <el-input v-model="ruleForm.discount" placeholder="请输入打折比例"></el-input>
+              <el-input v-model="ruleForm.discount" :disabled="isDisabled"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col :span="6">
             <el-form-item label="实收金额" prop="realPrice">
               <el-input v-model="ruleForm.realPrice" placeholder="请输入实收金额"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item>
+              <el-button type="primary" size="small" @click="submitRegistration('ruleForm')">保存</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -280,7 +256,7 @@ export default {
         sex: '', // 性别
         birthday: '', // 生日
         age: '', // 年龄
-        isVip: '', // 是否为vip
+        isVip: 0, // 是否为vip
         isMarried: '', // 婚姻状况
         idCard: '', // 身份证号
         phone: '', // 手机号
@@ -290,7 +266,7 @@ export default {
         examType: '', // 体检类别
         personnelType: '', // 人员类别
         medicalInsurance: '',
-        discount: '', // 折扣
+        discount: 100, // 折扣
         realPrice: '', // 实收金额
         labelNum: '', // 标签个数
         examGroupItemResultDtoList: [], // 组合项目
@@ -350,12 +326,19 @@ export default {
       isVip: [
         {id: 0, value: '否'},
         {id: 1, value: '是'}
-      ]
+      ],
+      radio: '',
+      isDisabled: true
     }
   },
   methods: {
     handleChange (value) {
       console.log(value);
+      if (value === 0) {
+        this.isDisabled = true;
+      } else if (value === 1) {
+        this.isDisabled = false;
+      }
     },
     // 根据身份证号获取人员信息
     getMessages () {
@@ -421,7 +404,13 @@ export default {
       http.getAllPackage().then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
-          that.tableData = response.data.data;
+          let arr = [];
+          for (let i = 0; i < response.data.data.length; i++) {
+            if (response.data.data[i].pid !== 0) {
+              arr.push(response.data.data[i]);
+            }
+          }
+          that.tableData = arr;
         }
       }).catch(error => {
         console.log(error);
@@ -450,44 +439,44 @@ export default {
       });
     },
     // 双击选择套餐并且获取相应的组合项目,根据套餐id获取标签个数
-    handleDbClick (row, event) {
-      let that = this;
-      console.log(row, event);
-      that.selectedPackage = row.name;
-      that.packageId = row.id;
-      // 根据套餐id获取组合项目
-      http.packageDetail(that.packageId).then(response => {
-        console.log(response);
-        that.value2 = [];
-        that.ruleForm.sumPrice = 0;
-        that.examGroupItems = response.data.data.examGroupItems;
-        that.tableData2 = response.data.data.examGroupItems;
-        that.ruleForm.examGroupItemResultDtoList = response.data.data.examGroupItems;
-        for (let i = 0; i < that.examGroupItems.length; i++) {
-          // let obj = {};
-          // obj.label = that.examGroupItems[i].name;
-          // obj.key = that.examGroupItems[i].code;
-          // obj.price = that.examGroupItems[i].price;
-          // obj.discount = that.examGroupItems[i].discount;
-          // obj.realPrice = that.examGroupItems[i].realPrice;
-          that.value2.push(that.examGroupItems[i].code);
-        }
-        for (let n = 0; n < that.tableData2.length; n++) {
-          that.ruleForm.sumPrice += that.tableData2[n].realPrice;
-        }
-      }).catch(error => {
-        console.log(error);
-      });
-      // 根据套餐id获取标签个数
-      http.getLabelNum(that.packageId).then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          that.ruleForm.labelNum = response.data.data.length;
-        }
-      }).catch(error => {
-        console.log(error);
-      });
-    },
+    // handleDbClick (row, event) {
+    //   let that = this;
+    //   console.log(row, event);
+    //   that.selectedPackage = row.name;
+    //   that.packageId = row.id;
+    //   // 根据套餐id获取组合项目
+    //   http.packageDetail(that.packageId).then(response => {
+    //     console.log(response);
+    //     that.value2 = [];
+    //     that.ruleForm.sumPrice = 0;
+    //     that.examGroupItems = response.data.data.examGroupItems;
+    //     that.tableData2 = response.data.data.examGroupItems;
+    //     that.ruleForm.examGroupItemResultDtoList = response.data.data.examGroupItems;
+    //     for (let i = 0; i < that.examGroupItems.length; i++) {
+    //       // let obj = {};
+    //       // obj.label = that.examGroupItems[i].name;
+    //       // obj.key = that.examGroupItems[i].code;
+    //       // obj.price = that.examGroupItems[i].price;
+    //       // obj.discount = that.examGroupItems[i].discount;
+    //       // obj.realPrice = that.examGroupItems[i].realPrice;
+    //       that.value2.push(that.examGroupItems[i].code);
+    //     }
+    //     for (let n = 0; n < that.tableData2.length; n++) {
+    //       that.ruleForm.sumPrice += that.tableData2[n].realPrice;
+    //     }
+    //   }).catch(error => {
+    //     console.log(error);
+    //   });
+    //   // 根据套餐id获取标签个数
+    //   http.getLabelNum(that.packageId).then(response => {
+    //     console.log(response);
+    //     if (response.status === 200 && response.data.result === '00000000') {
+    //       that.ruleForm.labelNum = response.data.data.length;
+    //     }
+    //   }).catch(error => {
+    //     console.log(error);
+    //   });
+    // },
     // 选择组合项目
     changeProjects (value, direction, movedKeys) {
       console.log(value, direction, movedKeys);
@@ -594,6 +583,45 @@ export default {
       }).catch(error => {
         console.log(error);
       });
+    },
+    getCurrentRow (index, row) {
+      this.radio = index;
+      let that = this;
+      console.log(row);
+      that.selectedPackage = row.name;
+      that.packageId = row.id;
+      // 根据套餐id获取组合项目
+      http.packageDetail(that.packageId).then(response => {
+        console.log(response);
+        that.value2 = [];
+        that.ruleForm.sumPrice = 0;
+        that.examGroupItems = response.data.data.examGroupItems;
+        that.tableData2 = response.data.data.examGroupItems;
+        that.ruleForm.examGroupItemResultDtoList = response.data.data.examGroupItems;
+        for (let i = 0; i < that.examGroupItems.length; i++) {
+          // let obj = {};
+          // obj.label = that.examGroupItems[i].name;
+          // obj.key = that.examGroupItems[i].code;
+          // obj.price = that.examGroupItems[i].price;
+          // obj.discount = that.examGroupItems[i].discount;
+          // obj.realPrice = that.examGroupItems[i].realPrice;
+          that.value2.push(that.examGroupItems[i].code);
+        }
+        for (let n = 0; n < that.tableData2.length; n++) {
+          that.ruleForm.sumPrice += that.tableData2[n].realPrice;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+      // 根据套餐id获取标签个数
+      http.getLabelNum(that.packageId).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          that.ruleForm.labelNum = response.data.data.length;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
     }
   },
   mounted () {
@@ -610,10 +638,10 @@ export default {
   .container{
     width:100%;
     height:100%;
-    overflow:auto;
+    overflow:hidden;
   }
   .container .package{
-    width:40%;
+    width:20%;
     height:60%;
     background:#fff;
     overflow:auto;
@@ -626,12 +654,11 @@ export default {
     text-indent:20px;
   }
   .container .price{
-    width:40%;
+    width:20%;
     height:60%;
     background:#fff;
     overflow:auto;
     float:left;
-    margin-bottom:5%;
   }
   .container .price .title{
     text-align:left;
@@ -644,17 +671,15 @@ export default {
     height:60%;
     background:#fff;
     overflow:auto;
-    float:right;
+    float:left;
     margin-bottom:1%;
   }
   .container .message{
-    width:58%;
-    height:60%;
+    width:100%;
+    height:39%;
     background:#fff;
     overflow:hidden;
     float:right;
-    padding-right:1%;
-    margin-bottom:5%;
   }
   .container .message .title{
     font-size:12px;
@@ -733,6 +758,9 @@ export default {
   >>>.el-transfer{
     width:100%;
     height:90%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
   }
   >>>.el-transfer-panel{
     width:35%;

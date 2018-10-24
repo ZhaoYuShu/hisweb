@@ -35,6 +35,7 @@ export default {
           console.log(response);
           if (response.status === 200 && response.data.result === '00000000') {
             Bus.$emit("staffs", response.data.data);
+            Bus.$emit("length", response.data.data.length);
           }
         }).catch(error => {
           console.log(error);

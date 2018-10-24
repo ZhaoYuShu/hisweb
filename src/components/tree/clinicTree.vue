@@ -1,14 +1,14 @@
 <template>
-    <el-tree
-      :data="data"
-      :props="defaultProps"
-      accordion
-      :highlight-current="true"
-      node-key="id"
-      @node-click="handleNodeClick"
-      default-expand-all
-      v-loading="loading">
-    </el-tree>
+  <el-tree
+    :data="data"
+    :props="defaultProps"
+    accordion
+    :highlight-current="true"
+    node-key="id"
+    @node-click="handleNodeClick"
+    default-expand-all
+    v-loading="loading">
+  </el-tree>
 </template>
 
 <script>

@@ -225,6 +225,9 @@ export default {
         e[i].examDate = formatDate(e[i].examDate);
       }
     });
+    Bus.$on("length", (e) => {
+      this.people = e;
+    });
   }
 }
 </script>
@@ -327,6 +330,5 @@ export default {
   >>>.el-transfer-panel__item.el-checkbox{
     margin-left:30px;
   }
-
 </style>
 

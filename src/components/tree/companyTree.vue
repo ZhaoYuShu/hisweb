@@ -3,7 +3,7 @@
     :data="data"
     :props="defaultProps"
     accordion
-    :hightlight-current="true"
+    :highlight-current="true"
     node-key="id"
     @node-click="handleNodeClick"
     default-expand-all

@@ -61,12 +61,12 @@
             </el-col>
             <el-col :span="4">
               <el-form-item label="总检医生" prop="doctor">
-                <el-input v-model="form.doctor"></el-input>
+                <el-input v-model="form.doctor" placeholder="请输入总检医生"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item label="操作员" prop="operator">
-                <el-input v-model="form.operator"></el-input>
+                <el-input v-model="form.operator" placeholder="请输入操作员"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">

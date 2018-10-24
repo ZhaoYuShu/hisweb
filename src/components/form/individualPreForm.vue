@@ -23,8 +23,8 @@
           ref="ruleForm"
           label-width="150px"
           class="demo-ruleForm">
-          <el-row :gutter="20">
-            <el-col :span="12">
+          <el-row :gutter="10">
+            <el-col :span="6">
               <el-form-item label="单位" prop="companyCode">
                 <el-select v-model="ruleForm.companyCode" placeholder="请选择单位" @change="handleChange" :disabled="isDisabled">
                   <el-option
@@ -36,38 +36,34 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="预约编号" prop="registrationNo">
                 <el-input v-model="ruleForm.registrationNo" disabled></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="联系电话" prop="phone">
                 <el-input v-model="ruleForm.phone" placeholder="请输入联系电话" @blur="getPersonInfo"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="体检号" prop="examCode">
                 <el-input v-model="ruleForm.examCode" disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+          <el-row :gutter="10">
+            <el-col :span="6">
               <el-form-item label="身份证号" prop="personnelCode">
                 <el-input v-model="ruleForm.personnelCode" placeholder="请输入身份证号"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="姓名" prop="name">
                 <el-input v-model="ruleForm.name" placeholder="请输入姓名"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="性别" prop="sex">
                 <el-select v-model="ruleForm.sex" placeholder="请选择性别">
                   <el-option
@@ -79,14 +75,14 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="体检次数" prop="examTimes">
                 <el-input v-model="ruleForm.examTimes" disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+          <el-row :gutter="10">
+            <el-col :span="6">
               <el-form-item label="出生日期" prop="birthday">
                 <el-date-picker
                   v-model="ruleForm.birthday"
@@ -95,14 +91,12 @@
                 </el-date-picker>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="年龄" prop="age">
                 <el-input v-model="ruleForm.age" placeholder="请输入年龄"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="预计体检日期" prop="examDate">
                 <el-date-picker
                   v-model="ruleForm.examDate"
@@ -111,7 +105,7 @@
                 </el-date-picker>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="对应分组" prop="groupCode">
                 <el-select v-model="ruleForm.groupCode" placeholder="请选择对应分组" @change="selectGroup">
                   <el-option
@@ -124,8 +118,8 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+          <el-row :gutter="10">
+            <el-col :span="6">
               <el-form-item label="体检类型" prop="examType">
                 <el-select v-model="ruleForm.examType" placeholder="请选择体检类型">
                   <el-option
@@ -137,7 +131,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="结算方式" prop="balanceType">
                 <el-select v-model="ruleForm.balanceType" placeholder="请选择结算方式">
                   <el-option
@@ -149,14 +143,12 @@
                 </el-select>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="标签个数" prop="labelNum">
                 <el-input v-model="ruleForm.labelNum" placeholder="请输入标签个数"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="人员类别" prop="personnelType">
                 <el-select v-model="ruleForm.personnelType" placeholder="请选择人员类别">
                   <el-option
@@ -169,20 +161,18 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+          <el-row :gutter="10">
+            <el-col :span="6">
               <el-form-item label="Email" prop="email">
                 <el-input v-model="ruleForm.email" placeholder="请输入Email"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="职务" prop="duty">
                 <el-input v-model="ruleForm.duty" placeholder="请输入职务"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="12">
+            <el-col :span="6">
               <el-form-item label="职称" prop="title">
                 <el-input v-model="ruleForm.title" placeholder="请输入职称"></el-input>
               </el-form-item>
@@ -793,6 +783,7 @@ export default {
     overflow-y:auto;
     overflow-x:hidden;
     margin-bottom:2%;
+    padding-right:1%;
   }
   .rightForm .top .title{
     text-align: left;

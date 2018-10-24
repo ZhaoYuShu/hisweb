@@ -322,7 +322,9 @@ export default {
     // 打印检验单
     printSheet2 (row, index) {
       console.log(row, index);
-      window.open(this.web + '/api/reports/applyPage?examCode=' + row.examCode + "&examTimes=" + row.examTimes);
+      let arr = [];
+      arr.push(row.registrationNo);
+      window.open(this.web + '/api/reports/applyPage?regCodes=' + arr);
       this.$refs.multipleTable.toggleRowSelection(row, true);
     },
     // 批量打印检验单

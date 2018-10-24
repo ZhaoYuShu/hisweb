@@ -111,7 +111,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="性别" required prop="sex">
-              <el-select v-model="ruleForm.sex">
+              <el-select v-model="ruleForm.sex" @change="handleChange">
                 <el-option
                   v-for="item in gender"
                   :key="item.id"
@@ -123,7 +123,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="男女是否使用同一常见结果" prop="resultType" required>
-              <el-radio-group v-model="ruleForm.resultType">
+              <el-radio-group v-model="ruleForm.resultType" disabled>
                 <el-radio
                   v-for="item in result"
                   :key="item.id"
@@ -387,6 +387,11 @@ export default {
     // },
     handleChange (value) {
       console.log(value);
+      if (value === 0) {
+        this.ruleForm.resultType = 1;
+      } else {
+        this.ruleForm.resultType = 0;
+      }
     },
     // 选择上级科室
     selectOffice (value) {
