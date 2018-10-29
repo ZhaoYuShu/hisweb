@@ -129,13 +129,13 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="最小极限值" prop="min">
-            <el-input type="text" v-model="ruleForm.min"></el-input>
+          <el-form-item label="最小极限值" prop="minValue">
+            <el-input type="text" v-model="ruleForm.minValue"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="最大极限值" prop="max">
-            <el-input type="text" v-model="ruleForm.max"></el-input>
+          <el-form-item label="最大极限值" prop="maxValue">
+            <el-input type="text" v-model="ruleForm.maxValue"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -174,8 +174,8 @@ export default {
         normalResult: '',
         resultType: '',
         status: '',
-        min: '',
-        max: '',
+        minValue: '',
+        maxValue: '',
         chargeType: ''
       },
       rules: {
@@ -350,7 +350,7 @@ export default {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
           that.$message({
-            message: '删除科室信息成功！',
+            message: '删除体检项目成功！',
             type: 'success'
           });
           that.resetForm('ruleForm');
