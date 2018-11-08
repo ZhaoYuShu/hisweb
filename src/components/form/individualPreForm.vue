@@ -764,7 +764,7 @@ export default {
     height: 98%;
     float: right;
     background: #fff;
-    padding-top: 1%;
+    /*padding-top: 1%;*/
   }
   .rightForm .top{
     width: 100%;

@@ -1,63 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import Layout from '@/views/layout/Layout'
-import Office from '@/views/office/office'
-import Sample from '@/views/sample/sample'
-import ExamItems from '@/views/examItems/examItems'
-import ProgramGroup from '@/views/programGroup/programGroup'
-import Package from '@/views/package/package'
-import Advice from '@/views/advice/advice'
-import Application from '@/views/application/application'
-import Equipment from '@/views/equipment/equipment'
-import Conclusion from '@/views/conclusion/conclusion'
-import Diseases from '@/views/diseases/diseases'
-import Result from '@/views/result/result'
-import Service from '@/views/service/service'
-import PersonalCategory from '@/views/personalCategory/personalCategory'
-import MedicalCategory from '@/views/medicalCategory/medicalCategory'
-import ProjectFunction from '@/views/projectFunction/ProjectFunction'
-import StatisticTemplate from '@/views/statisticTemplate/statisticTemplate'
-import Clinic from '@/views/clinic/clinic'
-import RemindDiagnosis from '@/views/remindDiagnosis/remindDiagnosis'
-import SummaryOffice from '@/views/summaryOffice/summaryOffice'
-import Invoice from '@/views/invoice/invoice'
-import SummaryProject from '@/views/summaryProject/summaryProject'
-import RelevantCharges from '@/views/relevantCharges/relevantCharges'
-import Discount from '@/views/discount/discount'
-import Questions from '@/views/questions/questions'
-import Registration from '@/views/registration/registration'
-import IndividualPreRegistration from '@/views/individualPreRegistration/individualPreRegistration'
-import OfficiallyRegistered from '@/views/officiallyRegistered/officiallyRegistered'
-import ServiceRegistration from '@/views/serviceRegistration/serviceRegistration'
-import Company from '@/views/company/company'
-import CompanyGroup from '@/views/companyGroup/companyGroup'
-import PersonalExamInfo from '@/views/personalExamInfo/personalExamInfo'
-import CompanySettlement from '@/views/companySettlement/companySettlement'
-import OfficeQuestion from '@/views/officeQuestion/officeQuestion'
-import PersonalUpdateInfo from '@/views/personalUpdateInfo/personalUpdateInfo'
-import ExamFee from '@/views/examFee/examFee'
-import SpecimenManagement from '@/views/specimenManagement/specimenManagement'
-import BatchPreRegistration from '@/views/batchPreRegistration/batchPreRegistration'
-import BatchFromExcel from '@/views/batchPreRegistration/batchFromExcel'
-import BatchFromRecord from '@/views/batchPreRegistration/batchFromRecord'
-import PersonalExamCharge from '@/views/personalExamCharge/personalExamCharge'
-import CancelRefund from '@/views/cancelRefund/cancelRefund'
-import MedicalPlatform from '@/views/medicalPlatform/medicalPlatform'
-import MedicalArea from '@/views/medicalArea/medicalArea'
-import RefusalExam from '@/views/refusalExam/refusalExam'
-import AdjustProject from '@/views/adjustProject/adjustProject'
-import AdjustProjectBatch from '@/views/adjustProjectBatch/adjustProjectBatch'
-import InstructionSheet from '@/views/instructionSheet/instructionSheet'
-import GroupAdjustment from '@/views/groupAdjustment/groupAdjustment'
-import Barcode from '@/views/barcode/barcode'
-import CompanyFee from '@/views/companyFee/companyFee'
-import PhysicalExamination from '@/views/physicalExamination/physicalExamination'
-import GeneralExamination from '@/views/generalExamination/generalExamination'
-import ChargeType from '@/views/chargeType/chargeType'
-import Menus from '@/views/menus/menus'
-import Role from '@/views/role/role'
-import User from '@/views/user/user'
-import ChangePassword from '@/views/changePassword/changePassword'
 
 // const _import = require('./_import_' + process.env.NODE_ENV)
 // in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
@@ -689,7 +632,8 @@ export const constantRouterMap = [
       {path: 'companyFee', name: 'companyFee', component: () => import('@/views/companyFee/companyFee'), meta: {title: '单位收费'}},
       {path: 'physicalExamination', name: 'physicalExamination', component: () => import('@/views/physicalExamination/physicalExamination'), meta: {title: '体检医生诊断'}},
       {path: 'inspection', name: 'inspection', component: () => import('@/views/inspection/inspection'), meta: {title: '检验项目诊断'}},
-      {path: 'generalExamination', name: 'generalExamination', component: () => import('@/views/generalExamination/generalExamination'), meta: {title: '总检医生诊断'}}
+      {path: 'generalExamination', name: 'generalExamination', component: () => import('@/views/generalExamination/generalExamination'), meta: {title: '总检医生诊断'}},
+      {path: 'medicalReport', name: 'medicalReport', component: () => import('@/views/medicalReport/medicalReport'), meta: {title: '打印体检报告'}}
     ]
   },
   {

@@ -86,9 +86,9 @@
               </el-form-item>
             </el-col>
             <el-col :span="4">
-              <el-form-item label="检查日期" prop="date">
+              <el-form-item label="检查日期" prop="examDate">
                 <el-date-picker
-                  v-model="ruleForm.date"
+                  v-model="ruleForm.examDate"
                   type="date"
                   disabled>
                 </el-date-picker>
@@ -400,7 +400,7 @@ export default {
   },
   mounted () {
     let date = new Date();
-    this.ruleForm.date = date;
+    this.ruleForm.examDate = date;
   }
 }
 </script>

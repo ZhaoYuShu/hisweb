@@ -1,6 +1,6 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
-let web = 'http://192.168.0.117:8081';
+let web = 'http://192.168.0.114:8081';
 // let web = 'http://a7958454.ngrok.io';
 let token = localStorage.getItem('token');
 let header = {'Authorization': token};
@@ -516,6 +516,9 @@ let addExamRecord = (data) => http.post(web + '/api/examRecord', data);
 // 根据身份证号获取信息
 let getInfo = (data) => http.get(web + '/api/examRecord/customer/' + data);
 
+// 获取体检记录信息
+let getExamRecord = (data) => http.post(web + '/api/examRecord/all', data);
+
 /* 收据单 */
 
 // 根据流水号查询交费的明细信息
@@ -827,6 +830,7 @@ export default {
   deleteCollect,
   addExamRecord,
   getInfo,
+  getExamRecord,
   receiptInfoDetail,
   receiptInfoList,
   receiptInfo,

@@ -714,6 +714,7 @@ export default {
               arr.push(response.data.data[i]);
             }
           }
+          arr.unshift({name: '无', code: 0});
           that.specimenType = that.changeNumber(arr);
           // that.changeNumber(that.specimenType);
         }
@@ -751,6 +752,7 @@ export default {
               arr.push(response.data.data[i]);
             }
           }
+          arr.unshift({name: '无', code: 0});
           that.equipment = that.changeNumber(arr);
           // that.changeNumber(that.equipment);
         }
