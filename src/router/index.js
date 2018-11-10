@@ -592,13 +592,13 @@ export const constantRouterMap = [
       {path: 'summaryProject', name: 'summaryProject', component: () => import('@/views/summaryProject/summaryProject'), meta: {title: '汇总项目设置'}},
       {path: 'relevantCharges', name: 'relevantCharges', component: () => import('@/views/relevantCharges/relevantCharges'), meta: {title: '相关收费设置'}},
       {path: 'discount', name: 'discount', component: () => import('@/views/discount/discount'), meta: {title: '折扣种类设置'}},
+      // {path: 'projectFunction', name: 'projectFunction', component: () => import('@/views/projectFunction/projectFunction'), meta: {title: '项目函数设置'}},
       // {path: 'questions', name: 'questions', component: {app_main: Questions}},
       // {path: 'serviceRegistration', name: 'serviceRegistration', component: () => import('@/views/serviceRegistration/serviceRegistration'), meta: {title: '服务登记'}},
       //{path: 'personalExamInfo', name: 'personalExamInfo', component: () => import('@/views/personalExamInfo/personalExamInfo'), meta: {title: '个人体检信息'}},
       // {path: 'companySettlement', name: 'companySettlement', component: () => import('@/views/companySettlement/companySettlement'), meta: {title: '单位体检结算方式设置'}},
       // {path: 'officeQuestion', name: 'officeQuestion', component: {app_main: OfficeQuestion}},
       // {path: 'personalUpdateInfo', name: 'personalUpdateInfo', component: () => import('@/views/personalUpdateInfo/personalUpdateInfo'), meta: {title: '单个人员信息修改'}},
-
       // {path: 'specimenManagement', name: 'specimenManagement', component: () => import('@/views/specimenManagement/specimenManagement'), meta: {title: '检验标本管理'}},
       // {path: 'batchPreRegistration', name: 'batchPreRegistration', component: () => import('@/views/batchPreRegistration/batchPreRegistration'), meta: {title: '批量预登记'}},
       // {path: 'batchFromExcel', name: 'batchFromExcel', component: () => import('@/views/batchPreRegistration/batchFromExcel'), meta: {title: '从Excel文件中读取'}},
@@ -610,7 +610,6 @@ export const constantRouterMap = [
       // {path: 'refusalExam', name: 'refusalExam', component: () => import('@/views/refusalExam/refusalExam'), meta: {title: '单位人员拒检登记'}},
       // {path: 'adjustProject', name: 'adjustProject', component: () => import('@/views/adjustProject/adjustProject'), meta: {title: '按项目单个调整'}},
       // {path: 'adjustProjectBatch', name: 'adjustProjectBatch', component: () => import('@/views/adjustProjectBatch/adjustProjectBatch'), meta: {title: '按项目批量调整'}},
-
       // {path: 'groupAdjustment', name: 'groupAdjustment', component: () => import('@/views/groupAdjustment/groupAdjustment'), meta: {title: '按分组调整'}},
       // {path: 'barcode', name: 'barcode', component: () => import('@/views/barcode/barcode'), meta: {title: '打印条形码'}},
 

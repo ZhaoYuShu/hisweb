@@ -12,7 +12,7 @@
           <el-row :gutter="10">
             <el-col :span="4">
               <el-form-item label="体检编号" prop="examCode">
-                <el-input v-model="ruleForm.examCode" placeholder="请输入体检编号" @keyup.enter.native="getInfo"></el-input>
+                <el-input v-model="ruleForm.examCode" placeholder="请输入体检编号" @keyup.enter.native="getInfo" v-loading.fullscreen.lock="fullscreenLoading"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
@@ -89,24 +89,22 @@
     </div>
     <div class="div2">
       <div class="left">
-          <el-row>
-            <el-col>
-              <p class="title">综述</p>
-            </el-col>
-          </el-row>
-          <el-input type="textarea" v-model="review" :rows="5" style="width:98%;margin:0 auto;"></el-input>
+        <el-row>
+          <el-col>
+            <p class="title">综述</p>
+          </el-col>
+        </el-row>
+        <el-input type="textarea" v-model="review" :rows="22" style="width:98%;margin:0 auto;"></el-input>
       </div>
-      <div class="right">
+      <div class="middle">
         <el-row>
           <el-col>
             <p class="title">建议</p>
           </el-col>
         </el-row>
-        <el-input type="textarea" :rows="5" v-model="suggest" style="width:98%;margin:0 auto;margin-bottom:3%;"></el-input>
+        <el-input type="textarea" :rows="22" v-model="suggest" style="width:98%;margin:0 auto;margin-bottom:3%;"></el-input>
       </div>
-    </div>
-    <div class="div3">
-      <div class="left">
+      <div class="right">
         <el-row>
           <el-col>
             <p class="title">诊断记录表</p>
@@ -115,29 +113,12 @@
         <el-table
           :data="tableData"
           border
-          height="80%"
-          style="width:98%;margin:0 auto;">
-          <el-table-column
-            label="序号"
-            width="100"
-            type="index"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            label="科室"
-            prop="office"
-            width="200"
-            align="left">
-          </el-table-column>
+          height="90%"
+          style="width:98%;margin:0 auto;"
+          :row-style="rowStyle">
           <el-table-column
             label="疾病诊断"
-            prop="diagnosis"
-            width="500"
-            align="left">
-          </el-table-column>
-          <el-table-column
-            label="检查医生"
-            prop="doctor"
+            prop="name"
             align="left">
           </el-table-column>
         </el-table>
@@ -164,6 +145,7 @@ export default {
         personnelType: '', // 人员类别
         companyName: '' // 单位名称
       },
+      fullscreenLoading: false, // 全屏加载中
       form: {
         doctor: '',
         date: '',
@@ -187,6 +169,7 @@ export default {
   methods: {
     getInfo () {
       let that = this;
+      that.fullscreenLoading = true;
       http.checkoutInfo(that.ruleForm.examCode).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
@@ -200,11 +183,17 @@ export default {
           that.ruleForm.companyName = res.companyName;
           that.review = res.review;
           that.suggest = res.suggest;
-          that.tableData = res.examResultTypeList;
+          that.fullscreenLoading = false;
+          that.tableData = res.diagnoseInfoResultShortDtos;
         }
       }).catch(error => {
+        that.fullscreenLoading = false;
         console.log(error);
       });
+    },
+    // 改变诊断列表的字体颜色
+    rowStyle (row, rowIndex) {
+      return 'color:red';
     }
   },
   mounted () {
@@ -261,35 +250,26 @@ export default {
   }
   .container .div2{
     width:100%;
-    height:30%;
+    height:70%;
     margin-bottom:1%;
   }
   .container .div2 .left{
-    width:50%;
+    width:39%;
     height:100%;
     background:#fff;
     float:left;
     margin-right:1%;
   }
+  .container .div2 .middle{
+    width:39%;
+    height:100%;
+    float:left;
+    margin-right:1%;
+  }
   .container .div2 .right{
-    width:49%;
+    width:20%;
     height:100%;
     float:left;
-  }
-  .container .div3{
-    width:100%;
-    height:40%;
-  }
-  .container .div3 .left{
-    width:100%;
-    height:100%;
-    float:left;
-  }
-  .container .div3 .right{
-    width:49%;
-    float:right;
-    height:100%;
-    padding-top:2%;
   }
   .el-date-editor{
     width:100%;

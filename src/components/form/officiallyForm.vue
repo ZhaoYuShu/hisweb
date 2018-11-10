@@ -135,8 +135,8 @@
           fixed="right"
           width="300">
           <template slot-scope="scope">
-            <el-button @click="printSheet1(scope.row, scope.$index)" type="text" size="small">打印指引单</el-button>
-            <el-button @click="printSheet2(scope.row, scope.$index)" type="text" size="small">打印检验单</el-button>
+            <el-button @click="printSheet1(scope.row, scope.$index)" type="success" size="small">打印指引单</el-button>
+            <el-button @click="printSheet2(scope.row, scope.$index)" type="success" size="small">打印检验单</el-button>
           </template>
         </el-table-column>
       </el-table>

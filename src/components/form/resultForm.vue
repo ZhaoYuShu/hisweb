@@ -11,7 +11,7 @@
           <el-button type="primary" @click="deleteCommonResults" size="small">确 定</el-button>
         </span>
       </el-dialog>
-      <el-dialog title="数字型项目常见结果" :visible.sync="dialogFormVisible">
+      <el-dialog title="项目常见结果" :visible.sync="dialogFormVisible">
         <el-form :model="form" ref="form" :rules="rules2" label-width="100px" class="demo-form">
           <el-row :gutter="20">
             <!--<el-col :span="12">-->
@@ -146,7 +146,7 @@
       <hr style="width:96%;"/>
       <el-row>
         <el-col :span="12">
-          <p class="title">字符型项目常见结果</p>
+          <p class="title">项目常见结果</p>
         </el-col>
       </el-row>
       <el-table
@@ -185,14 +185,14 @@
           align="left">
         </el-table-column>
         <el-table-column
-          prop="spell"
-          label="拼音简码"
+          prop="small"
+          label="小于"
           width="200"
           align="left">
         </el-table-column>
         <el-table-column
-          prop="fiveName"
-          label="五笔简码"
+          prop="big"
+          label="大于"
           width="200"
           align="left">
         </el-table-column>
@@ -201,7 +201,7 @@
           fixed="right"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">删除</el-button>
+            <el-button @click="handleClick(scope.row)" type="danger" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

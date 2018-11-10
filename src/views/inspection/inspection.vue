@@ -153,20 +153,19 @@
           <el-table-column
             label="参考值"
             prop="referenceValue"
-            width="100"
+            width="150"
             align="left">
           </el-table-column>
           <el-table-column
             label="提示信息"
             prop="hitMessage"
-            width="100"
             align="left">
           </el-table-column>
           <el-table-column
             fixed="right"
             label="操作">
             <template slot-scope="scope">
-              <el-button @click="saveMessage(scope.row, scope.$index, scope)" type="text" size="small">保存</el-button>
+              <el-button @click="saveMessage(scope.row, scope.$index, scope)" type="success" size="small" >保存</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -181,7 +180,8 @@
           :data="tableData3"
           border
           height="80%"
-          style="width:98%;margin:0 auto;">
+          style="width:98%;margin:0 auto;"
+          :row-style="rowStyle">
           <el-table-column
             label="诊断内容"
             prop="diagnosis"
@@ -266,7 +266,7 @@
             that.fullscreenLoading = false;
             that.obj.examTimes = res.examTimes;
             that.obj.examCode = res.examCode;
-            that.obj.examGroupItemResultZDDtos = res.examGroupItemResultDtoList;
+            // that.obj.examGroupItemResultZDDtos = res.examGroupItemResultDtoList;
             console.log(that.obj);
             let list = response.data.data.examGroupItemResultDtoList;
             for (let i = 0; i < list.length; i++) {
@@ -292,6 +292,9 @@
       // 选择组合项目获取详细项目
       selectExamItem (row, event, column) {
         let that = this;
+        let objs = {};
+        that.summary = '';
+        that.tableData3 = [];
         console.log(row, event, column);
         that.currentCode = row.code;
         that.currentName = row.name;
@@ -300,8 +303,36 @@
         http.examResult(row.resultId, row.code).then(response => {
           console.log(response);
           if (response.status === 200 && response.data.result === '00000000') {
-            that.tableData2 = response.data.data;
-            that.summary = row.node;
+            that.tableData2 = response.data.data.examItemAndZDResultDtos;
+            var node = response.data.data.node;
+            var qNode = response.data.data.qNode;
+            var arr = [];
+            for (let value of Object.values(node)) {
+              that.summary += " " + value;
+            }
+            for (let value of Object.values(qNode)) {
+              var obj = {};
+              obj.diagnosis = value;
+              arr.push(obj);
+            }
+            that.tableData3 = arr;
+            that.obj.examGroupItemResultZDDtos = [];
+            objs.code = row.code;
+            objs.name = row.name;
+            objs.node = that.summary;
+            objs.resultID = row.resultId;
+            objs.examItemResultDtoList = [];
+            that.obj.examGroupItemResultZDDtos.push(objs);
+            for (let i = 0; i < row.examItemResultDtoList.examItemAndZDResultDtos.length; i++) {
+              let obj2 = {};
+              obj2.code = row.examItemResultDtoList.examItemAndZDResultDtos[i].itemCode;
+              obj2.defaultValue = row.examItemResultDtoList.examItemAndZDResultDtos[i].defaultValue;
+              obj2.name = row.examItemResultDtoList.examItemAndZDResultDtos[i].name;
+              obj2.referenceValue = row.examItemResultDtoList.examItemAndZDResultDtos[i].referenceValue;
+              obj2.unit = row.examItemResultDtoList.examItemAndZDResultDtos[i].unit;
+              objs.examItemResultDtoList.push(obj2);
+            }
+            console.log(that.obj);
           }
         }).catch(error => {
           console.log(error);
@@ -316,7 +347,7 @@
         let obj = {};
         obj.code = that.currentCode;
         obj.name = that.currentName;
-        obj.node = that.currentNode;
+        obj.node = that.summary;
         obj.resultID = that.currentResultID;
         obj.examItemResultDtoList = [];
         row.code = row.itemCode;
@@ -325,6 +356,15 @@
         http.saveExamResultItem(obj).then(response => {
           console.log(response);
           if (response.status === 200 && response.data.result === '00000000') {
+            that.summary = response.data.data.node;
+            that.obj.examGroupItemResultZDDtos[0].node = that.summary;
+            var arr = [];
+            for (let value of Object.values(response.data.data.qnode)) {
+              var objs = {};
+              objs.diagnosis = value;
+              arr.push(objs);
+            }
+            that.tableData3 = arr;
             that.$message({
               message: '保存成功！',
               type: 'success'
@@ -375,6 +415,10 @@
         }).catch(error => {
           console.log(error);
         });
+      },
+      // 改变诊断列表的字体颜色
+      rowStyle (row, rowIndex) {
+        return 'color:red';
       }
     },
     mounted () {

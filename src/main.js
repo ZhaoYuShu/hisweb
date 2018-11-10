@@ -51,6 +51,7 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
+
 Vue.use(VCharts)
 Vue.use(contentmenu)
 Vue.use(ElementUI)
