@@ -282,7 +282,7 @@ export default {
         commonDiseases: '',
         officeId: '',
         clinicId: '',
-        diagnoseContentResultDtos: [],
+        // diagnoseContentResultDtos: [],
         seq: '',
         id: ''
       },
@@ -294,7 +294,7 @@ export default {
         commonDiseases: '',
         officeId: '',
         clinicId: '',
-        diagnoseContentResultDtos: [],
+        // diagnoseContentResultDtos: [],
         seq: '',
         id: ''
       },
@@ -337,16 +337,18 @@ export default {
       infoCode: '',
       saveDisabled: false,
       saveDisabled2: false,
-      obj: {}
+      obj: {},
+      currentCode: ''
     }
   },
   methods: {
     addAdvice (formName) {
       console.log(1);
       this.dialogFormVisible = true;
-      this.$refs[formName].resetFields();
-      this.ruleForm.diagnoseContentResultDtos = [];
+
+      // this.form.diagnoseContentResultDtos = [];
       this.getCode();
+      this.$refs[formName].resetFields();
     },
     addAdvice2 () {
       console.log(2);
@@ -399,8 +401,7 @@ export default {
       let that = this;
       that.infoCode = row.code;
       that.obj = row;
-      that.obj.diagnoseCode = row.code;
-      console.log(that.obj);
+      that.currentCode = row.code;
       console.log(row, event, column);
       http.diagnoseContentDetail(row.code).then(function (response) {
         console.log(response);
@@ -418,6 +419,8 @@ export default {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
           that.form.code = response.data.data;
+          that.currentCode = response.data.data;
+          console.log(that.currentCode);
         }
       }).catch(function (error) {
         console.log(error);
@@ -514,7 +517,9 @@ export default {
           Object.assign(objSave, that.form2);
           that.tableData2.push(objSave);
           that.obj.diagnoseContent = that.form2.diagnoseContent;
+          that.obj.diagnoseCode = that.currentCode;
           that.form2.diagnoseContent = '';
+          console.log(that.obj);
           http.addDiagnoseContent(that.obj).then(response => {
             console.log(response);
             if (response.status === 200 && response.data.result === '00000000') {
@@ -531,7 +536,7 @@ export default {
           }).catch(error => {
             console.log(error);
           });
-          console.log(that.form.diagnoseContentResultDtos);
+          // console.log(that.form.diagnoseContentResultDtos);
           console.log(that.form2);
         } else {
           console.log('error submit!!');
@@ -551,7 +556,7 @@ export default {
             console.log(response);
             if (response.status === 200 && response.data.result === '00000000') {
               that.tableData2 = response.data.data;
-              that.form3.diagnoseContentResultDtos = response.data.data;
+              // that.form3.diagnoseContentResultDtos = response.data.data;
               http.updateDiagnoseInfo(that.form3).then(response => {
                 console.log(response);
                 if (response.status === 200 && response.data.result === '00000000') {
@@ -716,6 +721,9 @@ export default {
     });
     Bus.$on("saveDisabled", (e) => {
       this.saveDisabled2 = e;
+    });
+    Bus.$on("tableData2", (e) => {
+      this.tableData2 = e;
     });
   }
 }

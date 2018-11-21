@@ -38,6 +38,7 @@ export default {
         if (response.status === 200 && response.data.result === '00000000') {
           Bus.$emit('diagnoseInfo', response.data.data);
           Bus.$emit('officeId', examItemId);
+          Bus.$emit('tableData2', []);
           if (response.data.data.length === 0) {
             Bus.$emit('diagnoseContent', []);
           }

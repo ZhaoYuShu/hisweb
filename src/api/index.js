@@ -2,8 +2,8 @@ import axios from 'axios'
 import http from '@/utils/request.js'
 let web = 'http://localhost:8081';
 // let web = 'http://a7958454.ngrok.io';
-let token = localStorage.getItem('token');
-let header = {'Authorization': token};
+// let token = localStorage.getItem('token');
+// let header = {'Authorization': token};
 // 登录
 let login = (data) => axios.post(web + '/api/login', data);
 

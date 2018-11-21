@@ -64,12 +64,12 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="小于" prop="small">
-                <el-input v-model="form.small" placeholder="请输入最小值"></el-input>
+                <el-input v-model="form.small" placeholder="请输入最大值"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="大于" prop="big">
-                <el-input v-model="form.big" placeholder="请输入最大值"></el-input>
+                <el-input v-model="form.big" placeholder="请输入最小值"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -175,17 +175,17 @@
         <el-table-column
           prop="diagnoseContext"
           label="诊断"
-          width="200"
+          width="300"
           align="left">
         </el-table-column>
+        <!--<el-table-column-->
+          <!--prop="seq"-->
+          <!--label="显示顺序"-->
+          <!--width="100"-->
+          <!--align="left">-->
+        <!--</el-table-column>-->
         <el-table-column
-          prop="seq"
-          label="显示顺序"
-          width="100"
-          align="left">
-        </el-table-column>
-        <el-table-column
-          prop="small"
+          prop="samll"
           label="小于"
           width="200"
           align="left">
@@ -408,7 +408,7 @@ export default {
       this.dialogFormVisible = false;
       let obj = {};
       let obj2 = {};
-      this.$refs[formName].validate((valid) => {
+      that.$refs[formName].validate((valid) => {
         if (valid) {
           console.log('submit');
           obj2.big = that.form.big;
@@ -430,9 +430,9 @@ export default {
         }
       });
       console.log(that.obj);
-      this.resetForm2('form');
-      console.log(this.tableData, typeof this.tableData);
-      this.tableData.push(obj2);
+      that.resetForm2('form');
+      console.log(that.tableData, typeof that.tableData);
+      that.tableData.push(obj2);
     },
     // 获取所有诊断
     getAllDiagnose () {
