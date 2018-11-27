@@ -29,7 +29,7 @@
         align="left">
       </el-table-column>
       <el-table-column
-        label="手机号"
+        label="登录账号"
         prop="mobile"
         width="250"
         align="left">
@@ -58,8 +58,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="手机号" prop="mobile">
-              <el-input v-model="form.mobile" placeholder="请输入手机号"></el-input>
+            <el-form-item label="登录账号" prop="mobile">
+              <el-input v-model="form.mobile" placeholder="请输入登录账号"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -138,7 +138,7 @@ export default {
           {required: true, message: '请输入用户名', trigger: 'blur'}
         ],
         mobile: [
-          {required: true, message: '请输入手机号', trigger: 'blur'}
+          {required: true, message: '请输入登录账号', trigger: 'blur'}
         ],
         passWord: [
           {required: true, message: '请输入密码', trigger: 'blur'}

@@ -32,7 +32,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="所属科室" :label-width="formLabelWidth" prop="officeId">
-              <el-select v-model="form.officeId">
+              <el-select v-model="form.officeId" :disabled="officeDisabled">
                 <el-option
                   v-for="item in office"
                   :key="item.id"
@@ -172,7 +172,7 @@
         <h5 class="title">体检诊断信息</h5>
       </el-col>
       <el-col :span="2" class="span44">
-        <el-button @click="addAdvice('form')" type="primary" class="add" size="small">添加</el-button>
+        <el-button @click="addAdvice()" type="primary" class="add" size="small">添加</el-button>
       </el-col>
       <el-col :span="2" class="span4">
         <el-button @click="saveAdvice" type="success" class="save" size="small" :disabled="saveDisabled">保存</el-button>
@@ -337,21 +337,28 @@ export default {
       infoCode: '',
       saveDisabled: false,
       saveDisabled2: false,
+      officeDisabled: false,
       obj: {},
       currentCode: ''
     }
   },
   methods: {
-    addAdvice (formName) {
-      console.log(1);
+    addAdvice () {
       this.dialogFormVisible = true;
+      // this.form.officeId = this.officeId;
 
       // this.form.diagnoseContentResultDtos = [];
+      this.form.title = '';
+      this.form.name = '';
+      this.form.illness = '';
+      this.form.commonDiseases = '';
+      this.form.officeId = '';
+      this.form.clinicId = '';
+      this.form.id = '';
       this.getCode();
-      this.$refs[formName].resetFields();
+      this.form.officeId = this.officeId;
     },
     addAdvice2 () {
-      console.log(2);
       this.dialogFormVisible2 = true;
     },
     saveAdvice () {
@@ -724,6 +731,9 @@ export default {
     });
     Bus.$on("tableData2", (e) => {
       this.tableData2 = e;
+    });
+    Bus.$on('officeDisabled', (e) => {
+      this.officeDisabled = e;
     });
   }
 }

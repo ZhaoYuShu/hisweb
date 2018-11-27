@@ -304,9 +304,15 @@ export default {
     },
     handleCheck () {
       console.log(this.$refs.tree.getCheckedKeys());
+      console.log(this.$refs.tree.getHalfCheckedKeys());
       this.$nextTick(function () {
-        this.form.menuCodes = this.$refs.tree.getCheckedKeys();
-        this.form2.menuCodes = this.$refs.tree.getCheckedKeys();
+        let arr1 = [];
+        let arr2 = [];
+        arr1 = this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys());
+        arr2 = this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys());
+        // console.log(arr1);
+        this.form.menuCodes = arr1;
+        this.form2.menuCodes = arr2;
       });
       console.log(this.form2.menuCodes);
     },

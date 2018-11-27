@@ -192,7 +192,7 @@ export default {
       //   console.log(error);
       // });
       // location.href = 'http://192.168.0.101:8081/api/reports/zy_report_A4?format=pdf&examCode=100001&examTimes=1';
-      let web = 'http://localhost:8081'
+      let web = 'http://172.17.8.3:8081'
       window.open(web + '/api/reports/zy_report_A4?format=pdf&examCode=' + this.examCode + '&examTimes=' + this.examTimes);
     },
     // 刷新树结构
@@ -331,4 +331,3 @@ export default {
     margin-left:30px;
   }
 </style>
-

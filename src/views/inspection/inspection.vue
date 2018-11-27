@@ -133,7 +133,7 @@
           <el-table-column
             label="体检明细项目"
             prop="name"
-            width="300"
+            width="250"
             align="left">
           </el-table-column>
           <el-table-column
@@ -162,7 +162,6 @@
             align="left">
           </el-table-column>
           <el-table-column
-            fixed="right"
             label="操作">
             <template slot-scope="scope">
               <el-button @click="saveMessage(scope.row, scope.$index, scope)" type="success" size="small" >保存</el-button>

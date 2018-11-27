@@ -3,8 +3,11 @@
   <div class="container">
     <el-dialog title="常见结果" :visible.sync="dialogFormVisible">
       <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-form">
+        <el-form-item label="体检结果" prop="examResults">
+          <el-input type="textarea" v-model="form.examResults" rows="10"></el-input>
+        </el-form-item>
         <el-form-item label="常见结果" prop="commonResults">
-          <el-select v-model="form.commonResults" @change="handleSelect">
+          <el-select v-model="form.commonResults" @change="handleSelect" multiple>
             <el-option
               v-for="item in commonResults"
               :key="item.id"
@@ -15,7 +18,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
+        <el-button @click="cancelResults" size="small">取 消</el-button>
         <el-button type="primary" @click="confirm" size="small">确 定</el-button>
       </div>
     </el-dialog>
@@ -138,7 +141,7 @@
           <el-table-column
             label="体检明细项目"
             prop="name"
-            width="300"
+            width="250"
             align="left">
           </el-table-column>
           <el-table-column
@@ -156,7 +159,6 @@
             align="left">
           </el-table-column>
           <el-table-column
-            fixed="right"
             label="操作">
             <template slot-scope="scope">
               <el-button @click="saveMessage(scope.row, scope.$index, scope)" type="success" size="small">保存</el-button>
@@ -220,7 +222,8 @@ export default {
         operator: '' // 操作员
       },
       form: {
-        commonResults: ""
+        commonResults: [],
+        examResults: ''
       },
       rules: {
         examCode: [
@@ -245,7 +248,8 @@ export default {
       currentNode: '', // 当前点击的组合项目小结
       currentResultID: '', // 当前点击的组合项目resultid
       result: '', // 结果
-      row: {}
+      row: {},
+      checkedValue: []
     }
   },
   methods: {
@@ -422,26 +426,41 @@ export default {
     },
     // 双击输入框弹出常见结果下拉框
     commonResult (row) {
-      this.dialogFormVisible = true;
-      console.log(row);
-      this.commonResults = row.commonResults;
-      this.row = row;
+      if (row.resultType === 1) {
+        this.dialogFormVisible = true;
+        console.log(row);
+        this.commonResults = row.commonResults;
+        this.form.examResults = row.defaultValue;
+        this.row = row;
+      }
     },
     // 选择常见结果
     handleSelect (value) {
       console.log(value);
       let that = this;
-      for (let i = 0; i < that.commonResults.length; i++) {
-        if (that.commonResults[i].id === value) {
-          that.result = that.commonResults[i].name;
-          break;
-        }
-      }
+      this.row.commonResultId = value;
     },
     // 确定选择常见结果
     confirm () {
-      this.row.defaultValue = this.result;
+      let that = this;
+      // for (let i = 0; i < that.checkedValue.length; i++) {
+      //   for (let j = 0; j < that.commonResults.length; j++) {
+      //     if (that.commonResults[j].id === that.checkedValue[i]) {
+      //       that.result = that.result + that.commonResults[j].name + ';';
+      //       break;
+      //     }
+      //   }
+      // }
+      console.log(that.result);
+      // this.row.defaultValue = this.result;
+
       this.dialogFormVisible = false;
+      this.form.commonResults = [];
+    },
+    // 取消选择常见结果
+    cancelResults () {
+      this.dialogFormVisible = false;
+      this.form.commonResults = [];
     },
     // 改变诊断列表字体颜色
     rowStyle (row, rowIndex) {

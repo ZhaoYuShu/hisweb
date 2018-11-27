@@ -77,7 +77,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="体检次数" prop="examTimes">
-                <el-input v-model="ruleForm.examTimes" disabled></el-input>
+                <el-input v-model="ruleForm.examTimes"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -333,9 +333,9 @@ export default {
         examDate: [
           {required: true, message: '请选择体检日期', trigger: 'change'}
         ],
-        phone: [
-          {required: true, message: '请输入联系电话', trigger: 'blur'}
-        ],
+        // phone: [
+        //   {required: true, message: '请输入联系电话', trigger: 'blur'}
+        // ],
         groupCode: [
           {required: true, message: '请选择对应分组', trigger: 'change'}
         ],

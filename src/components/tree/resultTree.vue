@@ -54,6 +54,16 @@ export default {
         }).catch(error => {
           console.log(error);
         });
+
+        // 根据科室id获取对应的诊断信息
+        http.diagnoseInfoDetail(data.pid).then(response => {
+          console.log(response);
+          if (response.status === 200 && response.data.result === '00000000') {
+            Bus.$emit("diagnoseInfo", response.data.data);
+          }
+        }).catch(error => {
+          console.log(error);
+        });
       }
     },
     // 获取树结构

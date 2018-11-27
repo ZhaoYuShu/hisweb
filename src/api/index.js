@@ -1,6 +1,8 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
-let web = 'http://localhost:8081';
+// let web = 'http://192.168.0.113:8081';
+let web = 'http://172.17.8.3:8081';
+// let web = 'http://192.168.43.16:8081';
 // let web = 'http://a7958454.ngrok.io';
 // let token = localStorage.getItem('token');
 // let header = {'Authorization': token};
@@ -566,11 +568,17 @@ let chargeTypeDetail = (data) => http.get(web + '/api/chargeType/' + data);
 // 新增体检项目常见结果
 let addCommonResults = (data) => http.post(web + '/api/commonResults', data);
 
-// 根据常见结果code删除常见结果
+// 根据常见结果id删除常见结果
 let deleteCommonResults = (data) => http.delete(web + '/api/commonResults/' + data);
 
 // 根据体检项目id查询常见结果数据
 let commonResultsDetail = (data) => http.get(web + '/api/commonResults/' + data);
+
+// 根据id获取详情
+let commonResultsDetail2 = (data) => http.get(web + '/api/commonResults/info/' + data);
+
+// 修改体检项目的常见结果
+let updateCommonResults = (data) => http.put(web + '/api/commonResults', data);
 
 /* 菜单管理 */
 
@@ -846,6 +854,8 @@ export default {
   addCommonResults,
   deleteCommonResults,
   commonResultsDetail,
+  commonResultsDetail2,
+  updateCommonResults,
   addMenu,
   menuTree,
   menuDetail,

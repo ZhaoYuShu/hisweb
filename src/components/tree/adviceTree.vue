@@ -30,22 +30,25 @@ export default {
     handleNodeClick (data) {
       // let that = this;
       console.log(data, data.id);
-      let examItemId = data.id;
-      Bus.$emit("saveDisabled", true);
-      Bus.$emit("saveDisabled2", true);
-      http.diagnoseInfoDetail(examItemId).then(function (response) {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          Bus.$emit('diagnoseInfo', response.data.data);
-          Bus.$emit('officeId', examItemId);
-          Bus.$emit('tableData2', []);
-          if (response.data.data.length === 0) {
-            Bus.$emit('diagnoseContent', []);
+      if (data.pid !== 0) {
+        let examItemId = data.id;
+        Bus.$emit("saveDisabled", true);
+        Bus.$emit("saveDisabled2", true);
+        Bus.$emit('officeDisabled', true);
+        http.diagnoseInfoDetail(examItemId).then(function (response) {
+          console.log(response);
+          if (response.status === 200 && response.data.result === '00000000') {
+            Bus.$emit('diagnoseInfo', response.data.data);
+            Bus.$emit('officeId', examItemId);
+            Bus.$emit('tableData2', []);
+            if (response.data.data.length === 0) {
+              Bus.$emit('diagnoseContent', []);
+            }
           }
-        }
-      }).catch(function (error) {
-        console.log(error);
-      })
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
     },
     getTree () {
       let that = this;

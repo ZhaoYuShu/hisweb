@@ -11,6 +11,7 @@
           <el-button type="primary" @click="deleteCommonResults" size="small">确 定</el-button>
         </span>
       </el-dialog>
+      <!--新增-->
       <el-dialog title="项目常见结果" :visible.sync="dialogFormVisible">
         <el-form :model="form" ref="form" :rules="rules2" label-width="100px" class="demo-form">
           <el-row :gutter="20">
@@ -32,7 +33,7 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-form-item label="描述" prop="desc">
+              <el-form-item label="描述" prop="descrption">
                 <el-input v-model="form.desc" placeholder="请输入描述"></el-input>
               </el-form-item>
             </el-col>
@@ -79,6 +80,70 @@
           <el-button type="primary" @click="confirmInsert('form')" size="small">确 定</el-button>
         </div>
       </el-dialog>
+      <!--修改-->
+      <el-dialog title="项目常见结果" :visible.sync="dialogFormVisible2">
+        <el-form :model="form2" ref="form2" :rules="rules2" label-width="100px" class="demo-form2">
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="名称" prop="name">
+                <el-input v-model="form2.name" placeholder="请输入名称"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="显示顺序" prop="seq">
+                <el-input v-model="form2.seq" placeholder="请输入显示顺序"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="描述" prop="descrption">
+                <el-input v-model="form2.desc" placeholder="请输入描述"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="诊断" prop="diagnoseId">
+                <el-select v-model="form2.diagnoseId" placeholder="请选择诊断">
+                  <el-option
+                    v-for="item in diagnoseId"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="拼音简拼" prop="spell">
+                <el-input v-model="form2.spell" placeholder="请输入拼音简拼"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="五笔简拼" prop="fiveName">
+                <el-input v-model="form2.fiveName" placeholder="请输入五笔简拼"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="小于" prop="small">
+                <el-input v-model="form2.small" placeholder="请输入最大值"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="大于" prop="big">
+                <el-input v-model="form2.big" placeholder="请输入最小值"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible2 = false" size="small">取 消</el-button>
+          <el-button type="primary" @click="updateResults('form2')" size="small">确 定</el-button>
+        </div>
+      </el-dialog>
       <!--表单-->
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">
         <el-row>
@@ -93,7 +158,7 @@
                 <el-radio
                   v-for="item in summary"
                   :key="item.id"
-                  :label="item.id">{{item.value}}</el-radio>
+                  :label="item.boolean">{{item.value}}</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -103,7 +168,7 @@
                 <el-radio
                   v-for="item in showName"
                   :key="item.id"
-                  :label="item.id">{{item.value}}</el-radio>
+                  :label="item.boolean">{{item.value}}</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -122,7 +187,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="男女是否使用同一常见结果" prop="resultType" required>
+            <el-form-item label="男女是否使用同一常见结果" prop="resultType">
               <el-radio-group v-model="ruleForm.resultType" disabled>
                 <el-radio
                   v-for="item in result"
@@ -137,7 +202,8 @@
             <!--<el-form-item>-->
           <el-button type="primary" @click="resetForm('ruleForm')" size="small">增加</el-button>
           <el-button type="success" @click="submitForm('ruleForm')" size="small">保存</el-button>
-          <el-button type="info" @click="insertForm" size="small">插入</el-button>
+          <el-button type="danger" @click="insertForm" size="small">插入</el-button>
+          <!--<el-button type="warning" @click="updateForm('ruleForm')" size="small">修改</el-button>-->
           <el-button size="small" @click="reloadTree">刷新</el-button>
             <!--</el-form-item>-->
           <!--</el-col>-->
@@ -153,7 +219,9 @@
         :data="tableData"
         border
         height="69%"
-        :row-class-name="tableRowClassName">
+        :row-class-name="tableRowClassName"
+        @row-click="rowClick"
+        :highlight-current-row="true">
         <el-table-column
           label="顺序"
           type="index"
@@ -167,7 +235,7 @@
           align="left">
         </el-table-column>
         <el-table-column
-          prop="desc"
+          prop="descrption"
           label="描述"
           width="200"
           align="left">
@@ -175,7 +243,7 @@
         <el-table-column
           prop="diagnoseContext"
           label="诊断"
-          width="300"
+          width="200"
           align="left">
         </el-table-column>
         <!--<el-table-column-->
@@ -187,20 +255,19 @@
         <el-table-column
           prop="samll"
           label="小于"
-          width="200"
+          width="100"
           align="left">
         </el-table-column>
         <el-table-column
           prop="big"
           label="大于"
-          width="200"
+          width="100"
           align="left">
         </el-table-column>
         <el-table-column
-          label="操作"
-          fixed="right"
-          width="100">
+          label="操作">
           <template slot-scope="scope">
+            <el-button @click="updateForm(scope.row)" type="warning" size="small">修改</el-button>
             <el-button @click="handleClick(scope.row)" type="danger" size="small">删除</el-button>
           </template>
         </el-table-column>
@@ -224,15 +291,25 @@ export default {
       form: {
         name: '', // 结果名称
         seq: '', // 显示顺序
-        desc: '', // 描述
+        descrption: '', // 描述
         diagnoseId: '', // 诊断
         spell: '', // 拼音简拼
         fiveName: '', // 五笔简拼
         small: '', // 最小值
         big: '' // 最大值
       },
+      form2: {
+        name: '',
+        seq: '',
+        descrption: '',
+        diagnoseId: '',
+        spell: '',
+        fiveName: '',
+        small: '',
+        big: ''
+      },
       examItemId: '', // 项目ID
-      diagnoseId: '', // 所有诊断
+      diagnoseId: [], // 所有诊断
       currentId: '',
       dialogVisible: false,
       rules: {
@@ -244,10 +321,10 @@ export default {
         ],
         sex: [
           {required: true, message: '请选择性别', trigger: 'change'}
-        ],
-        resultType: [
-          {required: true, message: '请选择', trigger: 'change'}
         ]
+        // resultType: [
+        //   {required: true, message: '请选择', trigger: 'change'}
+        // ]
       },
       rules2: {
         name: [
@@ -258,12 +335,12 @@ export default {
         ]
       },
       summary: [
-        {id: 1, value: '是'},
-        {id: 0, value: '否'}
+        {id: 1, value: '是', boolean: true},
+        {id: 0, value: '否', boolean: false}
       ],
       showName: [
-        {id: 1, value: '是'},
-        {id: 0, value: '否'}
+        {id: 1, value: '是', boolean: true},
+        {id: 0, value: '否', boolean: false}
       ],
       gender: [
         {id: 1, value: '男'},
@@ -275,9 +352,12 @@ export default {
         {id: 0, value: '否'}
       ],
       dialogFormVisible: false,
+      dialogFormVisible2: false,
       tableData: [],
       obj: {},
+      obj2: {},
       arr: [],
+      arr2: [],
       currentCode: ''
     }
   },
@@ -330,7 +410,7 @@ export default {
     // 删除常见结果
     handleClick (row) {
       console.log(row);
-      this.currentCode = row.code;
+      this.currentCode = row.id;
       this.dialogVisible = true;
     },
     // 确定删除常见结果
@@ -357,34 +437,69 @@ export default {
         console.log(error);
       })
     },
+    // 弹出修改框
+    updateForm (row) {
+      let that = this;
+      console.log(row);
+      this.dialogFormVisible2 = true;
+      http.commonResultsDetail2(row.id).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          that.form2 = response.data.data;
+        }
+      }).catch(error =>{
+        console.log(error);
+      });
+    },
     // 修改常见结果
-    // updateForm (formName) {
-    //   let that = this;
-    //   this.$refs[formName].validate((valid) => {
-    //     if (valid) {
-    //       console.log('submit!');
-    //       http.updateOffice(that.ruleForm).then(function (response) {
-    //         console.log(response);
-    //         if (response.status === 200 && response.data.result === '00000000') {
-    //           that.$message({
-    //             message: '修改常见结果成功！',
-    //             type: 'success'
-    //           });
-    //         } else {
-    //           that.$message({
-    //             message: response.data.msg,
-    //             type: 'error'
-    //           });
-    //         }
-    //       }).catch(function (error) {
-    //         console.log(error);
-    //       });
-    //     } else {
-    //       console.log('error submit!!');
-    //       return false;
-    //     }
-    //   });
-    // },
+    updateResults (formName) {
+      let that = this;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let obj = {};
+          let obj2 = {};
+          that.arr2 = [];
+          obj2.big = that.form2.big;
+          obj2.descrption = that.form2.descrption;
+          obj2.diagnoseId = that.form2.diagnoseId;
+          obj2.fiveName = that.form2.fiveName;
+          obj.inNode = that.ruleForm.inNode;
+          obj.inNodeName = that.ruleForm.inNodeName;
+          obj2.name = that.form2.name;
+          obj.resultType = that.ruleForm.resultType;
+          obj2.small = that.form2.small;
+          obj2.seq = that.form2.seq;
+          obj.sex = that.ruleForm.sex;
+          obj2.spell = that.form2.spell;
+          obj2.id = that.form2.id;
+          that.arr2.push(obj2);
+          obj.commonResultParamDtoList = that.arr2;
+          obj.examItemId = that.examItemId;
+          that.obj2 = obj;
+          console.log('submit!');
+          http.updateCommonResults(that.obj2).then(function (response) {
+            console.log(response);
+            if (response.status === 200 && response.data.result === '00000000') {
+              that.$message({
+                message: '修改常见结果成功！',
+                type: 'success'
+              });
+              that.dialogFormVisible2 = false;
+            } else {
+              that.$message({
+                message: response.data.msg,
+                type: 'error'
+              });
+            }
+          }).catch(function (error) {
+            console.log(error);
+          });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
     handleChange (value) {
       console.log(value);
       if (value === 0) {
@@ -412,7 +527,7 @@ export default {
         if (valid) {
           console.log('submit');
           obj2.big = that.form.big;
-          obj2.desc = that.form.desc;
+          obj2.descrption = that.form.descrption;
           obj2.diagnoseId = that.form.diagnoseId;
           obj2.fiveName = that.form.fiveName;
           obj.inNode = that.ruleForm.inNode;
@@ -465,7 +580,23 @@ export default {
         }
       }).catch(error => {
         console.log(error);
-      });    }
+      });
+    },
+    // 点击每行获取项目结果进入方式设置的信息
+    rowClick (row, event, column) {
+      let that = this;
+      http.commonResultsDetail2(row.id).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          that.ruleForm.inNode = response.data.data.inNode;
+          that.ruleForm.inNodeName = response.data.data.inNodeName;
+          that.ruleForm.sex = response.data.data.sex;
+          that.ruleForm.resultType = response.data.data.resultType;
+        }
+      }).catch(error =>{
+        console.log(error);
+      });
+    }
   },
   mounted () {
     this.getAllDiagnose();
@@ -477,6 +608,9 @@ export default {
     });
     Bus.$on('ruleForm', (e) => {
       this.ruleForm = e;
+    });
+    Bus.$on('diagnoseInfo', (e) => {
+      this.diagnoseId = e;
     });
   }
 }

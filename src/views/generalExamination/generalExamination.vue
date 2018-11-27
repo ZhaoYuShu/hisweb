@@ -81,6 +81,7 @@
             <el-col :span="4">
               <el-form-item>
                 <el-button size="small" type="primary">保存</el-button>
+                <el-button size="small" type="primary" @click="reviewReport">预览报告</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -163,7 +164,8 @@ export default {
         {id: 1, value: '男'},
         {id: 2, value: '女'},
         {id: 0, value: '所有'}
-      ]
+      ],
+      web: '172.17.8.3:8081'
     }
   },
   methods: {
@@ -194,6 +196,12 @@ export default {
     // 改变诊断列表的字体颜色
     rowStyle (row, rowIndex) {
       return 'color:red';
+    },
+    // 预览体检报告
+    reviewReport () {
+      let arr = [];
+      arr.push(this.ruleForm.orderNo);
+      window.open(this.web + '/api/reports/book?orderNo=' + arr);
     }
   },
   mounted () {

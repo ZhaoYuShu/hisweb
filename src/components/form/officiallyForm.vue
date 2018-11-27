@@ -183,7 +183,7 @@ export default {
       loading2: false,
       codeArray: [],
       registrationNo: '',
-      web: 'http://localhost:8081',
+      web: 'http://172.17.8.3:8081',
       url: ''
     }
   },
