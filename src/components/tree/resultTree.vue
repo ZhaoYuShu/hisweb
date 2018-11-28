@@ -35,20 +35,16 @@ export default {
           console.log(response);
           if (response.status === 200 && response.data.result === '00000000') {
             let ruleForm = {};
+            ruleForm.inNode = '';
+            ruleForm.inNodeName = '';
+            ruleForm.sex = '';
+            ruleForm.resultType = '';
+            Bus.$emit('ruleForm', ruleForm);
             if (response.data.data.commonResultParamDtoList) {
               Bus.$emit("tableData", response.data.data.commonResultParamDtoList);
-              ruleForm.inNode = response.data.data.inNode;
-              ruleForm.inNodeName = response.data.data.inNodeName;
-              ruleForm.sex = response.data.data.sex;
-              ruleForm.resultType = response.data.data.resultType;
-              Bus.$emit('ruleForm', ruleForm);
+
             } else {
               Bus.$emit('tableData', []);
-              ruleForm.inNode = '';
-              ruleForm.inNodeName = '';
-              ruleForm.sex = '';
-              ruleForm.resultType = '';
-              Bus.$emit('ruleForm', ruleForm);
             }
           }
         }).catch(error => {

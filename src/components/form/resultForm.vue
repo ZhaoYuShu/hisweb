@@ -34,12 +34,12 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="描述" prop="descrption">
-                <el-input v-model="form.desc" placeholder="请输入描述"></el-input>
+                <el-input v-model="form.descrption" placeholder="请输入描述"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="诊断" prop="diagnoseId">
-                <el-select v-model="form.diagnoseId" placeholder="请选择诊断">
+                <el-select v-model="form.diagnoseId" filterable placeholder="请选择诊断">
                   <el-option
                     v-for="item in diagnoseId"
                     :key="item.id"
@@ -64,8 +64,8 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-form-item label="小于" prop="small">
-                <el-input v-model="form.small" placeholder="请输入最大值"></el-input>
+              <el-form-item label="小于" prop="samll">
+                <el-input v-model="form.samll" placeholder="请输入最大值"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -98,12 +98,12 @@
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="描述" prop="descrption">
-                <el-input v-model="form2.desc" placeholder="请输入描述"></el-input>
+                <el-input v-model="form2.descrption" placeholder="请输入描述"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="诊断" prop="diagnoseId">
-                <el-select v-model="form2.diagnoseId" placeholder="请选择诊断">
+                <el-select v-model="form2.diagnoseId" filterable placeholder="请选择诊断">
                   <el-option
                     v-for="item in diagnoseId"
                     :key="item.id"
@@ -128,8 +128,8 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-form-item label="小于" prop="small">
-                <el-input v-model="form2.small" placeholder="请输入最大值"></el-input>
+              <el-form-item label="小于" prop="samll">
+                <el-input v-model="form2.samll" placeholder="请输入最大值"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -265,7 +265,8 @@
           align="left">
         </el-table-column>
         <el-table-column
-          label="操作">
+          label="操作"
+          fixed="right">
           <template slot-scope="scope">
             <el-button @click="updateForm(scope.row)" type="warning" size="small">修改</el-button>
             <el-button @click="handleClick(scope.row)" type="danger" size="small">删除</el-button>
@@ -295,7 +296,7 @@ export default {
         diagnoseId: '', // 诊断
         spell: '', // 拼音简拼
         fiveName: '', // 五笔简拼
-        small: '', // 最小值
+        samll: '', // 最小值
         big: '' // 最大值
       },
       form2: {
@@ -305,7 +306,7 @@ export default {
         diagnoseId: '',
         spell: '',
         fiveName: '',
-        small: '',
+        samll: '',
         big: ''
       },
       examItemId: '', // 项目ID
@@ -330,7 +331,7 @@ export default {
         name: [
           {required: true, message: '请输入名称', trigger: 'blur'}
         ],
-        desc: [
+        descrption: [
           {required: true, message: '请输入描述', trigger: 'blur'}
         ]
       },
@@ -467,7 +468,7 @@ export default {
           obj.inNodeName = that.ruleForm.inNodeName;
           obj2.name = that.form2.name;
           obj.resultType = that.ruleForm.resultType;
-          obj2.small = that.form2.small;
+          obj2.samll = that.form2.samll;
           obj2.seq = that.form2.seq;
           obj.sex = that.ruleForm.sex;
           obj2.spell = that.form2.spell;
@@ -485,6 +486,14 @@ export default {
                 type: 'success'
               });
               that.dialogFormVisible2 = false;
+              http.commonResultsDetail(that.examItemId).then(response => {
+                console.log(response);
+                if (response.status === 200 && response.data.result === '00000000') {
+                  that.tableData = response.data.data.commonResultParamDtoList;
+                }
+              }).catch(error => {
+                console.log(error);
+              });
             } else {
               that.$message({
                 message: response.data.msg,
@@ -534,7 +543,7 @@ export default {
           obj.inNodeName = that.ruleForm.inNodeName;
           obj2.name = that.form.name;
           obj.resultType = that.ruleForm.resultType;
-          obj2.small = that.form.small;
+          obj2.samll = that.form.samll;
           obj2.seq = that.form.seq;
           obj.sex = that.ruleForm.sex;
           obj2.spell = that.form.spell;

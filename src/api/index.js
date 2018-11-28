@@ -521,6 +521,9 @@ let getInfo = (data) => http.get(web + '/api/examRecord/customer/' + data);
 // 获取体检记录信息
 let getExamRecord = (data) => http.post(web + '/api/examRecord/all', data);
 
+// 保存总检结果
+let saveExamRecord = (data) => http.post(web + '/api/examRecord/save', data);
+
 /* 收据单 */
 
 // 根据流水号查询交费的明细信息
@@ -839,6 +842,7 @@ export default {
   addExamRecord,
   getInfo,
   getExamRecord,
+  saveExamRecord,
   receiptInfoDetail,
   receiptInfoList,
   receiptInfo,

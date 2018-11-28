@@ -643,7 +643,8 @@ export const constantRouterMap = [
       {path: 'role', name: 'role', component: () => import('@/views/role/role'), meta: {title: '角色管理'}},
       {path: 'user', name: 'user', component: () => import('@/views/user/user'), meta: {title: '用户管理'}},
       {path: 'configInfo', name: 'configInfo', component: () => import('@/views/configInfo/configInfo'), meta: {title: '基本信息设置'}},
-      {path: 'changePassword', name: 'changePassword', component: () => import('@/views/changePassword/changePassword'), meta: {title: '修改密码'}}
+      {path: 'changePassword', name: 'changePassword', component: () => import('@/views/changePassword/changePassword'), meta: {title: '修改密码'}},
+      {path: 'task', name: 'task', component: () => import('@/views/task/task'), meta: {title: '任务管理'}}
     ]
   }
 ];

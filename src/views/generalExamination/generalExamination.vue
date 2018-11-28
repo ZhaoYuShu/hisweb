@@ -59,16 +59,16 @@
                 <el-input v-model="ruleForm.companyName" disabled></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="4">
-              <el-form-item label="总检医生" prop="doctor">
-                <el-input v-model="form.doctor" placeholder="请输入总检医生"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <el-form-item label="操作员" prop="operator">
-                <el-input v-model="form.operator" placeholder="请输入操作员"></el-input>
-              </el-form-item>
-            </el-col>
+            <!--<el-col :span="4">-->
+              <!--<el-form-item label="总检医生" prop="doctor">-->
+                <!--<el-input v-model="form.doctor" placeholder="请输入总检医生"></el-input>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+            <!--<el-col :span="4">-->
+              <!--<el-form-item label="操作员" prop="operator">-->
+                <!--<el-input v-model="form.operator" placeholder="请输入操作员"></el-input>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
             <el-col :span="4">
               <el-form-item label="总检日期" prop="date">
                 <el-date-picker
@@ -80,7 +80,7 @@
             </el-col>
             <el-col :span="4">
               <el-form-item>
-                <el-button size="small" type="primary">保存</el-button>
+                <el-button size="small" type="primary" @click="saveExamRecord">保存</el-button>
                 <el-button size="small" type="primary" @click="reviewReport">预览报告</el-button>
               </el-form-item>
             </el-col>
@@ -165,7 +165,8 @@ export default {
         {id: 2, value: '女'},
         {id: 0, value: '所有'}
       ],
-      web: '172.17.8.3:8081'
+      web: 'http://172.17.8.3:8081'
+      // web: 'http://192.168.0.113:8081'
     }
   },
   methods: {
@@ -202,6 +203,28 @@ export default {
       let arr = [];
       arr.push(this.ruleForm.orderNo);
       window.open(this.web + '/api/reports/book?orderNo=' + arr);
+    },
+    // 保存总检
+    saveExamRecord () {
+      let obj = {};
+      let that = this;
+      obj.examCode = this.ruleForm.examCode;
+      obj.examTimes = this.ruleForm.examTimes;
+      obj.orderNo = this.ruleForm.orderNo;
+      obj.review = this.review;
+      obj.suggest = this.suggest;
+      http.saveExamRecord(obj).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          that.$message({
+            message: '保存成功',
+            type: 'success'
+          });
+          that.getInfo();
+        }
+      }).catch(error => {
+        console.log(error);
+      });
     }
   },
   mounted () {

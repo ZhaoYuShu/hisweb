@@ -273,18 +273,18 @@ export default {
           that.obj.examCode = res.examCode;
           // that.obj.examGroupItemResultZDDtos = res.examGroupItemResultDtoList;
           console.log(that.obj);
-          let list = response.data.data.examGroupItemResultDtoList;
-          for (let i = 0; i < list.length; i++) {
-            http.examResult(list[i].resultId, list[i].code).then(response => {
-              console.log(response);
-              if (response.status === 200 && response.data.result === '00000000') {
-                list[i].examItemResultDtoList = response.data.data;
-                list[i].node = that.summary;
-              }
-            }).catch(error => {
-              console.log(error);
-            });
-          }
+          // let list = response.data.data.examGroupItemResultDtoList;
+          // for (let i = 0; i < list.length; i++) {
+          //   http.examResult(list[i].resultId, list[i].code).then(response => {
+          //     console.log(response);
+          //     if (response.status === 200 && response.data.result === '00000000') {
+          //       list[i].examItemResultDtoList = response.data.data;
+          //       list[i].node = that.summary;
+          //     }
+          //   }).catch(error => {
+          //     console.log(error);
+          //   });
+          // }
           console.log(that.obj);
         }
       }).catch(error => {
@@ -453,7 +453,7 @@ export default {
       // }
       console.log(that.result);
       // this.row.defaultValue = this.result;
-
+      this.row.defaultValue = this.form.examResults;
       this.dialogFormVisible = false;
       this.form.commonResults = [];
     },
@@ -466,7 +466,6 @@ export default {
     rowStyle (row, rowIndex) {
       return 'color:red';
     }
-
   },
   mounted () {
     let date = new Date();

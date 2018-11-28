@@ -73,9 +73,9 @@
               </el-form-item>
             </el-col>
             <el-col :span="4">
-              <el-form-item label="检查日期" prop="date">
+              <el-form-item label="检查日期" prop="examDate">
                 <el-date-picker
-                  v-model="ruleForm.date"
+                  v-model="ruleForm.examDate"
                   type="date"
                   disabled>
                 </el-date-picker>
@@ -220,7 +220,7 @@
           examType: '', // 体检类别
           // personnelType: '', // 人员类别
           companyName: '', // 单位名称
-          date: '', // 检查日期
+          examDate: '', // 检查日期
           doctor: '', // 检查医生
           operator: '' // 操作员
         },
@@ -267,18 +267,18 @@
             that.obj.examCode = res.examCode;
             // that.obj.examGroupItemResultZDDtos = res.examGroupItemResultDtoList;
             console.log(that.obj);
-            let list = response.data.data.examGroupItemResultDtoList;
-            for (let i = 0; i < list.length; i++) {
-              http.examResult(list[i].resultId, list[i].code).then(response => {
-                console.log(response);
-                if (response.status === 200 && response.data.result === '00000000') {
-                  list[i].examItemResultDtoList = response.data.data;
-                  list[i].node = that.summary;
-                }
-              }).catch(error => {
-                console.log(error);
-              });
-            }
+            // let list = response.data.data.examGroupItemResultDtoList;
+            // for (let i = 0; i < list.length; i++) {
+            //   http.examResult(list[i].resultId, list[i].code).then(response => {
+            //     console.log(response);
+            //     if (response.status === 200 && response.data.result === '00000000') {
+            //       list[i].examItemResultDtoList = response.data.data;
+            //       list[i].node = that.summary;
+            //     }
+            //   }).catch(error => {
+            //     console.log(error);
+            //   });
+            // }
             console.log(that.obj);
           }
         }).catch(error => {
@@ -422,7 +422,7 @@
     },
     mounted () {
       let date = new Date();
-      this.ruleForm.date = date;
+      this.ruleForm.examDate = date;
     }
   }
 </script>
