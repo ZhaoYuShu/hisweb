@@ -54,7 +54,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="折扣方式" prop="discountType">
-              <el-select v-model="form1.discountType" @change="handleSelect">
+              <el-select v-model="form1.discountType" filterable placeholder="请选择折扣方式" @change="handleSelect">
                 <el-option
                   v-for="item in discountType"
                   :key="item.id"
@@ -73,7 +73,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="结算方式" prop="balanceType">
-              <el-select v-model="form1.balanceType">
+              <el-select v-model="form1.balanceType" filterable placeholder="请选择结算方式">
                 <el-option
                   v-for="item in balanceType"
                   :key="item.id"
@@ -133,7 +133,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="折扣方式" prop="discountType">
-              <el-select v-model="form2.discountType">
+              <el-select v-model="form2.discountType" filterable placeholder="请选择折扣方式">
                 <el-option
                   v-for="item in discountType"
                   :key="item.id"
@@ -152,7 +152,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="结算方式" prop="balanceType">
-              <el-select v-model="form2.balanceType">
+              <el-select v-model="form2.balanceType" filterable placeholder="请选择结算方式">
                 <el-option
                   v-for="item in balanceType"
                   :key="item.id"

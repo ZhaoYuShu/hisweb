@@ -30,7 +30,7 @@
       <el-row>
         <el-col :span="22">
           <el-form-item label="发票项目" prop="invoiceItem">
-            <el-select v-model="ruleForm.invoiceItem" placeholder="请选择发票项目">
+            <el-select v-model="ruleForm.invoiceItem" filterable placeholder="请选择发票项目">
               <el-option
                 v-for="item in invoice"
                 :key="item.id"

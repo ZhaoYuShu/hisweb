@@ -318,7 +318,7 @@
         <el-row :gutter="10">
           <el-col :span="6">
             <el-form-item label="收费种类" prop="chargeType">
-              <el-select v-model="ruleForm.chargeType">
+              <el-select v-model="ruleForm.chargeType" filterable placeholder="请选择收费种类">
                 <el-option
                   v-for="item in chargeType"
                   :key="item.id"

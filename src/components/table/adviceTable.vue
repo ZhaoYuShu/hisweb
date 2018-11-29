@@ -32,7 +32,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="所属科室" :label-width="formLabelWidth" prop="officeId">
-              <el-select v-model="form.officeId" :disabled="officeDisabled">
+              <el-select v-model="form.officeId" filterable :disabled="officeDisabled">
                 <el-option
                   v-for="item in office"
                   :key="item.id"
@@ -97,7 +97,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="所属科室" :label-width="formLabelWidth" prop="officeId">
-              <el-select v-model="form3.officeId">
+              <el-select v-model="form3.officeId" filterable>
                 <el-option
                   v-for="item in office"
                   :key="item.id"

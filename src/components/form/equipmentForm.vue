@@ -41,7 +41,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="使用标本" prop="sampleTypeCode" required>
-        <el-select v-model="ruleForm.sampleTypeCode">
+        <el-select v-model="ruleForm.sampleTypeCode" filterable placeholder="请输入标本">
           <el-option
             v-for="item in options"
             :key="item.id"

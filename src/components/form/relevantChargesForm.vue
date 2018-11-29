@@ -30,7 +30,7 @@
       <el-row>
         <el-col :span="22">
           <el-form-item label="收费类别" prop="type">
-            <el-select v-model="ruleForm.type" placeholder="请选择收费类别">
+            <el-select v-model="ruleForm.type" filterable placeholder="请选择收费类别">
               <el-option
                 v-for="item in chargeType"
                 :key="item.id"

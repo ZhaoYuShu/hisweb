@@ -1,6 +1,60 @@
 <!--总检医生诊台-->
 <template>
   <div class="container">
+    <!--人员名单-->
+    <el-dialog title="人员名单" :visible.sync="dialogTableVisible">
+      <el-form :model="form2" ref="form2" :rules="rules2" label-width="80px" class="demo-form2">
+        <el-row :gutter="10">
+          <el-col :span="12">
+            <el-form-item label="单位名称" prop="companyName">
+              <el-select v-model="form2.companyName" filterable placeholder="请选择单位名称" @change="chooseCompany">
+                <el-option
+                  v-for="item in companyName"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.code">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="单位分组" prop="companyGroup">
+              <el-select v-model="form2.companyGroup" filterable placeholder="请选择单位分组" @change="getAllStaff">
+                <el-option
+                  v-for="item in companyGroup"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.code">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <!--<el-col :span="8">-->
+            <!--<el-form-item label="姓名" prop="name">-->
+              <!--<el-input ></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+        </el-row>
+      </el-form>
+      <el-table
+        :data="tableData2"
+        border
+        height="400"
+        style="width:98%;margin:0 auto;"
+        :highlight-current-row="true"
+        @row-click="getExamCode">
+        <!--<el-table-column property="company" label="单位" width="150"></el-table-column>-->
+        <el-table-column property="examCode" label="体检编号" width="150"></el-table-column>
+        <el-table-column property="name" label="姓名" width="100"></el-table-column>
+        <el-table-column property="sexName" label="性别" width="100"></el-table-column>
+        <el-table-column property="age" label="年龄" width="100"></el-table-column>
+        <el-table-column property="statusName" label="状态"></el-table-column>
+      </el-table>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogTableVisible = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="comfirmExamCode" size="small">确 定</el-button>
+      </div>
+    </el-dialog>
     <div class="div1">
       <div class="info">
         <el-row>
@@ -12,7 +66,7 @@
           <el-row :gutter="10">
             <el-col :span="4">
               <el-form-item label="体检编号" prop="examCode">
-                <el-input v-model="ruleForm.examCode" placeholder="请输入体检编号" @keyup.enter.native="getInfo" v-loading.fullscreen.lock="fullscreenLoading"></el-input>
+                <el-input v-model="ruleForm.examCode" placeholder="请输入体检编号" @keyup.enter.native="getInfo" v-loading.fullscreen.lock="fullscreenLoading" @dblclick.native="getPersonList"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="4">
@@ -152,19 +206,29 @@ export default {
         date: '',
         operator: ''
       },
+      form2: {
+        companyName: '',
+        companyGroup: ''
+      },
       rules: {
         examCode: [
           {required: true, message: '请输入体检编号', trigger: 'blur'}
         ]
       },
+      rules2: {},
       suggest: '',
       review: '',
       tableData: [],
+      tableData2: [],
       sex: [
         {id: 1, value: '男'},
         {id: 2, value: '女'},
         {id: 0, value: '所有'}
       ],
+      companyName: [],
+      companyGroup: [],
+      examCode: '',
+      dialogTableVisible: false,
       web: 'http://172.17.8.3:8081'
       // web: 'http://192.168.0.113:8081'
     }
@@ -193,6 +257,13 @@ export default {
         that.fullscreenLoading = false;
         console.log(error);
       });
+    },
+    // 获取人员列表
+    getPersonList () {
+      this.form2.companyName = '';
+      this.form2.companyGroup = '';
+      this.tableData2 = [];
+      this.dialogTableVisible = true;
     },
     // 改变诊断列表的字体颜色
     rowStyle (row, rowIndex) {
@@ -225,11 +296,114 @@ export default {
       }).catch(error => {
         console.log(error);
       });
+    },
+    // 获取所有单位
+    getAllCompany () {
+      let that = this;
+      http.getAllCompany().then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          let arr = [];
+          for (let i = 0; i < response.data.data.length; i++) {
+            if (response.data.data[i].pid !== 0) {
+              arr.push(response.data.data[i]);
+            }
+          }
+          that.companyName = arr;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    // 选择单位获取对应的单位分组
+    chooseCompany (data) {
+      console.log(data);
+      let that = this;
+      http.getAllCompanyGroup(data).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          let arr = [];
+          for (let i = 0; i < response.data.data.companyGroups.length; i++) {
+            if (response.data.data.companyGroups[i].pid !== 0) {
+              arr.push(response.data.data.companyGroups[i]);
+            }
+          }
+          that.companyGroup = arr;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    // 选择单位分组获取所有人员
+    getAllStaff (data) {
+      let that = this;
+      http.getAllStaff(data).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          for (let i = 0; i < response.data.data.length; i++) {
+            // 转换性别
+            if (response.data.data[i].sex === 1) {
+              response.data.data[i].sexName = '男';
+            } else if (response.data.data[i].sex === 2) {
+              response.data.data[i].sexName = '女';
+            } else if (response.data.data[i].sex === 0) {
+              response.data.data[i].sexName = '所有';
+            }
+
+            //转换状态
+            if (response.data.data[i].status === 0) {
+              response.data.data[i].statusName = '未检';
+            } else if (response.data.data[i].status === 1) {
+              response.data.data[i].statusName = '部分已检';
+            } else if (response.data.data[i].status === 2) {
+              response.data.data[i].statusName = '待总检';
+            } else if (response.data.data[i].status === 3) {
+              response.data.data[i].statusName = '已总检';
+            }
+          }
+          that.tableData2 = response.data.data;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    // 点击表格的一行获取体检编号
+    getExamCode (row) {
+      let that = this;
+      console.log(row);
+      that.examCode = row.examCode;
+    },
+    comfirmExamCode () {
+      let that = this;
+      that.dialogTableVisible = false;
+      that.ruleForm.examCode = this.examCode;
+      that.fullscreenLoading = true;
+      http.checkoutInfo(that.ruleForm.examCode).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          let res = response.data.data;
+          that.ruleForm.examTimes = res.examTimes;
+          that.ruleForm.orderNo = res.orderNo;
+          that.ruleForm.name = res.name;
+          that.ruleForm.sex = res.sex;
+          that.ruleForm.age = res.age;
+          that.ruleForm.examTypeName = res.examTypeName;
+          that.ruleForm.companyName = res.companyName;
+          that.review = res.review;
+          that.suggest = res.suggest;
+          that.fullscreenLoading = false;
+          that.tableData = res.diagnoseInfoResultShortDtos;
+        }
+      }).catch(error => {
+        that.fullscreenLoading = false;
+        console.log(error);
+      });
     }
   },
   mounted () {
     let date = new Date();
     this.form.date = date;
+    this.getAllCompany();
   }
 }
 </script>

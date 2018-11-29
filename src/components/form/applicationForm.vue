@@ -33,7 +33,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="标本类型" prop="sampleTypeCode" required>
-            <el-select v-model="ruleForm.sampleTypeCode">
+            <el-select v-model="ruleForm.sampleTypeCode" filterable placeholder="请选择标本类型">
               <el-option
                 v-for="item in options"
                 :key="item.id"

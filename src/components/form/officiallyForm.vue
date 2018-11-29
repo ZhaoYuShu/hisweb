@@ -20,7 +20,7 @@
           </el-col>
           <el-col :span="11">
             <el-form-item label="公司名称" prop="companyCode">
-              <el-select v-model="ruleForm.companyCode" placeholder="请选择公司名称">
+              <el-select v-model="ruleForm.companyCode" filterable placeholder="请选择公司名称">
                 <el-option
                   v-for="item in group"
                   :key="item.id"

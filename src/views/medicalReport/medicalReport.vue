@@ -15,7 +15,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="单位名称" prop="companyCode">
-              <el-select v-model="ruleForm.companyCode" @change="selectCompany">
+              <el-select v-model="ruleForm.companyCode" filterable placeholder="请选择单位" @change="selectCompany">
                 <el-option
                   v-for="item in companyCode"
                   :key="item.id"
@@ -39,7 +39,7 @@
         <el-row :gutter="10">
           <el-col :span="6">
             <el-form-item label="单位分组" prop="groupCode">
-              <el-select v-model="ruleForm.groupCode">
+              <el-select v-model="ruleForm.groupCode" filterable placeholder="请选择单位分组">
                 <el-option
                   v-for="item in group"
                   :key="item.id"

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
-// let web = 'http://192.168.0.113:8081';
+// let web = 'http://localhost:8081';
+// let web = 'http://192.168.0.102:8081';
 let web = 'http://172.17.8.3:8081';
 // let web = 'http://192.168.43.16:8081';
 // let web = 'http://a7958454.ngrok.io';
@@ -258,6 +259,8 @@ let updateCompany = (data) => http.put(web + '/api/company', data);
 
 // 根据体检单位ID获取单位详细信息
 let companyDetail2 = (data) => http.get(web + '/api/company/getCompany/' + data);
+
+// 根据体检单位ID获取单位下所有人员
 
 /* 体检单位预约登记记录模块 */
 

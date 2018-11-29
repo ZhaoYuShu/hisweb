@@ -40,7 +40,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="打折" prop="discountPercentage" required>
-            <el-select v-model="ruleForm.discountPercentage" @change="selectDiscount">
+            <el-select v-model="ruleForm.discountPercentage" filterable @change="selectDiscount">
               <el-option
                 v-for="item in discountType"
                 :key="item.id"

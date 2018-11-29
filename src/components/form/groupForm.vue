@@ -37,7 +37,7 @@
         </el-col>
         <el-col :lg="24" :xl="12">
           <el-form-item label="体检科室" prop="officeId" required>
-            <el-select v-model="ruleForm.officeId" @change="selectOffice" :disabled="false">
+            <el-select v-model="ruleForm.officeId" @change="selectOffice" filterable :disabled="false">
               <el-option
                 v-for="item in options"
                 :key="item.id"
@@ -103,7 +103,7 @@
         </el-col>
         <el-col :lg="24" :xl="12">
           <el-form-item label="汇总项目" prop="program">
-            <el-select v-model="ruleForm.program" placeholder="请选择汇总项目">
+            <el-select v-model="ruleForm.program" filterable placeholder="请选择汇总项目">
               <el-option
                 v-for="item in program"
                 :key="item.id"
@@ -157,7 +157,7 @@
       <el-row :gutter="20">
         <el-col :span="24" :xl="12">
           <el-form-item label="打折" prop="discount" required>
-            <el-select v-model="ruleForm.discount" @change="selectDiscount">
+            <el-select v-model="ruleForm.discount" filterable @change="selectDiscount">
               <el-option
                 v-for="item in discountType"
                 :key="item.id"
@@ -200,7 +200,7 @@
       <el-row :gutter="20">
         <el-col :lg="24" :xl="12">
           <el-form-item label="标本类型" prop="specimenType">
-            <el-select v-model="ruleForm.specimenType" placeholder="请选择标本类型">
+            <el-select v-model="ruleForm.specimenType" filterable placeholder="请选择标本类型">
               <el-option
                 v-for="item in specimenType"
                 :key="item.id"
@@ -284,7 +284,7 @@
         </el-col>
         <el-col :lg="24" :xl="12">
           <el-form-item label="对应设备" prop="mapperEquipment">
-            <el-select v-model="ruleForm.mapperEquipment" placeholder="请选择对应设备">
+            <el-select v-model="ruleForm.mapperEquipment" filterable placeholder="请选择对应设备">
               <el-option
                 v-for="item in equipment"
                 :key="item.id"
@@ -298,7 +298,7 @@
       <el-row :gutter="20">
         <el-col :lg="24" :xl="12">
           <el-form-item label="执行科室" prop="executeOffice">
-            <el-select v-model="ruleForm.executeOffice" placeholder="请选择执行科室">
+            <el-select v-model="ruleForm.executeOffice" filterable placeholder="请选择执行科室">
               <el-option
                 v-for="item in options2"
                 :key="item.id"

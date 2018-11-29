@@ -62,10 +62,10 @@
         label="操作"
         fixed="right">
         <template slot-scope="scope">
-          <el-button type="success" size="small" @click="authorization(scope.row)">暂停</el-button>
-          <el-button @click="deleteUser(scope.row)" type="danger" size="small">恢复</el-button>
-          <el-button @click="" type="warning" size="small">修改</el-button>
-          <el-button @click="" ></el-button>
+          <el-button type="info" size="small" @click="suspendedTask(scope.row)">暂停</el-button>
+          <el-button @click="restoreTask(scope.row)" type="success" size="small">恢复</el-button>
+          <el-button @click="updateTask(scope.row)" type="warning" size="small">修改</el-button>
+          <el-button @click="deleteTask(scope.row)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -214,26 +214,6 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    // 获取用户列表
-    userList() {
-      let that = this;
-      http.userList().then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          let list = response.data.data.list;
-          for (let i = 0; i < list.length; i++) {
-            let date = new Date(list[i].createTime);
-            let year = date.getFullYear();
-            let month = date.getMonth();
-            let day = date.getDate();
-            list[i].createTime = year + '/' + month + '/' + day;
-          }
-          that.tableData = list;
-        }
-      }).catch(error => {
-        console.log(error);
-      });
-    },
     // 删除用户
     deleteUser(data) {
       console.log(data);
@@ -263,63 +243,21 @@ export default {
       });
       that.dialogVisible = false;
     },
-    // 点击授权按钮，弹出弹框
-    authorization(data) {
-      let that = this;
+    // 暂停任务
+    suspendedTask (data) {
       console.log(data);
-      that.dialogFormVisible2 = true;
-      that.userNo = data.userNo;
-      that.form2.userNo = data.userNo;
-      http.getAuth(data.userNo).then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          if (response.data.data.role) {
-            that.form2.roleCode = response.data.data.role.roleCode;
-          } else {
-            that.form2.roleCode = '';
-          }
-        }
-      }).catch(error => {
-        console.log(error);
-      });
     },
-    // 确定授权
-    confirmAuth(formName) {
-      let that = this;
-      that.$refs[formName].validate((valid) => {
-        if (valid) {
-          console.log("submit!");
-          http.authorization(that.form2).then(response => {
-            console.log(response);
-            if (response.status === 200 && response.data.result === '00000000') {
-              that.$message({
-                message: '用户授权成功',
-                type: 'success'
-              });
-            } else {
-              that.$message({
-                message: response.data.msg,
-                type: 'error'
-              });
-            }
-          }).catch(error => {
-            console.log(error);
-          });
-        }
-      });
-      that.dialogFormVisible2 = false;
+    // 恢复任务
+    restoreTask (data) {
+      console.log(data);
     },
-    // 获取所有角色
-    getAllRole() {
-      let that = this;
-      http.getAllRole().then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          that.roles = response.data.data;
-        }
-      }).catch(error => {
-        console.log(error);
-      });
+    // 修改任务
+    updateTask (data) {
+      console.log(data);
+    },
+    // 删除任务
+    deleteTask (data) {
+      console.log(data);
     }
   },
   mounted () {

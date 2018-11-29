@@ -26,7 +26,7 @@
           <el-row :gutter="10">
             <el-col :span="6">
               <el-form-item label="单位" prop="companyCode">
-                <el-select v-model="ruleForm.companyCode" placeholder="请选择单位" @change="handleChange" :disabled="isDisabled">
+                <el-select v-model="ruleForm.companyCode" filterable placeholder="请选择单位" @change="handleChange" :disabled="isDisabled">
                   <el-option
                     v-for="item in company"
                     :key="item.id"
@@ -107,7 +107,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="对应分组" prop="groupCode">
-                <el-select v-model="ruleForm.groupCode" placeholder="请选择对应分组" @change="selectGroup">
+                <el-select v-model="ruleForm.groupCode" filterable placeholder="请选择对应分组" @change="selectGroup">
                   <el-option
                     v-for="item in group"
                     :key="item.id"
@@ -121,7 +121,7 @@
           <el-row :gutter="10">
             <el-col :span="6">
               <el-form-item label="体检类型" prop="examType">
-                <el-select v-model="ruleForm.examType" placeholder="请选择体检类型">
+                <el-select v-model="ruleForm.examType" filterable placeholder="请选择体检类型">
                   <el-option
                     v-for="item in examType"
                     :key="item.id"
@@ -150,7 +150,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="人员类别" prop="personnelType">
-                <el-select v-model="ruleForm.personnelType" placeholder="请选择人员类别">
+                <el-select v-model="ruleForm.personnelType" filterable placeholder="请选择人员类别">
                   <el-option
                     v-for="item in personalCategory"
                     :key="item.id"

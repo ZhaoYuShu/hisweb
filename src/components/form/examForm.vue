@@ -16,7 +16,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="科室名称" prop="officeId" :span="12" required>
-            <el-select v-model="ruleForm.officeId" placeholder="请选择科室">
+            <el-select v-model="ruleForm.officeId" filterable placeholder="请选择科室">
               <el-option v-for="item in options"
                 :key="item.id"
                 :label="item.name"
@@ -66,7 +66,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="临床类型" prop="clinicId">
-            <el-select v-model="ruleForm.clinicId" placeholder="请选择临床类型">
+            <el-select v-model="ruleForm.clinicId" filterable placeholder="请选择临床类型">
                 <el-option
                   v-for="item in type"
                   :key="item.id"
@@ -85,7 +85,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="收费类别" prop="chargeType">
-            <el-select v-model="ruleForm.chargeType" placeholder="请选择收费类别">
+            <el-select v-model="ruleForm.chargeType" filterable placeholder="请选择收费类别">
               <el-option
                 v-for="item in chargeType"
                 :key="item.id"

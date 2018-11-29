@@ -191,7 +191,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="人员类别" prop="personnelType">
-              <el-select v-model="ruleForm.personnelType">
+              <el-select v-model="ruleForm.personnelType" filterable placeholder="请选择人员类别">
                 <el-option
                   v-for="item in personalCategory"
                   :key="item.id"
@@ -205,7 +205,7 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item label="体检类别" prop="examType">
-              <el-select v-model="ruleForm.examType">
+              <el-select v-model="ruleForm.examType" filterable placeholder="请选择体检类别">
                 <el-option
                   v-for="item in medicalCategory"
                   :key="item.id"
