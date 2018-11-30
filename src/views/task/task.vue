@@ -69,6 +69,8 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!--增加任务-->
     <el-dialog title="增加任务" :visible.sync="dialogFormVisible">
       <el-form :model="form" ref="form" :rules="rules" label-width="100px" class="demo-form">
         <el-row :gutter="20">
@@ -78,21 +80,26 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="登录账号" prop="mobile">
-              <el-input v-model="form.mobile" placeholder="请输入登录账号"></el-input>
+            <el-form-item label="任务所在组" prop="taskGroup">
+              <el-input v-model="form.taskGroup" placeholder="请输入任务所在组"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="密码" prop="passWord">
-              <el-input v-model="form.passWord" placeholder="请输入密码" type="password"></el-input>
+            <el-form-item label="任务类名" prop="className">
+              <el-input v-model="form.className" placeholder="请输入任务类名"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="确认密码" prop="passWord2">
-              <el-input v-model="form.passWord2" placeholder="请输入确认密码" type="password"></el-input>
+            <el-form-item label="触发器名称" prop="triggerName">
+              <el-input v-model="form.triggerName" placeholder="请输入触发器名称"></el-input>
             </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="触发器所在组" prop=""></el-form-item>
           </el-col>
         </el-row>
       </el-form>
@@ -101,7 +108,9 @@
         <el-button type="primary" @click="submitForm('form')" size="small">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="用户授权" :visible.sync="dialogFormVisible2" style="width:50%;margin:0 auto;">
+
+    <!--修改任务-->
+    <el-dialog title="修改任务" :visible.sync="dialogFormVisible2" style="width:50%;margin:0 auto;">
       <el-form :model="form2" ref="form2" :rules="rules2" label-width="100px" class="demo-form2">
         <el-row :gutter="20">
           <el-col :span="24">
@@ -145,7 +154,7 @@ export default {
     return {
       form: {
         taskName: '',
-        mobile: '',
+        taskGroup: '',
         passWord: '',
         passWord2: ''
       },

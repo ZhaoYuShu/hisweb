@@ -223,6 +223,9 @@ let deleteDiagnoseInfo = (data) => http.delete(web + '/api/diagnoseInfo/' + data
 // 修改诊断信息
 let updateDiagnoseInfo = (data) => http.put(web + '/api/diagnoseInfo', data);
 
+// 根据诊断信息编号获取诊断内容
+let getDiagnoseContent = (data) => http.get(web + '/api/diagnoseInfo/code/' + data);
+
 /* 建议内容 */
 
 // 根据诊断code获取建议内容
@@ -261,6 +264,7 @@ let updateCompany = (data) => http.put(web + '/api/company', data);
 let companyDetail2 = (data) => http.get(web + '/api/company/getCompany/' + data);
 
 // 根据体检单位ID获取单位下所有人员
+let getCompanyStaff = (data) => http.get(web + '/api/company/customers/' + data);
 
 /* 体检单位预约登记记录模块 */
 
@@ -759,6 +763,7 @@ export default {
   diagnoseContentDetail,
   deleteDiagnoseContent,
   addDiagnoseContent,
+  getDiagnoseContent,
   getAllCompany,
   companyCode,
   companyDetail,
@@ -767,6 +772,7 @@ export default {
   deleteCompany,
   updateCompany,
   companyDetail2,
+  getCompanyStaff,
   addCompanyExamRecord,
   updateCompanyExamRecord,
   deleteCompanyExamRecord,

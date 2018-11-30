@@ -2,33 +2,33 @@
 <template>
   <div class="container">
     <!--人员名单-->
-    <el-dialog title="人员名单" :visible.sync="dialogTableVisible">
+    <el-dialog title="人员名单" :visible.sync="dialogTableVisible" v-loading="loading">
       <el-form :model="form2" ref="form2" :rules="rules2" label-width="80px" class="demo-form2">
         <el-row :gutter="10">
-          <el-col :span="12">
+          <el-col :span="24">
             <el-form-item label="单位名称" prop="companyName">
               <el-select v-model="form2.companyName" filterable placeholder="请选择单位名称" @change="chooseCompany">
                 <el-option
                   v-for="item in companyName"
                   :key="item.id"
                   :label="item.name"
-                  :value="item.code">
+                  :value="item.id">
                 </el-option>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="单位分组" prop="companyGroup">
-              <el-select v-model="form2.companyGroup" filterable placeholder="请选择单位分组" @change="getAllStaff">
-                <el-option
-                  v-for="item in companyGroup"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.code">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
+          <!--<el-col :span="12">-->
+            <!--<el-form-item label="单位分组" prop="companyGroup">-->
+              <!--<el-select v-model="form2.companyGroup" filterable placeholder="请选择单位分组" @change="getAllStaff">-->
+                <!--<el-option-->
+                  <!--v-for="item in companyGroup"-->
+                  <!--:key="item.id"-->
+                  <!--:label="item.name"-->
+                  <!--:value="item.code">-->
+                <!--</el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
           <!--<el-col :span="8">-->
             <!--<el-form-item label="姓名" prop="name">-->
               <!--<el-input ></el-input>-->
@@ -53,6 +53,25 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="comfirmExamCode" size="small">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--诊断内容-->
+    <el-dialog title="诊断建议" :visible.sync="dialogTableVisible2">
+      <el-table
+        :data="tableData3"
+        border
+        height="400"
+        style="width:98%;margin:0 auto;"
+        :highlight-current-row="true"
+        @select="selectDiagnose"
+        @select-all="selectAllDiagnose">
+        <el-table-column type="selection"></el-table-column>
+        <el-table-column property="diagnoseContent" label="诊断建议"></el-table-column>
+      </el-table>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogTableVisible2 = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="comfirmDiagnose" size="small">确 定</el-button>
       </div>
     </el-dialog>
     <div class="div1">
@@ -170,7 +189,8 @@
           border
           height="90%"
           style="width:98%;margin:0 auto;"
-          :row-style="rowStyle">
+          :row-style="rowStyle"
+          @row-dblclick="getDiagnoseContent">
           <el-table-column
             label="疾病诊断"
             prop="name"
@@ -210,27 +230,28 @@ export default {
         companyName: '',
         companyGroup: ''
       },
-      rules: {
-        examCode: [
-          {required: true, message: '请输入体检编号', trigger: 'blur'}
-        ]
-      },
+      rules: {},
       rules2: {},
       suggest: '',
       review: '',
       tableData: [],
       tableData2: [],
+      tableData3: [],
       sex: [
         {id: 1, value: '男'},
         {id: 2, value: '女'},
         {id: 0, value: '所有'}
       ],
+      loading: false,
       companyName: [],
       companyGroup: [],
       examCode: '',
+      diagnoseName: '',
+      diagnoseContent: [],
       dialogTableVisible: false,
+      dialogTableVisible2: false,
       web: 'http://172.17.8.3:8081'
-      // web: 'http://192.168.0.113:8081'
+      // web: 'http://192.168.0.102:8081'
     }
   },
   methods: {
@@ -315,29 +336,12 @@ export default {
         console.log(error);
       });
     },
-    // 选择单位获取对应的单位分组
+    // 选择单位获取对应的人员信息
     chooseCompany (data) {
       console.log(data);
       let that = this;
-      http.getAllCompanyGroup(data).then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          let arr = [];
-          for (let i = 0; i < response.data.data.companyGroups.length; i++) {
-            if (response.data.data.companyGroups[i].pid !== 0) {
-              arr.push(response.data.data.companyGroups[i]);
-            }
-          }
-          that.companyGroup = arr;
-        }
-      }).catch(error => {
-        console.log(error);
-      });
-    },
-    // 选择单位分组获取所有人员
-    getAllStaff (data) {
-      let that = this;
-      http.getAllStaff(data).then(response => {
+      that.loading = true;
+      http.getCompanyStaff(data).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
           for (let i = 0; i < response.data.data.length; i++) {
@@ -362,11 +366,45 @@ export default {
             }
           }
           that.tableData2 = response.data.data;
+          that.loading = false;
         }
       }).catch(error => {
         console.log(error);
       });
     },
+    // 选择单位分组获取所有人员
+    // getAllStaff (data) {
+    //   let that = this;
+    //   http.getAllStaff(data).then(response => {
+    //     console.log(response);
+    //     if (response.status === 200 && response.data.result === '00000000') {
+    //       for (let i = 0; i < response.data.data.length; i++) {
+    //         // 转换性别
+    //         if (response.data.data[i].sex === 1) {
+    //           response.data.data[i].sexName = '男';
+    //         } else if (response.data.data[i].sex === 2) {
+    //           response.data.data[i].sexName = '女';
+    //         } else if (response.data.data[i].sex === 0) {
+    //           response.data.data[i].sexName = '所有';
+    //         }
+    //
+    //         //转换状态
+    //         if (response.data.data[i].status === 0) {
+    //           response.data.data[i].statusName = '未检';
+    //         } else if (response.data.data[i].status === 1) {
+    //           response.data.data[i].statusName = '部分已检';
+    //         } else if (response.data.data[i].status === 2) {
+    //           response.data.data[i].statusName = '待总检';
+    //         } else if (response.data.data[i].status === 3) {
+    //           response.data.data[i].statusName = '已总检';
+    //         }
+    //       }
+    //       that.tableData2 = response.data.data;
+    //     }
+    //   }).catch(error => {
+    //     console.log(error);
+    //   });
+    // },
     // 点击表格的一行获取体检编号
     getExamCode (row) {
       let that = this;
@@ -398,6 +436,44 @@ export default {
         that.fullscreenLoading = false;
         console.log(error);
       });
+    },
+    // 根据诊断信息编号获取诊断内容
+    getDiagnoseContent (row) {
+      let that = this;
+      that.dialogTableVisible2 = true;
+      that.diagnoseName = row.name;
+      http.getDiagnoseContent(row.code).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          that.tableData3 = response.data.data;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    // 选择诊断建议
+    selectDiagnose (data) {
+      console.log(data);
+      this.diagnoseContent = data;
+    },
+    // 全选诊断建议
+    selectAllDiagnose (data) {
+      console.log(data);
+      this.diagnoseContent = data;
+    },
+    // 确定添加诊断建议
+    comfirmDiagnose () {
+      let that = this;
+      that.dialogTableVisible2 = false;
+      console.log(that.diagnoseContent);
+      that.suggest += "*" + that.diagnoseName + ":" + "\n";
+      let arr = [];
+      for (let i = 0; i < that.diagnoseContent.length; i++) {
+        arr.push(that.diagnoseContent[i].diagnoseContent);
+      }
+      let str = '';
+      str = arr.join('\n');
+      that.suggest += str + '\n';
     }
   },
   mounted () {
