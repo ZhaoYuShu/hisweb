@@ -556,6 +556,7 @@ export default {
       this.value2 = [];
       this.getAllCompany();
       this.ruleForm.sumPrice = 0;
+      this.radio = '';
     },
     // 获取全部单位,获取全部单位分组
     getAllCompany () {

@@ -19,17 +19,20 @@
     </div>
     <div class="buttons">
       <el-row type="flex" justify="space-around" style="height:100%;align-items:center;">
-        <el-col :span="6">
+        <el-col :span="4">
           <el-button type="primary" size="small" @click="query">查询</el-button>
         </el-col>
         <el-col :span="6">
-          <el-button type="success" size="small" @click="charge" :disabled="disabled">收费</el-button>
+          <el-button type="success" size="small" @click="charge" :disabled="disabled">确认收费</el-button>
         </el-col>
         <el-col :span="6">
+          <el-button type="warning" size="small" @click="retype" :disabled="disabled">打印收费单</el-button>
+        </el-col>
+        <el-col :span="4">
           <el-button type="danger" size="small" :disabled="disabled2">退费</el-button>
         </el-col>
         <el-col :span="6">
-          <el-button type="warning" size="small" :disabled="disabled3">补打/重打</el-button>
+          <el-button type="warning" size="small" :disabled="disabled3" @click="retype">补打/重打</el-button>
         </el-col>
       </el-row>
     </div>
@@ -288,6 +291,9 @@ export default {
       obj.clearingType = 1;
       that.tableData2 = [];
       that.ruleForm = {};
+      that.disabled = true;
+      that.disabled2 = true;
+      that.disabled3 = true;
       http.receiptInfoList(obj).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
@@ -336,9 +342,15 @@ export default {
     handleRowClick (row, event, column) {
       console.log(row, event, column);
       let that = this;
-      that.disabled = false;
-      that.disabled2 = false;
-      that.disabled3 = false;
+      if (row.isCharge === 1) {
+        that.disabled = true;
+        that.disabled2 = false;
+        that.disabled3 = false;
+      } else if (row.isCharge === 0) {
+        that.disabled = false;
+        that.disabled2 = false;
+        that.disabled3 = false;
+      }
       that.currentCode = row.orderNo;
       http.receiptInfoDetail(row.orderNo).then(response => {
         console.log(response);
@@ -402,15 +414,68 @@ export default {
       http.confirmCharge2(that.currentCode).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
+
           that.$message({
             message: '交费成功',
             type: 'success'
           });
-          window.open(that.web + '/api/receiptInfo/print2/' + that.currentCode);
+
+          let obj = {};
+          obj.orderNo = that.form.registrationNo;
+          obj.name = that.form.name;
+          obj.status = that.option;
+          obj.clearingType = 1;
+          that.tableData2 = [];
+          that.ruleForm = {};
+          that.disabled = true;
+          that.disabled2 = true;
+          that.disabled3 = true;
+          http.receiptInfoList(obj).then(response => {
+            console.log(response);
+            if (response.status === 200 && response.data.result === '00000000') {
+              that.tableData = response.data.data.users;
+              for (let i = 0; i < that.tableData.length; i++) {
+                // 转换性别
+                // 1是男，2是女，0是所有
+                if (that.tableData[i].sex === 1) {
+                  that.tableData[i].sexName = '男';
+                } else if (that.tableData[i].sex === 2) {
+                  that.tableData[i].sexName = '女';
+                } else if (that.tableData[i].sex === 0) {
+                  that.tableData[i].sexName = '所有';
+                }
+                // 转换总检状态
+                // 0是未检，1是部分已检，2是待总检，3是完成
+                if (that.tableData[i].status === 0) {
+                  that.tableData[i].checkStatus = '未检';
+                } else if (that.tableData[i].status === 1) {
+                  that.tableData[i].checkStatus = '部分已检';
+                } else if (that.tableData[i].status === 2) {
+                  that.tableData[i].checkStatus = '待总检';
+                } else if (that.tableData[i].status === 3) {
+                  that.tableData[i].checkStatus = '完成';
+                }
+                // 转换交费方式
+                // 1是个人交费，2是单位交费
+                if (that.tableData[i].clearingType === 1) {
+                  that.tableData[i].balanceType = '个人结账';
+                } else if (that.tableData[i].clearingType === 2) {
+                  that.tableData[i].balanceType = '单位结账';
+                }
+              }
+            }
+          }).catch(error => {
+            console.log(error);
+          });
+
         }
       }).catch(error => {
         console.log(error);
       });
+    },
+    // 打印收费单
+    retype () {
+      window.open(this.web + '/api/receiptInfo/print2/' + this.currentCode);
     }
   },
   mounted () {
