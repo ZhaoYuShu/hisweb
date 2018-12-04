@@ -1,138 +1,6 @@
 <!--个人体检收费-->
 <template>
   <div class="container">
-    <el-dialog title="刷卡" :visible.sync="dialogFormVisible" style="height:80%;">
-      <el-row>
-        <el-col :span="24">
-          <p class="title">体检卡基本信息</p>
-        </el-col>
-      </el-row>
-      <el-form :model="dialogForm" ref="dialogForm" class="dialog-form" label-width="100px">
-        <el-row>
-          <el-col :span="22">
-            <el-form-item label="感应编号" prop="inductionNumber">
-              <el-input v-model="dialogForm.inductionNumber"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="11">
-            <el-form-item label="卡编号" prop="cardNumber">
-              <el-input v-model="dialogForm.cardNumber" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="登记次数" prop="registrationNumber">
-              <el-input v-model="dialogForm.registrationNumber"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="11">
-            <el-form-item label="卡类别" prop="cardType">
-              <el-input v-model="dialogForm.cardType" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="状态" prop="status">
-              <el-input v-model="dialogForm.status" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="11">
-            <el-form-item label="销售金额" prop="saleAmount">
-              <el-input v-model="dialogForm.saleAmount" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="销售人" prop="saleMan">
-              <el-input v-model="dialogForm.saleMan" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="11">
-            <el-form-item label="销售日期" prop="saleDate">
-              <el-input v-model="dialogForm.saleDate" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="初始金额" prop="initialAmount">
-              <el-input v-model="dialogForm.initialAmount" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="11">
-            <el-form-item label="注销人" prop="cancellationPeople">
-              <el-input v-model="dialogForm.cancellationPeople" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="注销日期" prop="cancellationDate">
-              <el-input v-model="dialogForm.cancellationDate" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="11">
-            <el-form-item label="剩余金额" prop="remainAmount">
-              <el-input v-model="dialogForm.remainAmount" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="有效日期" prop="effectiveDate">
-              <el-input v-model="dialogForm.effectiveDate" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="11">
-            <el-form-item label="已使用次数" prop="usedTimes">
-              <el-input v-model="dialogForm.usedTimes"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="11">
-            <el-form-item label="可使用次数" prop="usableTimes">
-              <el-input v-model="dialogForm.usableTimes"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <el-row>
-        <el-col :span="24">
-          <p class="title">体检卡中项目信息</p>
-        </el-col>
-      </el-row>
-      <el-table
-        :data="dialogTable"
-        border
-        height="50%"
-        style="width:98%;margin:0 auto;">
-        <el-table-column
-          label="项目名称"
-          prop="name"
-          width="300"
-          align="left">
-        </el-table-column>
-        <el-table-column
-          label="总数"
-          prop="totalNumber"
-          width="100"
-          align="left">
-        </el-table-column>
-        <el-table-column
-          label="剩余次数"
-          prop="remainNumber"
-          align="left">
-        </el-table-column>
-      </el-table>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false" size="small">确 定</el-button>
-      </div>
-    </el-dialog>
     <div class="base">
       <el-form ref="form" :rules="rules" :model="form" label-width="100px" class="demo-form">
         <el-row :gutter="10">
@@ -155,13 +23,13 @@
           <el-button type="primary" size="small" @click="query">查询</el-button>
         </el-col>
         <el-col :span="6">
-          <el-button type="success" size="small">收费</el-button>
+          <el-button type="success" size="small" @click="charge" :disabled="disabled">收费</el-button>
         </el-col>
         <el-col :span="6">
-          <el-button type="danger" size="small">退费</el-button>
+          <el-button type="danger" size="small" :disabled="disabled2">退费</el-button>
         </el-col>
         <el-col :span="6">
-          <el-button type="warning" size="small">补打/重打</el-button>
+          <el-button type="warning" size="small" :disabled="disabled3">补打/重打</el-button>
         </el-col>
       </el-row>
     </div>
@@ -216,7 +84,7 @@
         </el-table-column>
         <!--0是未检，1是部分已检，2是待总检，3是完成-->
         <el-table-column
-          label="总检"
+          label="体检状态"
           prop="checkStatus"
           width="120"
           align="left">
@@ -231,12 +99,6 @@
           label="体检次数"
           prop="examTimes"
           width="100"
-          align="left">
-        </el-table-column>
-        <el-table-column
-          label="体检类别"
-          prop="examTypeName"
-          width="150"
           align="left">
         </el-table-column>
         <!--1是个人交费，2是单位交费-->
@@ -316,7 +178,7 @@
         label-width="100px"
         class="demo-ruleForm">
         <el-row :gutter="10">
-          <el-col :span="6">
+          <el-col :span="4">
             <el-form-item label="收费种类" prop="chargeType">
               <el-select v-model="ruleForm.chargeType" filterable placeholder="请选择收费种类">
                 <el-option
@@ -328,56 +190,39 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="4">
             <el-form-item label="体检编号" prop="code">
               <el-input v-model="ruleForm.code" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="4">
             <el-form-item label="姓名" prop="name">
               <el-input v-model="ruleForm.name" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="套餐金额" prop="packageMoney">
-              <el-input v-model="ruleForm.packageMoney" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="6">
+          <el-col :span="4">
             <el-form-item label="打折" prop="discount1">
               <el-input v-model="ruleForm.discount1" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="套餐应收" prop="packageReceivable">
-              <el-input v-model="ruleForm.packageReceivable" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
+          <el-col :span="4">
             <el-form-item label="总计金额" prop="totalAmount">
               <el-input v-model="ruleForm.totalAmount" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="打折" prop="discount3">
-              <el-input v-model="ruleForm.discount3" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="6">
+          <el-col :span="4">
             <el-form-item label="应收金额" prop="receivableMoney">
               <el-input v-model="ruleForm.receivableMoney" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :span="4">
             <el-form-item label="实收金额" prop="paidMoney">
-              <el-input v-model="ruleForm.paidMoney"></el-input>
+              <el-input v-model="ruleForm.paidMoney" @keyup.enter.native="getMoney"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="4">
             <el-form-item label="找零金额" prop="changeAmount">
               <el-input v-model="ruleForm.changeAmount" disabled></el-input>
             </el-form-item>
@@ -410,49 +255,26 @@ export default {
         chargeType: '', // 收费类型
         code: '', // 体检编号
         name: '', // 姓名
-        invoice: '', // 是否退发票
-        packageMoney: '', // 套餐金额
         discount1: '', // 打折
         packageReceivable: '', // 套餐应收
-        extraMoney: '', // 加做金额
-        discount2: '', // 打折
-        extraReceivable: '', // 加做应收
         totalAmount: '', // 总计金额
-        discount3: '', // 打折
         receivableMoney: '', // 应收金额
-        lastPaid: '', // 上次实收
         paidMoney: '', // 实收金额
         changeAmount: '', // 找零金额
-        currentInvoice: '' // 当前发票
       },
       sumPrice: '',
       chargeType: [],
-      invoice: [
-        {id: 0, value: '不退发票'},
-        {id: 1, value: '退发票'}
-      ],
       dialogFormVisible: false,
-      dialogForm: {
-        inductionNumber: '', // 感应编号
-        cardNumber: '', // 卡编号
-        registrationNumber: '', // 登记次数
-        cardType: '', // 卡类别
-        status: '', // 状态
-        saleAmount: '', // 销售金额
-        saleMan: '', // 销售人
-        saleDate: '', // 销售日期
-        initialAmount: '', // 初始金额
-        cancellationPeople: '', // 注销人
-        cancellationDate: '', // 注销日期
-        remainAmount: '', // 剩余金额
-        effectiveDate: '', // 有效日期
-        usedTimes: '', // 已使用次数
-        usableTimes: '' // 允许使用次数
-      },
       dialogTable: [],
       tableData: [],
       tableData2: [],
-      tableData3: []
+      tableData3: [],
+      currentCode: '',
+      disabled: true,
+      disabled2: true,
+      disabled3: true,
+      web: 'http://192.168.0.100:8081'
+      // web: 'http://172.17.8.3:8081'
     }
   },
   methods: {
@@ -464,6 +286,8 @@ export default {
       obj.name = this.form.name;
       obj.status = this.option;
       obj.clearingType = 1;
+      that.tableData2 = [];
+      that.ruleForm = {};
       http.receiptInfoList(obj).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
@@ -512,6 +336,10 @@ export default {
     handleRowClick (row, event, column) {
       console.log(row, event, column);
       let that = this;
+      that.disabled = false;
+      that.disabled2 = false;
+      that.disabled3 = false;
+      that.currentCode = row.orderNo;
       http.receiptInfoDetail(row.orderNo).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
@@ -519,12 +347,10 @@ export default {
           that.tableData2 = result.chargeInfos;
           that.ruleForm.name = result.name;
           that.ruleForm.code = result.code;
-          that.ruleForm.packageMoney = result.packagePrice;
           that.ruleForm.discount1 = result.discount;
-          that.ruleForm.packageReceivable = result.realPrice;
-          that.ruleForm.discount3 = result.vipDiscount;
-          that.ruleForm.totalAmount = result.sumPrice;
+          that.ruleForm.totalAmount = result.sumPrice.toFixed(2);
           that.sumPrice = result.sumPrice;
+          that.ruleForm.receivableMoney = (result.discount * result.sumPrice / 100).toFixed(2);
         }
       }).catch(error => {
         console.log(error);
@@ -548,27 +374,6 @@ export default {
         console.log(error);
       });
     },
-    // 选择相关收费项目(单选)
-    handleSelect (selection, row) {
-      let that = this;
-      that.ruleForm.totalAmount = that.sumPrice;
-      console.log(selection, row);
-      if (selection.length) {
-        for (let i = 0; i < selection.length; i++) {
-          that.ruleForm.totalAmount += selection[i].price;
-        }
-      }
-    },
-    // 选择相关收费项目(全选)
-    handleSelectAll (selection) {
-      let that = this;
-      that.ruleForm.totalAmount = that.sumPrice;
-      if (selection.length) {
-        for (let i = 0; i < selection.length; i++) {
-          that.ruleForm.totalAmount += selection[i].price;
-        }
-      }
-    },
     // 获取所有收费类别
     getAllChargeType () {
       let that = this;
@@ -582,6 +387,26 @@ export default {
             }
           }
           that.chargeType = arr;
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+    },
+    // 计算出找零金额
+    getMoney () {
+      this.ruleForm.changeAmount = (this.ruleForm.paidMoney - this.ruleForm.receivableMoney).toFixed(2);
+    },
+    // 收费
+    charge () {
+      let that = this;
+      http.confirmCharge2(that.currentCode).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          that.$message({
+            message: '交费成功',
+            type: 'success'
+          });
+          window.open(that.web + '/api/receiptInfo/print2/' + that.currentCode);
         }
       }).catch(error => {
         console.log(error);

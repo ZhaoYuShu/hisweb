@@ -214,7 +214,9 @@ export default {
       rule1: {},
       currentCode: '',
       sumPrice: 0,
-      regNo: []
+      regNo: [],
+      web: 'http://192.168.0.100:8081'
+      // web: 'http://172.17.8.3:8081'
     }
   },
   methods: {
@@ -336,17 +338,19 @@ export default {
     // 打印收费单
     printSheet () {
       let that = this;
-      let obj = {};
-      obj.companyCode = that.ruleForm.companyCode;
-      obj.groupCode = that.ruleForm.groupCode;
-      obj.regNo = that.regNo;
-      http.printSheet(that.ruleForm.companyCode, that.ruleForm.groupCode, that.regNo).then(response => {
+      http.confirmCharge(that.ruleForm.companyCode, that.ruleForm.groupCode, that.regNo).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
+          that.$message({
+            message: '交费成功',
+            type: 'success'
+          });
+          window.open(that.web + '/api/receiptInfo/print/' + that.ruleForm.companyCode + '/' + that.ruleForm.groupCode + '?regNo=' + that.regNo);
         }
       }).catch(error => {
         console.log(error);
       });
+
     }
   },
   mounted () {

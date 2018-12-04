@@ -1,8 +1,8 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
 // let web = 'http://localhost:8081';
-// let web = 'http://192.168.0.102:8081';
-let web = 'http://172.17.8.3:8081';
+let web = 'http://192.168.0.100:8081';
+// let web = 'http://172.17.8.3:8081';
 // let web = 'http://192.168.43.16:8081';
 // let web = 'http://a7958454.ngrok.io';
 // let token = localStorage.getItem('token');
@@ -542,8 +542,11 @@ let receiptInfoList = (data) => http.post(web + '/api/receiptInfo/list/', data);
 // 根据体检单位code,体检单位分组获取单位收费单信息（未结算）
 let receiptInfo = (companyCode, groupCode) => http.get(web + '/api/receiptInfo/' + companyCode + '/' + groupCode);
 
-// 打印收费单
-let printSheet = (companyCode, groupCode, data) => http.get(web + '/api/receiptInfo/print/' + companyCode + '/' + groupCode + "?regNo=" + data);
+// 单位确认收费
+let confirmCharge = (companyCode, groupCode, data) => http.get(web + '/api/receiptInfo/confirm/free/' + companyCode + '/' + groupCode + "?regNo=" + data);
+
+// 个人确认收费
+let confirmCharge2 = (data) => http.get(web + '/api/receiptInfo/confirm/free2/' + data);
 
 /* 收费单信息模块 */
 
@@ -855,7 +858,8 @@ export default {
   receiptInfoDetail,
   receiptInfoList,
   receiptInfo,
-  printSheet,
+  confirmCharge,
+  confirmCharge2,
   chargeInfo,
   addChargeType,
   updateChargeType,
