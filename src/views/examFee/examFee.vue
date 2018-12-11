@@ -276,8 +276,8 @@ export default {
       disabled: true,
       disabled2: true,
       disabled3: true,
-      web: 'http://192.168.0.100:8081'
-      // web: 'http://172.17.8.3:8081'
+      // web: 'http://192.168.0.100:8081'
+      web: 'http://172.17.8.3:8081'
     }
   },
   methods: {

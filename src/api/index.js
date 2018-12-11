@@ -1,7 +1,7 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
 // let web = 'http://localhost:8081';
-let web = 'http://192.168.0.100:8081';
+let web = 'http://192.168.0.117:8081';
 // let web = 'http://172.17.8.3:8081';
 // let web = 'http://192.168.43.16:8081';
 // let web = 'http://a7958454.ngrok.io';

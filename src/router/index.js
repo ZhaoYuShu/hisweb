@@ -632,7 +632,8 @@ export const constantRouterMap = [
       {path: 'physicalExamination', name: 'physicalExamination', component: () => import('@/views/physicalExamination/physicalExamination'), meta: {title: '体检医生诊断'}},
       {path: 'inspection', name: 'inspection', component: () => import('@/views/inspection/inspection'), meta: {title: '检验项目诊断'}},
       {path: 'generalExamination', name: 'generalExamination', component: () => import('@/views/generalExamination/generalExamination'), meta: {title: '总检医生诊断'}},
-      {path: 'medicalReport', name: 'medicalReport', component: () => import('@/views/medicalReport/medicalReport'), meta: {title: '打印体检报告'}}
+      {path: 'medicalReport', name: 'medicalReport', component: () => import('@/views/medicalReport/medicalReport'), meta: {title: '打印体检报告'}},
+      {path: 'medicalInfo', name: 'medicalInfo', component: () => import('@/views/medicalInfo/medicalInfo'), meta: {title: '体检人员信息'}}
     ]
   },
   {
