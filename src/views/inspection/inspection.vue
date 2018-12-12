@@ -42,13 +42,14 @@
         height="400"
         style="width:98%;margin:0 auto;"
         :highlight-current-row="true"
-        @row-click="getExamCode">
+        @row-click="getExamCode"
+        :row-style="rowStyle2">
         <!--<el-table-column property="company" label="单位" width="150"></el-table-column>-->
         <el-table-column property="examCode" label="体检编号" width="150"></el-table-column>
         <el-table-column property="name" label="姓名" width="100"></el-table-column>
         <el-table-column property="sexName" label="性别" width="100"></el-table-column>
         <el-table-column property="age" label="年龄" width="100"></el-table-column>
-        <el-table-column property="statusName" label="状态"></el-table-column>
+        <el-table-column property="statusName" label="状态" sortable></el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false" size="small">取 消</el-button>
@@ -401,6 +402,8 @@
             for (let value of Object.values(node)) {
               that.summary += " " + value;
             }
+            that.summary = that.summary.replace(/＼n/g, '\n');
+            that.summary = that.summary.replace(/null/g, '');
             for (let value of Object.values(qNode)) {
               var obj = {};
               obj.diagnosis = value;
@@ -448,6 +451,8 @@
           console.log(response);
           if (response.status === 200 && response.data.result === '00000000') {
             that.summary = response.data.data.node;
+            that.summary = that.summary.replace(/＼n/g, '\n');
+            that.summary = that.summary.replace(/null/g, '');
             that.obj.examGroupItemResultZDDtos[0].node = that.summary;
             var arr = [];
             for (let value of Object.values(response.data.data.qnode)) {
@@ -712,6 +717,15 @@
           this.commonResults = row.commonResults;
           this.form.examResults = row.defaultValue;
           this.row = row;
+        }
+      },
+      // 标红未检人员颜色
+      rowStyle2 (data) {
+        console.log(data);
+        if (data.row.status === 0) {
+          return 'background:#f77b7b;color:#fff;';
+        }else {
+          return 'background:#9f9fef;color:#fff;'
         }
       }
     },

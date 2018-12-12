@@ -42,13 +42,14 @@
         height="400"
         style="width:98%;margin:0 auto;"
         :highlight-current-row="true"
-        @row-click="getExamCode">
+        @row-click="getExamCode"
+        :row-style="rowStyle2">
         <!--<el-table-column property="company" label="单位" width="150"></el-table-column>-->
-        <el-table-column property="examCode" label="体检编号" width="150"></el-table-column>
-        <el-table-column property="name" label="姓名" width="100"></el-table-column>
-        <el-table-column property="sexName" label="性别" width="100"></el-table-column>
-        <el-table-column property="age" label="年龄" width="100"></el-table-column>
-        <el-table-column property="statusName" label="状态"></el-table-column>
+        <el-table-column prop="examCode" label="体检编号" width="150"></el-table-column>
+        <el-table-column prop="name" label="姓名" width="100"></el-table-column>
+        <el-table-column prop="sexName" label="性别" width="100"></el-table-column>
+        <el-table-column prop="age" label="年龄" width="100"></el-table-column>
+        <el-table-column prop="statusName" label="状态" sortable></el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false" size="small">取 消</el-button>
@@ -154,6 +155,10 @@
             <el-col :span="4">
               <el-form-item>
                 <el-button size="small" type="primary" @click="saveExamRecord">保存</el-button>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item>
                 <el-button size="small" type="primary" @click="reviewReport">预览报告</el-button>
               </el-form-item>
             </el-col>
@@ -405,6 +410,7 @@ export default {
     //     console.log(error);
     //   });
     // },
+
     // 点击表格的一行获取体检编号
     getExamCode (row) {
       let that = this;
@@ -474,6 +480,15 @@ export default {
       let str = '';
       str = arr.join('\n');
       that.suggest += str + '\n';
+    },
+    // 标红未检人员颜色
+    rowStyle2 (data) {
+      console.log(data);
+      if (data.row.status === 0) {
+        return 'background:#f77b7b;color:#fff;';
+      }else {
+        return 'background:#9f9fef;color:#fff;'
+      }
     }
   },
   mounted () {

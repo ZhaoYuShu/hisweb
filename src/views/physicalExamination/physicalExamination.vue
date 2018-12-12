@@ -42,13 +42,14 @@
         height="400"
         style="width:98%;margin:0 auto;"
         :highlight-current-row="true"
-        @row-click="getExamCode">
+        @row-click="getExamCode"
+        :row-style="rowStyle2">
         <!--<el-table-column property="company" label="单位" width="150"></el-table-column>-->
         <el-table-column property="examCode" label="体检编号" width="150"></el-table-column>
         <el-table-column property="name" label="姓名" width="100"></el-table-column>
         <el-table-column property="sexName" label="性别" width="100"></el-table-column>
         <el-table-column property="age" label="年龄" width="100"></el-table-column>
-        <el-table-column property="statusName" label="状态"></el-table-column>
+        <el-table-column property="statusName" label="状态" sortable></el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogTableVisible = false" size="small">取 消</el-button>
@@ -381,6 +382,9 @@ export default {
           for (let value of Object.values(node)) {
             that.summary += " " + value;
           }
+          that.summary = that.summary.replace(/＼n/g, '\n');
+          that.summary = that.summary.replace(/null/g, '');
+          console.log(that.summary);
           for (let value of Object.values(qNode)) {
             var obj = {};
             obj.diagnosis = value;
@@ -451,6 +455,9 @@ export default {
               for (let value of Object.values(node)) {
                 that.summary += " " + value;
               }
+              that.summary = that.summary.replace(/＼n/g, '\n');
+              that.summary = that.summary.replace(/null/g, '');
+              console.log(that.summary);
               for (let value of Object.values(qNode)) {
                 var obj = {};
                 obj.diagnosis = value;
@@ -550,6 +557,15 @@ export default {
     // 改变诊断列表字体颜色
     rowStyle (row, rowIndex) {
       return 'color:red';
+    },
+    // 标红未检人员颜色
+    rowStyle2 (data) {
+      console.log(data);
+      if (data.row.status === 0) {
+        return 'background:#f77b7b;color:#fff;';
+      }else {
+        return 'background:#9f9fef;color:#fff;'
+      }
     },
     // 获取人员列表
     getPersonList () {

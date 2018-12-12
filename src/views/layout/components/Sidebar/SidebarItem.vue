@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { generateTitle } from '@/utils/i18n'
+// import { generateTitle } from '@/utils/i18n'
 export default {
   name: 'SidebarItem',
   data () {
@@ -77,20 +77,26 @@ export default {
     }
   },
   methods: {
-    generateTitle,
+    // generateTitle,
     hasOneShowingChildren(children) {
       const showingChildren = children.filter(item => {
         return !item.hidden
-      })
+      });
       if (showingChildren.length === 1) {
         return true
       }
       return false
+    },
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
     }
   },
   created() {
     for (const o in this.routes) {
-      const obj = this.routes[o]
+      const obj = this.routes[o];
       if (obj.path.indexOf('myiframe') >= 0) {
         obj.children[0].path = 'urlPath?src=https://www.baidu.com'
       }
