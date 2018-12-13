@@ -137,16 +137,16 @@
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="单位" prop="companyCode">
-              <el-input v-model="companyName" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="单位分组" prop="groupCode">
-              <el-input v-model="groupName" disabled></el-input>
-            </el-form-item>
-          </el-col>
+          <!--<el-col :span="6">-->
+            <!--<el-form-item label="单位" prop="companyCode">-->
+              <!--<el-input v-model="companyName" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+          <!--<el-col :span="6">-->
+            <!--<el-form-item label="单位分组" prop="groupCode">-->
+              <!--<el-input v-model="groupName" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
           <el-col :span="6">
             <el-form-item label="是否为VIP" prop="isVip">
               <el-radio-group v-model="ruleForm.isVip">
@@ -163,13 +163,6 @@
           <el-col :span="6">
             <el-form-item label="联系电话" prop="phone">
               <el-input v-model="ruleForm.phone" placeholder="请输入联系电话"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item label="联系地址" prop="address">
-              <el-input v-model="ruleForm.address" placeholder="请输入联系地址"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -189,6 +182,13 @@
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <!--<el-col :span="6">-->
+            <!--<el-form-item label="联系地址" prop="address">-->
+              <!--<el-input v-model="ruleForm.address" placeholder="请输入联系地址"></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
           <el-col :span="6">
             <el-form-item label="人员类别" prop="personnelType">
               <el-select v-model="ruleForm.personnelType" filterable placeholder="请选择人员类别">
@@ -201,8 +201,6 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item label="体检类别" prop="examType">
               <el-select v-model="ruleForm.examType" filterable placeholder="请选择体检类别">
@@ -225,11 +223,11 @@
               <el-input v-model="ruleForm.realPrice" placeholder="请输入实收金额"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
+        </el-row>
+        <el-row type="flex" justify="center">
             <el-form-item>
               <el-button type="primary" size="small" @click="submitRegistration('ruleForm')">保存</el-button>
             </el-form-item>
-          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -274,8 +272,8 @@ export default {
         companyCode: '', // 单位
         groupCode: '' // 单位分组
       },
-      companyName: '个人单位', // 单位名称
-      groupName: '个人体检', // 单位分组名称
+      // companyName: '个人单位', // 单位名称
+      // groupName: '个人体检', // 单位分组名称
       examGroupItems: [],
       tableData: [],
       tableData2: [],
@@ -311,7 +309,7 @@ export default {
       sex: [
         {id: 1, value: '男'},
         {id: 2, value: '女'},
-        {id: 0, value: '不详'}
+        {id: 0, value: '所有'}
       ],
       maritalStatus: [
         {id: 0, value: '未婚'},
@@ -532,6 +530,7 @@ export default {
                 type: 'success'
               });
               that.resetForm('ruleForm');
+              that.ruleForm.isVip = 0;
             } else {
               that.$message({
                 message: response.data.msg,

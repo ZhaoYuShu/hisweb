@@ -83,15 +83,6 @@
           </el-row>
           <el-row :gutter="10">
             <el-col :span="6">
-              <el-form-item label="出生日期" prop="birthday">
-                <el-date-picker
-                  v-model="ruleForm.birthday"
-                  type="date"
-                  placeholder="选择出生日期">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
               <el-form-item label="年龄" prop="age">
                 <el-input v-model="ruleForm.age" placeholder="请输入年龄"></el-input>
               </el-form-item>
@@ -117,8 +108,6 @@
                 </el-select>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row :gutter="10">
             <el-col :span="6">
               <el-form-item label="体检类型" prop="examType">
                 <el-select v-model="ruleForm.examType" filterable placeholder="请选择体检类型">
@@ -131,53 +120,55 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item label="结算方式" prop="balanceType">
-                <el-select v-model="ruleForm.balanceType" placeholder="请选择结算方式">
-                  <el-option
-                    v-for="item in balanceType"
-                    :key="item.id"
-                    :label="item.value"
-                    :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="标签个数" prop="labelNum">
-                <el-input v-model="ruleForm.labelNum" placeholder="请输入标签个数"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="人员类别" prop="personnelType">
-                <el-select v-model="ruleForm.personnelType" filterable placeholder="请选择人员类别">
-                  <el-option
-                    v-for="item in personalCategory"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.code">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
           </el-row>
-          <el-row :gutter="10">
-            <el-col :span="6">
-              <el-form-item label="Email" prop="email">
-                <el-input v-model="ruleForm.email" placeholder="请输入Email"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="职务" prop="duty">
-                <el-input v-model="ruleForm.duty" placeholder="请输入职务"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="职称" prop="title">
-                <el-input v-model="ruleForm.title" placeholder="请输入职称"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
+          <!--<el-row :gutter="10">-->
+            <!--<el-col :span="6">-->
+              <!--<el-form-item label="结算方式" prop="balanceType">-->
+                <!--<el-select v-model="ruleForm.balanceType" placeholder="请选择结算方式">-->
+                  <!--<el-option-->
+                    <!--v-for="item in balanceType"-->
+                    <!--:key="item.id"-->
+                    <!--:label="item.value"-->
+                    <!--:value="item.id">-->
+                  <!--</el-option>-->
+                <!--</el-select>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+            <!--<el-col :span="6">-->
+              <!--<el-form-item label="标签个数" prop="labelNum">-->
+                <!--<el-input v-model="ruleForm.labelNum" placeholder="请输入标签个数"></el-input>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+            <!--<el-col :span="6">-->
+              <!--<el-form-item label="人员类别" prop="personnelType">-->
+                <!--<el-select v-model="ruleForm.personnelType" filterable placeholder="请选择人员类别">-->
+                  <!--<el-option-->
+                    <!--v-for="item in personalCategory"-->
+                    <!--:key="item.id"-->
+                    <!--:label="item.name"-->
+                    <!--:value="item.code">-->
+                  <!--</el-option>-->
+                <!--</el-select>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+          <!--</el-row>-->
+          <!--<el-row :gutter="10">-->
+            <!--<el-col :span="6">-->
+              <!--<el-form-item label="Email" prop="email">-->
+                <!--<el-input v-model="ruleForm.email" placeholder="请输入Email"></el-input>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+            <!--<el-col :span="6">-->
+              <!--<el-form-item label="职务" prop="duty">-->
+                <!--<el-input v-model="ruleForm.duty" placeholder="请输入职务"></el-input>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+            <!--<el-col :span="6">-->
+              <!--<el-form-item label="职称" prop="title">-->
+                <!--<el-input v-model="ruleForm.title" placeholder="请输入职称"></el-input>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+          <!--</el-row>-->
         </el-form>
         <el-row type="flex" justify="center">
           <el-button type="primary" size="small" @click="resetForm('ruleForm')">增加</el-button>
@@ -197,7 +188,7 @@
           ref="tables"
           :data="tableData"
           border
-          height="86%"
+          height="90%"
           style="width:98%;margin:0 auto;"
           @row-click="handleRowClick"
           :highlight-current-row="true">
@@ -258,7 +249,6 @@
           <el-table-column
             prop="labelNum"
             label="标签个数"
-            width="100"
             align="left">
           </el-table-column>
         </el-table>
@@ -306,7 +296,7 @@ export default {
         examType: '', // 体检类别
         duty: '', // 职务
         jobTitle: '', // 职称
-        balanceType: '' // 结算方式
+        balanceType: 2 // 结算方式
       },
       rules: {
         companyCode: [
@@ -768,7 +758,7 @@ export default {
   }
   .rightForm .top{
     width: 100%;
-    height: 54%;
+    height: 35%;
     margin-bottom: 2%;
     overflow: hidden;
   }
@@ -778,11 +768,11 @@ export default {
     margin-bottom:5px;
   }
   .rightForm .top .el-form{
-    height:70%;
+    height:60%;
     width:100%;
     overflow-y:auto;
     overflow-x:hidden;
-    margin-bottom:2%;
+    /*margin-bottom:2%;*/
     padding-right:1%;
   }
   .rightForm .top .title{
@@ -793,7 +783,7 @@ export default {
   }
   .rightForm .bottom{
     width: 100%;
-    height: 45%;
+    height: 63%;
   }
   .rightForm .bottom .title{
     text-align:left;

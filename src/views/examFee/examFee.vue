@@ -60,7 +60,8 @@
         border
         height="80%"
         style="width:98%;margin:0 auto;"
-        @row-click="handleRowClick">
+        @row-click="handleRowClick"
+        :highlight-current-row="true">
         <el-table-column
           label="登记流水号"
           prop="orderNo"

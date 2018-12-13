@@ -210,6 +210,7 @@ export default {
           });
         }
       }).catch(error => {
+        that.loading2 = false;
         console.log(error);
       });
     },

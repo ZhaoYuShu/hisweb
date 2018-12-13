@@ -642,7 +642,7 @@
         that.summary = '';
         that.tableData2 = [];
         that.tableData3 = [];
-        http.examRecordUser1(that.ruleForm.examCode).then(response => {
+        http.examRecordUser2(that.ruleForm.examCode).then(response => {
           console.log(response);
           if (response.status === 200 && response.data.result === '00000000') {
             let res = response.data.data;

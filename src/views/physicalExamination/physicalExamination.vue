@@ -522,7 +522,7 @@ export default {
         this.dialogFormVisible = true;
         console.log(row);
         this.commonResults = row.commonResults;
-        this.form.examResults = row.defaultValue;
+        this.form.examResults = row.defaultValue.replace(/＼n/g, '\n');
         this.row = row;
       }
     },
