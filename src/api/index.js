@@ -1,7 +1,7 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
 // let web = 'http://localhost:8081';
-let web = 'http://192.168.0.100:8081';
+let web = 'http://192.168.0.106:8081';
 // let web = 'http://172.17.8.3:8081';
 // let web = 'http://192.168.43.16:8081';
 // let web = 'http://a7958454.ngrok.io';
@@ -551,6 +551,9 @@ let confirmCharge = (companyCode, groupCode, data) => http.get(web + '/api/recei
 // 个人确认收费
 let confirmCharge2 = (data) => http.get(web + '/api/receiptInfo/confirm/free2/' + data);
 
+// 体检加项
+let confirmAddExam = (data) => http.post(web + '/api/receiptInfo/examItam/add/', data);
+
 /* 收费单信息模块 */
 
 // 根据流水号获取收费项目
@@ -864,6 +867,7 @@ export default {
   receiptInfo,
   confirmCharge,
   confirmCharge2,
+  confirmAddExam,
   chargeInfo,
   addChargeType,
   updateChargeType,

@@ -26,12 +26,12 @@
             </el-col>
             <el-col :span="2">
               <el-form-item>
-                <el-button type="primary" size="small" @click="printSheet()">打印收费单</el-button>
+                <el-button type="primary" size="small" @click="printSheet()" :disabled="disabled">打印收费单</el-button>
               </el-form-item>
             </el-col>
             <el-col :span="2">
               <el-form-item>
-                <el-button type="primary" size="small" @click="confirm()">确认</el-button>
+                <el-button type="primary" size="small" @click="confirm()" :disabled="disabled">确认</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -82,7 +82,7 @@
 <script>
 import http from '@/api/index.js'
 export default {
-    name: "addExam",
+  name: "addExam",
   data () {
     return {
       ruleForm: {
@@ -104,6 +104,7 @@ export default {
       currentCode: '',
       sumPrice: 0,
       regNo: [],
+      disabled: true,
       // web: 'http://192.168.0.102:8081'
       web: 'http://172.17.8.3:8081'
     }
@@ -134,6 +135,10 @@ export default {
     // 根据登记流水号或体检编号获取已选的体检项目
     queryExam () {
       let that = this;
+      that.value2 = [];
+      that.tableData2 = [];
+      that.examGroupItemResultDtoList = [];
+      that.disabled = true;
       http.queryExam(that.ruleForm).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
@@ -182,6 +187,11 @@ export default {
           }
         }
       }
+      if (that.examGroupItemResultDtoList.length) {
+        that.disabled = false;
+      } else {
+        that.disabled = true;
+      }
       console.log(that.examGroupItemResultDtoList);
       that.tableData2 = that.examGroupItemResultDtoList;
     },
@@ -193,6 +203,17 @@ export default {
       obj.companyGroupCode = that.companyGroupCode;
       obj.orderNo = that.orderNo;
       obj.examGroupItemResultDtoList = that.examGroupItemResultDtoList;
+      http.confirmAddExam(obj).then(response => {
+        console.log(response);
+        if (response.status === 200 && response.data.result === '00000000') {
+          that.$message({
+            message: '加项成功',
+            type: 'success'
+          });
+        }
+      }).catch(error => {
+        console.log(error);
+      });
 
     },
     // 打印收费单
