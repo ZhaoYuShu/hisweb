@@ -768,10 +768,10 @@ export default {
     margin-top:0;
   }
   >>>.el-transfer-panel__body{
-    height:80%;
+    height:90%;
   }
   >>>.el-transfer-panel__list.is-filterable{
-    height:82%;
+    height:85%;
   }
   >>>.el-table td, >>>.el-table th{
     padding:0.8vh 0;

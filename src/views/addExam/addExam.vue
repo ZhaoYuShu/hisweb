@@ -26,12 +26,12 @@
             </el-col>
             <el-col :span="2">
               <el-form-item>
-                <el-button type="primary" size="small" @click="printSheet()" :disabled="disabled">打印收费单</el-button>
+                <el-button type="primary" size="small" @click="confirm()" :disabled="disabled">打印收费单</el-button>
               </el-form-item>
             </el-col>
             <el-col :span="2">
               <el-form-item>
-                <el-button type="primary" size="small" @click="confirm()" :disabled="disabled">确认</el-button>
+                <el-button type="primary" size="small" @click="printSheet2()" :disabled="disabled">打印检验单</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -105,8 +105,8 @@ export default {
       sumPrice: 0,
       regNo: [],
       disabled: true,
-      // web: 'http://192.168.0.102:8081'
-      web: 'http://172.17.8.3:8081'
+      web: 'http://192.168.0.117:8081'
+      // web: 'http://172.17.8.3:8081'
     }
   },
   methods: {
@@ -195,7 +195,7 @@ export default {
       console.log(that.examGroupItemResultDtoList);
       that.tableData2 = that.examGroupItemResultDtoList;
     },
-    // 确认
+    // 保存
     confirm () {
       let that = this;
       let obj = {};
@@ -210,6 +210,7 @@ export default {
             message: '加项成功',
             type: 'success'
           });
+          window.open(that.web + '/api/receiptInfo/print/additem/' + that.orderNo);
         }
       }).catch(error => {
         console.log(error);
@@ -217,8 +218,8 @@ export default {
 
     },
     // 打印收费单
-    printSheet () {
-      let that = this;
+    // printSheet () {
+    //   let that = this;
       // http.confirmCharge(that.ruleForm.companyCode, that.ruleForm.groupCode, that.regNo).then(response => {
       //   console.log(response);
       //   if (response.status === 200 && response.data.result === '00000000') {
@@ -226,12 +227,18 @@ export default {
       //       message: '交费成功',
       //       type: 'success'
       //     });
-      window.open(that.web + '/api/receiptInfo/print/' + that.companyCode + '/' + that.companyGroupCode + '?regNo=' + that.orderNo);
+      // window.open(that.web + '/api/receiptInfo/print/' + that.companyCode + '/' + that.companyGroupCode + '?regNo=' + that.orderNo);
       //   }
       // }).catch(error => {
       //   console.log(error);
       // });
 
+    // }
+
+    // 打印检验单
+    printSheet2 () {
+      let that = this;
+      window.open(that.web + '/api/receiptInfo/confirm/additem/' + that.orderNo);
     }
   },
   mounted () {

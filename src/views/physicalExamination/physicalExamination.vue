@@ -375,6 +375,9 @@ export default {
       http.examResult(row.resultId, row.code).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
+          for (let i = 0; i < response.data.data.examItemAndZDResultDtos.length; i++) {
+            response.data.data.examItemAndZDResultDtos[i].defaultValue = response.data.data.examItemAndZDResultDtos[i].defaultValue.replace(/＼n/g, '\n');
+          };
           that.tableData2 = response.data.data.examItemAndZDResultDtos;
           var node = response.data.data.node;
           var qNode = response.data.data.qNode;
@@ -398,13 +401,13 @@ export default {
           objs.resultID = row.resultId;
           objs.examItemResultDtoList = [];
           that.obj.examGroupItemResultZDDtos.push(objs);
-          for (let i = 0; i < row.examItemResultDtoList.examItemAndZDResultDtos.length; i++) {
+          for (let i = 0; i < response.data.data.examItemAndZDResultDtos.length; i++) {
             let obj2 = {};
-            obj2.code = row.examItemResultDtoList.examItemAndZDResultDtos[i].itemCode;
-            obj2.defaultValue = row.examItemResultDtoList.examItemAndZDResultDtos[i].defaultValue;
-            obj2.name = row.examItemResultDtoList.examItemAndZDResultDtos[i].name;
-            obj2.referenceValue = row.examItemResultDtoList.examItemAndZDResultDtos[i].referenceValue;
-            obj2.unit = row.examItemResultDtoList.examItemAndZDResultDtos[i].unit;
+            obj2.code = response.data.data.examItemAndZDResultDtos[i].itemCode;
+            obj2.defaultValue = response.data.data.examItemAndZDResultDtos[i].defaultValue;
+            obj2.name = response.data.data.examItemAndZDResultDtos[i].name;
+            obj2.referenceValue = response.data.data.examItemAndZDResultDtos[i].referenceValue;
+            obj2.unit = response.data.data.examItemAndZDResultDtos[i].unit;
             objs.examItemResultDtoList.push(obj2);
           }
           console.log(that.obj);
@@ -416,6 +419,7 @@ export default {
     },
     // 保存体检结果
     saveMessage (row, index, scope) {
+      console.log(row, index, scope);
       let that = this;
       console.log("保存结果");
       console.log(row, index, scope);
@@ -448,6 +452,9 @@ export default {
           http.examResult(that.currentResultID, that.currentCode).then(response => {
             console.log(response);
             if (response.status === 200 && response.data.result === '00000000') {
+              for (let i = 0; i < response.data.data.examItemAndZDResultDtos.length; i++) {
+                response.data.data.examItemAndZDResultDtos[i].defaultValue = response.data.data.examItemAndZDResultDtos[i].defaultValue.replace(/＼n/g, '\n');
+              };
               that.tableData2 = response.data.data.examItemAndZDResultDtos;
               var node = response.data.data.node;
               var qNode = response.data.data.qNode;
