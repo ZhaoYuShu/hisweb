@@ -1,7 +1,7 @@
 import axios from 'axios'
 import http from '@/utils/request.js'
 // let web = 'http://localhost:8081';
-let web = 'http://192.168.0.117:8081';
+let web = 'http://192.168.0.102:8081';
 // let web = 'http://172.17.8.3:8081';
 // let web = 'http://192.168.43.16:8081';
 // let web = 'http://a7958454.ngrok.io';
@@ -534,6 +534,12 @@ let saveExamRecord = (data) => http.post(web + '/api/examRecord/save', data);
 // 根据个人体检编号、体检流水号等查询出该客户的体检项目
 let queryExam = (data) => http.post(web + '/api/examRecord/personItem/add', data);
 
+// 根据单位体检次数，单位分组code获取正式登记人员信息
+let getOfficiallyPeople = (data) => http.post(web + '/api/examRecord/person/records', data);
+
+// 根据流水号查询出该客户的体检项目用于拒检操作
+let personItems = (data) => http.get(web + '/api/examRecord/personItems/' + data);
+
 /* 收据单 */
 
 // 根据流水号查询交费的明细信息
@@ -862,6 +868,8 @@ export default {
   getExamRecord,
   saveExamRecord,
   queryExam,
+  getOfficiallyPeople,
+  personItems,
   receiptInfoDetail,
   receiptInfoList,
   receiptInfo,

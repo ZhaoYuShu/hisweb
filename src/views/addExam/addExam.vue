@@ -105,8 +105,8 @@ export default {
       sumPrice: 0,
       regNo: [],
       disabled: true,
-      web: 'http://192.168.0.117:8081'
-      // web: 'http://172.17.8.3:8081'
+      // web: 'http://192.168.0.117:8081'
+      web: 'http://172.17.8.3:8081'
     }
   },
   methods: {

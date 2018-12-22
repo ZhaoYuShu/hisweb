@@ -43,7 +43,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="联系电话" prop="phone">
-                <el-input v-model="ruleForm.phone" placeholder="请输入联系电话" @blur="getPersonInfo"></el-input>
+                <el-input v-model="ruleForm.phone" placeholder="请输入联系电话"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -296,7 +296,8 @@ export default {
         examType: '', // 体检类别
         duty: '', // 职务
         jobTitle: '', // 职称
-        balanceType: 2 // 结算方式
+        balanceType: 2, // 结算方式
+        companyExamTimes: '' // 单位体检次数id
       },
       rules: {
         companyCode: [
@@ -649,25 +650,25 @@ export default {
       });
     },
     // 根据身份证号(手机号)获取人员信息
-    getPersonInfo () {
-      let that = this;
-      http.getPersonInfo(that.ruleForm.companyCode, that.ruleForm.phone).then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          if (response.data.data.examTimes === 1) {
-            that.ruleForm.examTimes = 1;
-            console.log(this.ruleForm);
-          } else if (response.data.data.examTimes > 1) {
-            that.ruleForm = response.data.data;
-            that.ruleForm.groupCode = parseInt(response.data.data.groupCode);
-            that.ruleForm.personnelType = parseInt(response.data.data.personnelType);
-            console.log(this.ruleForm);
-          }
-        }
-      }).catch(error => {
-        console.log(error);
-      });
-    },
+    // getPersonInfo () {
+    //   let that = this;
+    //   http.getPersonInfo(that.ruleForm.companyCode, that.ruleForm.phone).then(response => {
+    //     console.log(response);
+    //     if (response.status === 200 && response.data.result === '00000000') {
+    //       if (response.data.data.examTimes === 1) {
+    //         that.ruleForm.examTimes = 1;
+    //         console.log(this.ruleForm);
+    //       } else if (response.data.data.examTimes > 1) {
+    //         that.ruleForm = response.data.data;
+    //         that.ruleForm.groupCode = parseInt(response.data.data.groupCode);
+    //         that.ruleForm.personnelType = parseInt(response.data.data.personnelType);
+    //         console.log(this.ruleForm);
+    //       }
+    //     }
+    //   }).catch(error => {
+    //     console.log(error);
+    //   });
+    // },
     // 点击表格中人员行获取详细信息
     handleRowClick (row, event, column) {
       console.log(row, event, column);
@@ -743,6 +744,9 @@ export default {
     });
     Bus.$on("people", (e) => {
       this.people = e;
+    });
+    Bus.$on('companyExamTimeId', (e) => {
+      this.ruleForm.companyExamTimes = e;
     });
   }
 }

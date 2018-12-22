@@ -203,6 +203,25 @@
           </el-table-column>
         </el-table>
       </div>
+      <div class="right2">
+        <el-row>
+          <el-col>
+            <p class="title">未检项目</p>
+          </el-col>
+        </el-row>
+        <el-table
+          :data="tableData4"
+          border
+          height="90%"
+          style="width:98%;margin:0 auto;"
+          :row-style="rowStyle">
+          <el-table-column
+            label="未检项目"
+            prop="name"
+            align="left">
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
   </div>
 </template>
@@ -242,6 +261,7 @@ export default {
       tableData: [],
       tableData2: [],
       tableData3: [],
+      tableData4: [],
       sex: [
         {id: 1, value: '男'},
         {id: 2, value: '女'},
@@ -278,6 +298,12 @@ export default {
           that.suggest = res.suggest;
           that.fullscreenLoading = false;
           that.tableData = res.diagnoseInfoResultShortDtos;
+          // 查询未检项目
+          for (let i = 0; i < res.noCheckoutItemName.length; i++) {
+            let obj = {};
+            obj.name = res.noCheckoutItemName[i];
+            that.tableData4.push(obj);
+          }
         }
       }).catch(error => {
         that.fullscreenLoading = false;
@@ -550,19 +576,25 @@ export default {
     margin-bottom:1%;
   }
   .container .div2 .left{
-    width:39%;
+    width:29%;
     height:100%;
     background:#fff;
     float:left;
     margin-right:1%;
   }
   .container .div2 .middle{
-    width:39%;
+    width:29%;
     height:100%;
     float:left;
     margin-right:1%;
   }
   .container .div2 .right{
+    width:19%;
+    height:100%;
+    float:left;
+    margin-right:1%;
+  }
+  .container .div2 .right2{
     width:20%;
     height:100%;
     float:left;

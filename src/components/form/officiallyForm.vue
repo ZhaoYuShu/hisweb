@@ -341,60 +341,22 @@ export default {
 
 <style scoped>
   .rightForm{
-    width:100%;
-    height:90%;
-    padding-top:1%;
-    padding-right:2%;
-    background:#fff;
-  }
-  .rightForm .top{
-    width:100%;
-    height:30%;
-    margin-bottom:1%;
-    overflow:hidden;
-  }
-  .rightForm .bottom{
-    width:100%;
-    height:69%;
-  }
-  .rightForm .title{
-    text-align:left;
-    text-indent:20px;
-    font-size:12px;
-    font-weight:bold;
-  }
-  .rightForm .el-form{
-    width:80%;
-    height:100%;
-    border-right:1px solid #ccc;
-    float:left;
-  }
-  .rightForm .options{
-    width:18%;
-    height:100%;
     float:right;
+    width:82%;
+    height:90%;
+    background:#fff;
+    margin-left:2%;
+    padding-right:1%;
+    padding-top:20px;
+    overflow:auto;
   }
-  .rightForm .el-date-editor{
-    width:40%;
+  .el-radio-group{
+    width:100%;
   }
-  .rightForm .indexNumberStart{
-    width:40%;
+  .el-select{
+    width:100%;
   }
-  .rightForm .indexNumberEnd{
-    width:40%;
-  }
-  .rightForm .options .el-radio{
-    margin-left:0;
-    margin-top:10px;
-  }
-  .rightForm .options .el-checkbox{
-    margin-top:10px;
-  }
-  .rightForm .options .el-col-24{
-    display:flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
+
 </style>
 <style scoped>
   >>>.el-form-item__label{
@@ -439,8 +401,5 @@ export default {
   >>>.el-transfer-panel__item.el-checkbox{
     margin-left:30px;
   }
-  >>>.current-row{
-    background:#000;
-  }
-</style>
 
+</style>

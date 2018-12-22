@@ -1,21 +1,21 @@
 <template>
-    <el-tree
-      :data="data"
-      :props="defaultProps"
-      accordion
-      :highlight-current="true"
-      node-key="id"
-      @node-click="handleNodeClick"
-      default-expand-all
-      v-loading="loading">
-    </el-tree>
+  <el-tree
+    :data="data"
+    :props="defaultProps"
+    accordion
+    :highlight-current="true"
+    node-key="id"
+    @node-click="handleNodeClick"
+    default-expand-all
+    v-loading="loading">
+  </el-tree>
 </template>
 
 <script>
 import http from '@/api/index.js'
 import Bus from '@/utils/bus.js'
 export default {
-  name: "individualPreTree",
+  name: "medicalInfoTree",
   data () {
     return {
       data: [],
@@ -31,15 +31,13 @@ export default {
       console.log(data);
       if (data.id > 1000) {
         Bus.$emit("currentId", data.id);
-        Bus.$emit('companyExamTimeId', data.pid);
-        http.getAllStaff(data.id).then(response => {
+        let obj = {};
+        obj.companyGroupCode = data.id;
+        obj.companyRecordId = data.pid;
+        http.getOfficiallyPeople(obj).then(response => {
           console.log(response);
           if (response.status === 200 && response.data.result === '00000000') {
             Bus.$emit('tableData', response.data.data);
-            Bus.$emit("saveDisabledIndividual", false);
-            Bus.$emit("deleteDisabledIndividual", true);
-            Bus.$emit("updateDisabledIndividual", true);
-            Bus.$emit("people", response.data.data.length);
           }
         }).catch(error => {
           console.log(error);
@@ -63,15 +61,6 @@ export default {
   },
   mounted () {
     this.getTree();
-    Bus.$on("reloadIndividualTree", (e) => {
-      this.data = e;
-    });
-    Bus.$on("loading1", (e) => {
-      this.loading = e;
-    });
-    Bus.$on("loading2", (e) => {
-      this.loading = e;
-    });
   }
 }
 </script>
