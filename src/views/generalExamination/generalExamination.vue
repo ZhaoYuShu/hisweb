@@ -173,7 +173,7 @@
             <p class="title">综述</p>
           </el-col>
         </el-row>
-        <el-input type="textarea" v-model="review" :rows="22" style="width:98%;margin:0 auto;"></el-input>
+        <el-input type="textarea" v-model="review" :rows="18" style="width:98%;margin:0 auto;font-size:18px;"></el-input>
       </div>
       <div class="middle">
         <el-row>
@@ -181,7 +181,7 @@
             <p class="title">建议</p>
           </el-col>
         </el-row>
-        <el-input type="textarea" :rows="22" v-model="suggest" style="width:98%;margin:0 auto;margin-bottom:3%;"></el-input>
+        <el-input type="textarea" :rows="18" v-model="suggest" style="width:98%;margin:0 auto;margin-bottom:3%;font-size:18px;"></el-input>
       </div>
       <div class="right">
         <el-row>
@@ -532,7 +532,7 @@ export default {
     overflow:auto;
   }
   .container .title{
-    font-size:12px;
+    font-size:14px;
     font-weight:bold;
     text-indent:20px;
     text-align:left;
@@ -605,7 +605,7 @@ export default {
 </style>
 <style scoped>
   >>>.el-form-item__label{
-    font-size:12px;
+    font-size:14px;
   }
   >>>.el-input__inner{
     height:30px;
@@ -629,7 +629,7 @@ export default {
     width:100%;
   }
   >>>.el-table{
-    font-size:12px;
+    font-size:14px;
   }
   >>>.el-table td, >>>.el-table th{
     padding:0.8vh 0;

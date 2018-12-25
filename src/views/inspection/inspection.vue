@@ -810,6 +810,7 @@
     width:100%;
     height:100%;
     margin: 0 auto;
+    font-size:16px;
   }
   .container .div3 .diagnosisList{
     width:29%;

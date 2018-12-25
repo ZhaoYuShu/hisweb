@@ -117,4 +117,10 @@ export default {
   .el-submenu__title{
     background:#42b983!important;
   }
+  .el-submenu__title span{
+    font-size:18px;
+  }
+  .el-menu-item{
+    font-size:18px;
+  }
 </style>

@@ -804,6 +804,7 @@ export default {
     width:100%;
     height:100%;
     margin: 0 auto;
+    font-size:16px;
   }
   .container .div3 .diagnosisList{
     width:29%;
@@ -819,7 +820,7 @@ export default {
     float:left;
   }
   .el-table{
-    font-size:12px;
+    font-size:14px;
   }
   .el-date-editor{
     width:100%;
