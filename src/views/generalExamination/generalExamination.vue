@@ -528,7 +528,7 @@ export default {
 <style scoped>
   .container{
     width:100%;
-    height:92%;
+    height:98%;
     overflow:auto;
   }
   .container .title{

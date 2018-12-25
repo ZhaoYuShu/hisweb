@@ -148,215 +148,254 @@
 </template>
 
 <script>
-import http from '@/api/index.js'
-import formatDate from '@/utils/formatDate.js'
-export default {
-  name: "officiallyForm",
-  data () {
-    return {
-      ruleForm: {
-        userName: '',
-        // sex: '',
-        companyCode: '',
-        status: 0,
-        orderNo: '',
-        orderNo2: ''
-      },
-      rules: {},
-      group: [],
-      sex: [
-        {id: 1, value: '男'},
-        {id: 2, value: '女'},
-        {id: 0, value: '所有'}
-      ],
-      registered: [
-        {id: 0, value: '未登记人员'},
-        {id: 1, value: '已登记人员'}
-      ],
-      tableData: [],
-      ids: [],
-      isShow: false,
-      isShow2: false,
-      isDisabled: true,
-      people: 0,
-      loading1: false,
-      loading2: false,
-      codeArray: [],
-      registrationNo: '',
-      web: 'http://172.17.8.3:8081',
-      url: ''
-    }
-  },
-  methods: {
-    // 确定登记
-    confirm () {
-      let that = this;
-      that.loading2 = true;
-      console.log(that.ids);
-      http.officialRegistration(that.ids).then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          that.$message({
-            message: '正式登记成功！',
-            type: 'success'
-          });
+  import http from '@/api/index.js'
+  import formatDate from '@/utils/formatDate.js'
+  export default {
+    name: "officiallyForm",
+    data () {
+      return {
+        ruleForm: {
+          userName: '',
+          // sex: '',
+          companyCode: '',
+          status: 0,
+          orderNo: '',
+          orderNo2: ''
+        },
+        rules: {},
+        group: [],
+        sex: [
+          {id: 1, value: '男'},
+          {id: 2, value: '女'},
+          {id: 0, value: '所有'}
+        ],
+        registered: [
+          {id: 0, value: '未登记人员'},
+          {id: 1, value: '已登记人员'}
+        ],
+        tableData: [],
+        ids: [],
+        isShow: false,
+        isShow2: false,
+        isDisabled: true,
+        people: 0,
+        loading1: false,
+        loading2: false,
+        codeArray: [],
+        registrationNo: '',
+        web: 'http://172.17.8.3:8081',
+        // web: 'http://192.168.0.104:8081',
+        url: ''
+      }
+    },
+    methods: {
+      // 确定登记
+      confirm () {
+        let that = this;
+        that.loading2 = true;
+        console.log(that.ids);
+        http.officialRegistration(that.ids).then(response => {
+          console.log(response);
+          if (response.status === 200 && response.data.result === '00000000') {
+            that.$message({
+              message: '正式登记成功！',
+              type: 'success'
+            });
+            that.loading2 = false;
+            that.isDisabled = true;
+            that.query();
+          } else {
+            that.$message({
+              message: response.data.msg,
+              type: 'error'
+            });
+          }
+        }).catch(error => {
           that.loading2 = false;
-          that.isDisabled = true;
-          that.query();
+          console.log(error);
+        });
+      },
+      // 选择每个人员
+      handleSelectionChange (selection, row) {
+        console.log(selection, row);
+        let arr = [];
+        let arr2 = [];
+        for (let i = 0; i < selection.length; i++) {
+          arr.push(selection[i].id);
+          arr2.push(selection[i].registrationNo);
+        }
+        console.log(arr);
+        this.ids = arr;
+        this.codeArray = arr2;
+        if (this.ids.length > 0) {
+          this.isDisabled = false;
         } else {
-          that.$message({
-            message: response.data.msg,
-            type: 'error'
-          });
+          this.isDisabled = true;
         }
-      }).catch(error => {
-        that.loading2 = false;
-        console.log(error);
-      });
-    },
-    // 选择每个人员
-    handleSelectionChange (selection, row) {
-      console.log(selection, row);
-      let arr = [];
-      let arr2 = [];
-      for (let i = 0; i < selection.length; i++) {
-        arr.push(selection[i].id);
-        arr2.push(selection[i].registrationNo);
-      }
-      console.log(arr);
-      this.ids = arr;
-      this.codeArray = arr2;
-      if (this.ids.length > 0) {
-        this.isDisabled = false;
-      } else {
-        this.isDisabled = true;
-      }
-    },
-    // 全选
-    handleSelectionAll (selection) {
-      console.log(selection);
-      let arr = [];
-      let arr2 = [];
-      for (let i = 0; i < selection.length; i++) {
-        arr.push(selection[i].id);
-        arr2.push(selection[i].registrationNo);
-      }
-      console.log(arr);
-      this.ids = arr;
-      this.codeArray = arr2;
-      if (this.ids.length > 0) {
-        this.isDisabled = false;
-      } else {
-        this.isDisabled = true;
-      }
-    },
-    // 获取所有公司
-    getAllGroup () {
-      let that = this;
-      http.getAllCompany().then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          let arr = [];
-          for (let i = 0; i < response.data.data.length; i++) {
-            if (response.data.data[i].pid !== 0) {
-              arr.push(response.data.data[i]);
+      },
+      // 全选
+      handleSelectionAll (selection) {
+        console.log(selection);
+        let arr = [];
+        let arr2 = [];
+        for (let i = 0; i < selection.length; i++) {
+          arr.push(selection[i].id);
+          arr2.push(selection[i].registrationNo);
+        }
+        console.log(arr);
+        this.ids = arr;
+        this.codeArray = arr2;
+        if (this.ids.length > 0) {
+          this.isDisabled = false;
+        } else {
+          this.isDisabled = true;
+        }
+      },
+      // 获取所有公司
+      getAllGroup () {
+        let that = this;
+        http.getAllCompany().then(response => {
+          console.log(response);
+          if (response.status === 200 && response.data.result === '00000000') {
+            let arr = [];
+            for (let i = 0; i < response.data.data.length; i++) {
+              if (response.data.data[i].pid !== 0) {
+                arr.push(response.data.data[i]);
+              }
             }
+            that.group = arr;
           }
-          that.group = arr;
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+      // 查询人员信息
+      query () {
+        let that = this;
+        that.loading1 = true;
+        if (that.ruleForm.status === 0) {
+          that.isShow = false;
+        } else if (that.ruleForm.status === 1) {
+          that.isShow = true;
         }
-      }).catch(error => {
-        console.log(error);
-      });
-    },
-    // 查询人员信息
-    query () {
-      let that = this;
-      that.loading1 = true;
-      if (that.ruleForm.status === 0) {
-        that.isShow = false;
-      } else if (that.ruleForm.status === 1) {
-        that.isShow = true;
-      }
-      http.getAllStaffs(that.ruleForm).then(response => {
-        console.log(response);
-        if (response.status === 200 && response.data.result === '00000000') {
-          for (let i = 0; i < response.data.data.length; i++) {
-            // 转换性别
-            if (response.data.data[i].sex === 0) {
-              response.data.data[i].sex = '所有';
-            } else if (response.data.data[i].sex === 1) {
-              response.data.data[i].sex = '男';
-            } else if (response.data.data[i].sex === 2) {
-              response.data.data[i].sex = '女';
+        http.getAllStaffs(that.ruleForm).then(response => {
+          console.log(response);
+          if (response.status === 200 && response.data.result === '00000000') {
+            for (let i = 0; i < response.data.data.length; i++) {
+              // 转换性别
+              if (response.data.data[i].sex === 0) {
+                response.data.data[i].sex = '所有';
+              } else if (response.data.data[i].sex === 1) {
+                response.data.data[i].sex = '男';
+              } else if (response.data.data[i].sex === 2) {
+                response.data.data[i].sex = '女';
+              }
+              // 转换结算方式
+              if (response.data.data[i].balanceType === 1) {
+                response.data.data[i].balanceType = '个人结账';
+              } else if (response.data.data[i].balanceType === 2) {
+                response.data.data[i].balanceType = '单位结账';
+              }
+              // 转化体检日期
+              // let date = new Date(response.data.data[i].examDate);
+              // let year = date.getFullYear();
+              // let month = date.getMonth() + 1;
+              // let day = date.getDate();
+              response.data.data[i].examDate = formatDate(response.data.data[i].examDate);
             }
-            // 转换结算方式
-            if (response.data.data[i].balanceType === 1) {
-              response.data.data[i].balanceType = '个人结账';
-            } else if (response.data.data[i].balanceType === 2) {
-              response.data.data[i].balanceType = '单位结账';
-            }
-            // 转化体检日期
-            // let date = new Date(response.data.data[i].examDate);
-            // let year = date.getFullYear();
-            // let month = date.getMonth() + 1;
-            // let day = date.getDate();
-            response.data.data[i].examDate = formatDate(response.data.data[i].examDate);
+            that.tableData = response.data.data;
+            that.people = response.data.data.length;
+            that.loading1 = false;
           }
-          that.tableData = response.data.data;
-          that.people = response.data.data.length;
-          that.loading1 = false;
-        }
-      }).catch(error => {
-        console.log(error);
-      });
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+      // 打印指引单
+      printSheet1 (row, index) {
+        console.log(row, index);
+        window.open(this.web + '/api/reports/zy_report_A4?format=pdf&examCode=' + row.examCode + '&examTimes=' + row.examTimes);
+        this.$refs.multipleTable.toggleRowSelection(row, true);
+      },
+      // 批量打印指引单
+      printSheetBatch () {
+        window.open(this.web + '/api/reports/pdf?regCodes=' + this.codeArray);
+      },
+      // 打印检验单
+      printSheet2 (row, index) {
+        console.log(row, index);
+        let arr = [];
+        arr.push(row.registrationNo);
+        window.open(this.web + '/api/reports/applyPage?regCodes=' + arr);
+        this.$refs.multipleTable.toggleRowSelection(row, true);
+      },
+      // 批量打印检验单
+      printSheetBatch2 () {
+        window.open(this.web + '/api/reports/applyPage?regCodes=' + this.codeArray);
+      }
     },
-    // 打印指引单
-    printSheet1 (row, index) {
-      console.log(row, index);
-      window.open(this.web + '/api/reports/zy_report_A4?format=pdf&examCode=' + row.examCode + '&examTimes=' + row.examTimes);
-      this.$refs.multipleTable.toggleRowSelection(row, true);
-    },
-    // 批量打印指引单
-    printSheetBatch () {
-      window.open(this.web + '/api/reports/pdf?regCodes=' + this.codeArray);
-    },
-    // 打印检验单
-    printSheet2 (row, index) {
-      console.log(row, index);
-      let arr = [];
-      arr.push(row.registrationNo);
-      window.open(this.web + '/api/reports/applyPage?regCodes=' + arr);
-      this.$refs.multipleTable.toggleRowSelection(row, true);
-    },
-    // 批量打印检验单
-    printSheetBatch2 () {
-      window.open(this.web + '/api/reports/applyPage?regCodes=' + this.codeArray);
+    mounted () {
+      this.getAllGroup();
     }
-  },
-  mounted () {
-    this.getAllGroup();
   }
-}
 </script>
 
 <style scoped>
   .rightForm{
-    float:right;
-    width:82%;
+    width:100%;
     height:90%;
+    padding-top:1%;
+    padding-right:2%;
     background:#fff;
-    margin-left:2%;
-    padding-right:1%;
-    padding-top:20px;
-    overflow:auto;
   }
-  .el-radio-group{
+  .rightForm .top{
     width:100%;
+    height:30%;
+    margin-bottom:1%;
+    overflow:hidden;
   }
-  .el-select{
+  .rightForm .bottom{
     width:100%;
+    height:69%;
   }
-
+  .rightForm .title{
+    text-align:left;
+    text-indent:20px;
+    font-size:12px;
+    font-weight:bold;
+  }
+  .rightForm .el-form{
+    width:80%;
+    height:100%;
+    border-right:1px solid #ccc;
+    float:left;
+  }
+  .rightForm .options{
+    width:18%;
+    height:100%;
+    float:right;
+  }
+  .rightForm .el-date-editor{
+    width:40%;
+  }
+  .rightForm .indexNumberStart{
+    width:40%;
+  }
+  .rightForm .indexNumberEnd{
+    width:40%;
+  }
+  .rightForm .options .el-radio{
+    margin-left:0;
+    margin-top:10px;
+  }
+  .rightForm .options .el-checkbox{
+    margin-top:10px;
+  }
+  .rightForm .options .el-col-24{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
 </style>
 <style scoped>
   >>>.el-form-item__label{
@@ -401,5 +440,7 @@ export default {
   >>>.el-transfer-panel__item.el-checkbox{
     margin-left:30px;
   }
-
+  >>>.current-row{
+    background:#000;
+  }
 </style>

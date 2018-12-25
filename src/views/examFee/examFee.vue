@@ -28,6 +28,12 @@
         <el-col :span="6">
           <el-button type="warning" size="small" @click="retype" :disabled="disabled">打印收费单</el-button>
         </el-col>
+        <el-col :span="6">
+          <el-button type="warning" size="small" @click="printSheet1" :disabled="disabled3">打印指引单</el-button>
+        </el-col>
+        <el-col :span="6">
+          <el-button type="warning" size="small" @click="printSheet2" :disabled="disabled3">打印检验单</el-button>
+        </el-col>
         <el-col :span="4">
           <el-button type="danger" size="small" :disabled="disabled2">退费</el-button>
         </el-col>
@@ -58,7 +64,7 @@
       <el-table
         :data="tableData"
         border
-        height="80%"
+        height="85%"
         style="width:98%;margin:0 auto;"
         @row-click="handleRowClick"
         :highlight-current-row="true">
@@ -122,7 +128,8 @@
       <el-table
         :data="tableData2"
         border
-        height="85%"
+        height="90%"
+        show-summary
         style="width:98%;margin:0 auto;">
         <el-table-column
           label="体检项目"
@@ -169,71 +176,71 @@
         <!--</el-table-column>-->
       <!--</el-table>-->
     <!--</div>-->
-    <div class="refund">
-      <el-row>
-        <el-col :span="24">
-          <p class="title">收费信息</p>
-        </el-col>
-      </el-row>
-      <el-form
-        ref="ruleForm"
-        :model="ruleForm"
-        :rules="rules"
-        label-width="100px"
-        class="demo-ruleForm">
-        <el-row :gutter="10">
-          <el-col :span="4">
-            <el-form-item label="收费种类" prop="chargeType">
-              <el-select v-model="ruleForm.chargeType" filterable placeholder="请选择收费种类">
-                <el-option
-                  v-for="item in chargeType"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item label="体检编号" prop="code">
-              <el-input v-model="ruleForm.code" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="ruleForm.name" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item label="打折" prop="discount1">
-              <el-input v-model="ruleForm.discount1" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item label="总计金额" prop="totalAmount">
-              <el-input v-model="ruleForm.totalAmount" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item label="应收金额" prop="receivableMoney">
-              <el-input v-model="ruleForm.receivableMoney" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10">
-          <el-col :span="4">
-            <el-form-item label="实收金额" prop="paidMoney">
-              <el-input v-model="ruleForm.paidMoney" @keyup.enter.native="getMoney"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item label="找零金额" prop="changeAmount">
-              <el-input v-model="ruleForm.changeAmount" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-    </div>
+    <!--<div class="refund">-->
+      <!--<el-row>-->
+        <!--<el-col :span="24">-->
+          <!--<p class="title">收费信息</p>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-form-->
+        <!--ref="ruleForm"-->
+        <!--:model="ruleForm"-->
+        <!--:rules="rules"-->
+        <!--label-width="100px"-->
+        <!--class="demo-ruleForm">-->
+        <!--<el-row :gutter="10">-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="收费种类" prop="chargeType">-->
+              <!--<el-select v-model="ruleForm.chargeType" filterable placeholder="请选择收费种类">-->
+                <!--<el-option-->
+                  <!--v-for="item in chargeType"-->
+                  <!--:key="item.id"-->
+                  <!--:label="item.name"-->
+                  <!--:value="item.id">-->
+                <!--</el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="体检编号" prop="code">-->
+              <!--<el-input v-model="ruleForm.code" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="姓名" prop="name">-->
+              <!--<el-input v-model="ruleForm.name" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="打折" prop="discount1">-->
+              <!--<el-input v-model="ruleForm.discount1" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="总计金额" prop="totalAmount">-->
+              <!--<el-input v-model="ruleForm.totalAmount" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="应收金额" prop="receivableMoney">-->
+              <!--<el-input v-model="ruleForm.receivableMoney" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+        <!--</el-row>-->
+        <!--<el-row :gutter="10">-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="实收金额" prop="paidMoney">-->
+              <!--<el-input v-model="ruleForm.paidMoney" @keyup.enter.native="getMoney"></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+          <!--<el-col :span="4">-->
+            <!--<el-form-item label="找零金额" prop="changeAmount">-->
+              <!--<el-input v-model="ruleForm.changeAmount" disabled></el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-col>-->
+        <!--</el-row>-->
+      <!--</el-form>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -277,7 +284,10 @@ export default {
       disabled: true,
       disabled2: true,
       disabled3: true,
-      // web: 'http://192.168.0.100:8081'
+      examCode: '',
+      examTimes: '',
+      registrationNo: '',
+      // web: 'http://192.168.0.104:8081'
       web: 'http://172.17.8.3:8081'
     }
   },
@@ -347,6 +357,9 @@ export default {
         that.disabled = true;
         that.disabled2 = false;
         that.disabled3 = false;
+        that.examCode = row.examCode;
+        that.examTimes = row.examTimes;
+        that.orderNo = row.orderNo;
       } else if (row.isCharge === 0) {
         that.disabled = false;
         that.disabled2 = false;
@@ -477,7 +490,17 @@ export default {
     // 打印收费单
     retype () {
       window.open(this.web + '/api/receiptInfo/print2/' + this.currentCode);
-    }
+    },
+    // 打印指引单
+    printSheet1 () {
+      window.open(this.web + '/api/reports/zy_report_A4?format=pdf&examCode=' + this.examCode + '&examTimes=' + this.examTimes);
+    },
+    // 打印检验单
+    printSheet2 () {
+      let arr = [];
+      arr.push(this.orderNo);
+      window.open(this.web + '/api/reports/applyPage?regCodes=' + arr);
+    },
   },
   mounted () {
     this.getAllOtherCharge();
@@ -493,7 +516,7 @@ export default {
     overflow:auto;
   }
   .container .base{
-    width:58%;
+    width:48%;
     height:16%;
     background:#fff;
     float:left;
@@ -510,7 +533,7 @@ export default {
     width:100%;
   }
   .container .buttons{
-    width:39%;
+    width:49%;
     height:16%;
     background:#fff;
     float:right;
@@ -518,17 +541,15 @@ export default {
   }
   .container .info{
     width:70%;
-    height:55%;
+    height:80%;
     background:#fff;
     float:left;
-    margin-bottom:1%;
   }
   .container .project{
     width:29%;
-    height:55%;
+    height:80%;
     background:#fff;
     float:right;
-    margin-bottom:1%;
   }
   /*.container .price{*/
     /*width:40%;*/

@@ -290,9 +290,9 @@ export default {
         preExamDay: [
           {required: true, message: '请选择体检日期', trigger: 'change'}
         ],
-        idCard: [
-          {required: true, message: '请输入身份证号', trigger: 'blur'}
-        ],
+        // idCard: [
+        //   {required: true, message: '请输入身份证号', trigger: 'blur'}
+        // ],
         personnelType: [
           {required: true, message: '请选择人员类别', trigger: 'change'}
         ],
