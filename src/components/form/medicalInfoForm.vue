@@ -12,7 +12,7 @@
         height="95%"
         style="width:98%;margin:0 auto;"
         :highlight-current-row="true"
-        @row-click="selectExamItem">
+        @row-click="selectItem">
         <el-table-column
           prop="companyName"
           label="单位"
@@ -76,10 +76,16 @@
       <el-table
         :data="tableData2"
         border
-        height="70%"
-        style="width:98%;margin:0 auto;"
+        height="85%"
+        style="width:98%;margin:0 auto;margin-bottom:30px;"
         :row-style="rowStyle"
-        @row-click="selectExamItem">
+        @select="selectExamItem"
+        @select-all="selectAllExamItem">
+        <el-table-column
+          type="selection"
+          width="55"
+          :selectable="selectable">
+        </el-table-column>
         <el-table-column
           prop="name"
           label="体检项目">
@@ -90,6 +96,14 @@
           sortable>
         </el-table-column>
       </el-table>
+
+      <div class="refund">
+        <el-row type="flex" justify="center">
+          <el-col :span="4">
+            <el-button @click="refund" size="small" type="danger">退费</el-button>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>
@@ -103,7 +117,8 @@ export default {
       return {
         tableData: [],
         tableData2: [],
-        company: []
+        company: [],
+        examCodes: []
       }
   },
   methods: {
@@ -126,7 +141,7 @@ export default {
       });
     },
     // 根据登记流水号查询出该客户的体检项目用于拒检操作
-    selectExamItem (data) {
+    selectItem (data) {
       console.log(data);
       http.personItems(data.orderNo).then(response => {
         console.log(response);
@@ -150,11 +165,42 @@ export default {
     },
     // 标红未检人员颜色
     rowStyle (data) {
-      console.log(data);
       if (data.row.status === 0) {
         return 'background:#f77b7b;color:#fff;';
       }else {
         return 'background:#9f9fef;color:#fff;'
+      }
+    },
+    // 退费
+    refund () {
+
+    },
+    // 单选
+    selectExamItem (selection, row) {
+      console.log(selection, row);
+      let arr = [];
+      for (let i = 0; i < selection.length; i++) {
+        arr.push(selection[i].code);
+      }
+      console.log(arr);
+      this.examCodes = arr;
+    },
+    // 全选
+    selectAllExamItem (selection) {
+      console.log(selection);
+      let arr = [];
+      for (let i = 0; i < selection.length; i++) {
+        arr.push(selection[i].code);
+      }
+      console.log(arr);
+      this.examCodes = arr;
+    },
+    // 是否可以选中
+    selectable (row, index) {
+      if (row.status === 1) {
+        return 0;
+      } else {
+        return 1;
       }
     }
   },

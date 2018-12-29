@@ -9,14 +9,44 @@
         </el-row>
         <el-form ref="ruleForm" :rules="rules" :model="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-row :gutter="20">
-            <el-col :span="9">
+            <el-col :span="6">
               <el-form-item label="登记流水号" prop="regNo">
                 <el-input v-model="ruleForm.regNo"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="9">
+            <el-col :span="6">
               <el-form-item label="体检编号" prop="examCode">
                 <el-input v-model="ruleForm.examCode"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="姓名" prop="name">
+                <el-input v-model="name" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="性别" prop="sex">
+                <el-select v-model="sex" disabled>
+                  <el-option
+                    v-for="item in sexs"
+                    :label="item.name"
+                    :key="item.id"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <el-form-item label="年龄" prop="age">
+                <el-input v-model="age" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="单位" prop="company">
+                <el-input v-model="company" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="2">
@@ -31,7 +61,7 @@
             </el-col>
             <el-col :span="2">
               <el-form-item>
-                <el-button type="primary" size="small" @click="printSheet2()" :disabled="disabled">打印检验单</el-button>
+                <el-button type="primary" size="small" @click="printSheet2()" :disabled="disabled2">打印检验单</el-button>
               </el-form-item>
             </el-col>
           </el-row>
@@ -89,6 +119,10 @@ export default {
         regNo: '',
         examCode: ''
       },
+      name: '',
+      age: '',
+      sex: '',
+      company: '',
       data2: [],
       value2: [],
       filterMethod (query, item) {
@@ -98,6 +132,11 @@ export default {
       companyGroupCode: '',
       orderNo: '',
       rules: {},
+      sexs: [
+        {name: '男', id: 1},
+        {name: '女', id: 2},
+        {name: '所有', id: 0}
+      ],
       examGroupItemResultDtoList: [],
       tableData: [],
       tableData2: [],
@@ -105,8 +144,9 @@ export default {
       sumPrice: 0,
       regNo: [],
       disabled: true,
-      // web: 'http://192.168.0.117:8081'
-      web: 'http://172.17.8.3:8081'
+      disabled2: true,
+      web: 'http://192.168.0.105:8081'
+      // web: 'http://172.17.8.3:8081'
     }
   },
   methods: {
@@ -139,12 +179,17 @@ export default {
       that.tableData2 = [];
       that.examGroupItemResultDtoList = [];
       that.disabled = true;
+      that.disabled2 = true;
       http.queryExam(that.ruleForm).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
           that.companyCode = response.data.data.companyCode;
           that.companyGroupCode = response.data.data.companyGroupCode;
           that.orderNo = response.data.data.orderNo;
+          that.name = response.data.data.customerAndExamRecordResultDto.name;
+          that.age = response.data.data.customerAndExamRecordResultDto.age;
+          that.sex = response.data.data.customerAndExamRecordResultDto.sex;
+          that.company = response.data.data.customerAndExamRecordResultDto.company;
           for (let i = 0; i < response.data.data.examGroupItemResultDtoList.length; i++) {
             that.value2.push(response.data.data.examGroupItemResultDtoList[i].code);
             for (let j = 0; j < that.data2.length; j++) {
@@ -210,6 +255,7 @@ export default {
             message: '加项成功',
             type: 'success'
           });
+          that.disabled2 = false;
           window.open(that.web + '/api/receiptInfo/print/additem/' + that.orderNo);
         }
       }).catch(error => {
@@ -262,10 +308,10 @@ export default {
   .container .top{
     width:100%;
     height:15%;
-    margin-bottom:1%;
+    margin-bottom:2%;
   }
   .container .top .query{
-    width:80%;
+    width:100%;
     height:100%;
     float:left;
     background:#fff;

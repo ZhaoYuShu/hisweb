@@ -222,16 +222,16 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :lg="24" :xl="12">
-          <el-form-item label="是否需要抽血" prop="blood">
-            <el-radio-group v-model="ruleForm.blood">
-              <el-radio
-                v-for="item in blood"
-                :key="item.id"
-                :label="item.id">{{item.value}}</el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-col>
+        <!--<el-col :lg="24" :xl="12">-->
+          <!--<el-form-item label="是否需要抽血" prop="blood">-->
+            <!--<el-radio-group v-model="ruleForm.blood">-->
+              <!--<el-radio-->
+                <!--v-for="item in blood"-->
+                <!--:key="item.id"-->
+                <!--:label="item.id">{{item.value}}</el-radio>-->
+            <!--</el-radio-group>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
         <el-col :lg="24" :xl="12">
           <el-form-item label="餐前/餐后" prop="isBeforeMeal">
             <el-radio-group v-model="ruleForm.isBeforeMeal">
@@ -242,21 +242,33 @@
             </el-radio-group>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="24" :xl="24">
-          <el-form-item label="临床意义" prop="clinicalSignificance">
-            <el-input v-model="ruleForm.clinicalSignificance" placeholder="请输入临床意义"></el-input>
+        <el-col :lg="24" :xl="12">
+          <el-form-item label="执行科室" prop="executeOffice">
+            <el-select v-model="ruleForm.executeOffice" filterable placeholder="请选择执行科室">
+              <el-option
+                v-for="item in options2"
+                :key="item.id"
+                :label="item.name"
+                :value="item.code">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="24" :xl="24">
-          <el-form-item label="打印申请" prop="printApplication">
-            <el-input v-model="ruleForm.printApplication" placeholder="请输入打印申请"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="24" :xl="24">-->
+          <!--<el-form-item label="临床意义" prop="clinicalSignificance">-->
+            <!--<el-input v-model="ruleForm.clinicalSignificance" placeholder="请输入临床意义"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="24" :xl="24">-->
+          <!--<el-form-item label="打印申请" prop="printApplication">-->
+            <!--<el-input v-model="ruleForm.printApplication" placeholder="请输入打印申请"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
       <el-row :gutter="20">
         <el-col :lg="24" :xl="24">
           <el-form-item label="提示信息" prop="hintMessage">
@@ -264,13 +276,13 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="24" :xl="24">
-          <el-form-item label="正常小结" prop="normalNode">
-            <el-input v-model="ruleForm.normalNode" placeholder="请输入正常小结"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="24" :xl="24">-->
+          <!--<el-form-item label="正常小结" prop="normalNode">-->
+            <!--<el-input v-model="ruleForm.normalNode" placeholder="请输入正常小结"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
       <el-row :gutter="20">
         <el-col :lg="24" :xl="12">
           <el-form-item label="是否打折" prop="allowDiscount">
@@ -295,102 +307,90 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="24" :xl="12">
-          <el-form-item label="执行科室" prop="executeOffice">
-            <el-select v-model="ruleForm.executeOffice" filterable placeholder="请选择执行科室">
-              <el-option
-                v-for="item in options2"
-                :key="item.id"
-                :label="item.name"
-                :value="item.code">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="24" :xl="12">
-          <el-form-item label="平均检查时间" prop="avgExamTime">
-            <el-input v-model="ruleForm.avgExamTime" placeholder="请输入平均检查时间(分)"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="24" :xl="12">
-          <el-form-item label="HIS是否对照" prop="hisContrast">
-            <el-radio-group v-model="ruleForm.hisContrast">
-              <el-radio
-                v-for="item in isHis"
-                :key="item.id"
-                :label="item.boolean">{{item.value}}</el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="24" :xl="12">
-          <el-form-item label="HisWay" prop="hisContrastType">
-            <el-input v-model="ruleForm.hisContrastType" placeholder="请输入His对照方式"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="4" :xl="4">
-          <el-form-item label="PACS接口截图点："></el-form-item>
-        </el-col>
-        <el-col :lg="8" :xl="8">
-          <el-form-item label="X1" prop="pacsApiX1">
-            <el-input v-model="ruleForm.pacsApiX1"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="8" :xl="8">
-          <el-form-item label="Y1" prop="pacsApiY1">
-            <el-input v-model="ruleForm.pacsApiY1"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="8" :xl="8">
-          <el-form-item label="X2" prop="pacsApiX2">
-            <el-input v-model="ruleForm.pacsApiX2"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="8" :xl="8">
-          <el-form-item label="Y2" prop="pacsApiY2">
-            <el-input v-model="ruleForm.pacsApiY2"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="4" :xl="4">
-          <el-form-item label="PACS图文报告大小:"></el-form-item>
-        </el-col>
-        <el-col :lg="8" :xl="8">
-          <el-form-item label="宽" prop="pacsReportW">
-            <el-input v-model="ruleForm.pacsReportW"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="8" :xl="8">
-          <el-form-item label="高" prop="pacsReportH">
-            <el-input v-model="ruleForm.pacsReportH"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :lg="24" :xl="24">
-          <el-form-item label="图文报告" prop="report">
-            <el-radio-group v-model="ruleForm.report">
-              <el-radio
-                v-for="item in report"
-                :key="item.id"
-                :label="item.boolean">{{item.value}}</el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item></el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item></el-form-item>
-        </el-col>
-      </el-row>
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="24" :xl="12">-->
+          <!--<el-form-item label="平均检查时间" prop="avgExamTime">-->
+            <!--<el-input v-model="ruleForm.avgExamTime" placeholder="请输入平均检查时间(分)"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="24" :xl="12">-->
+          <!--<el-form-item label="HIS是否对照" prop="hisContrast">-->
+            <!--<el-radio-group v-model="ruleForm.hisContrast">-->
+              <!--<el-radio-->
+                <!--v-for="item in isHis"-->
+                <!--:key="item.id"-->
+                <!--:label="item.boolean">{{item.value}}</el-radio>-->
+            <!--</el-radio-group>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :lg="24" :xl="12">-->
+          <!--<el-form-item label="HisWay" prop="hisContrastType">-->
+            <!--<el-input v-model="ruleForm.hisContrastType" placeholder="请输入His对照方式"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="4" :xl="4">-->
+          <!--<el-form-item label="PACS接口截图点："></el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :lg="8" :xl="8">-->
+          <!--<el-form-item label="X1" prop="pacsApiX1">-->
+            <!--<el-input v-model="ruleForm.pacsApiX1"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :lg="8" :xl="8">-->
+          <!--<el-form-item label="Y1" prop="pacsApiY1">-->
+            <!--<el-input v-model="ruleForm.pacsApiY1"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :lg="8" :xl="8">-->
+          <!--<el-form-item label="X2" prop="pacsApiX2">-->
+            <!--<el-input v-model="ruleForm.pacsApiX2"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :lg="8" :xl="8">-->
+          <!--<el-form-item label="Y2" prop="pacsApiY2">-->
+            <!--<el-input v-model="ruleForm.pacsApiY2"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="4" :xl="4">-->
+          <!--<el-form-item label="PACS图文报告大小:"></el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :lg="8" :xl="8">-->
+          <!--<el-form-item label="宽" prop="pacsReportW">-->
+            <!--<el-input v-model="ruleForm.pacsReportW"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :lg="8" :xl="8">-->
+          <!--<el-form-item label="高" prop="pacsReportH">-->
+            <!--<el-input v-model="ruleForm.pacsReportH"></el-input>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :lg="24" :xl="24">-->
+          <!--<el-form-item label="图文报告" prop="report">-->
+            <!--<el-radio-group v-model="ruleForm.report">-->
+              <!--<el-radio-->
+                <!--v-for="item in report"-->
+                <!--:key="item.id"-->
+                <!--:label="item.boolean">{{item.value}}</el-radio>-->
+            <!--</el-radio-group>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+      <!--<el-row :gutter="20">-->
+        <!--<el-col :span="12">-->
+          <!--<el-form-item></el-form-item>-->
+        <!--</el-col>-->
+        <!--<el-col :span="12">-->
+          <!--<el-form-item></el-form-item>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
     </el-form>
   </div>
 </template>

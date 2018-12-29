@@ -134,7 +134,8 @@ export default {
         sex: '',
         remark: '',
         pid: '0',
-        examGroupItems: []
+        examGroupItems: [],
+        id: ''
       },
       operator: '',
       updatedAt: '',
@@ -230,6 +231,7 @@ export default {
       this.saveDisabled = false;
       this.deleteDisabled = true;
       this.updateDisabled = true;
+      this.ruleForm.id = '';
     },
     handleChange (value) {
       console.log(value);

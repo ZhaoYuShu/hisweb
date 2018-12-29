@@ -219,8 +219,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="实收金额" prop="realPrice">
-              <el-input v-model="ruleForm.realPrice" placeholder="请输入实收金额"></el-input>
+            <el-form-item label="应收金额" prop="realPrice">
+              <el-input v-model="ruleForm.realPrice" placeholder="请输入应收金额"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -595,6 +595,7 @@ export default {
         console.log(response);
         that.value2 = [];
         that.ruleForm.sumPrice = 0;
+        that.ruleForm.realPrice = response.data.data.totalPrice;
         that.examGroupItems = response.data.data.examGroupItems;
         that.tableData2 = response.data.data.examGroupItems;
         that.ruleForm.examGroupItemResultDtoList = response.data.data.examGroupItems;
