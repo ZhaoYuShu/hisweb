@@ -145,8 +145,8 @@ export default {
       regNo: [],
       disabled: true,
       disabled2: true,
-      web: 'http://192.168.0.105:8081'
-      // web: 'http://172.17.8.3:8081'
+      // web: 'http://192.168.0.105:8081'
+      web: 'http://172.17.8.3:8081'
     }
   },
   methods: {

@@ -283,6 +283,7 @@ export default {
     getInfo () {
       let that = this;
       that.fullscreenLoading = true;
+      that.tableData4 = [];
       http.checkoutInfo(that.ruleForm.examCode).then(response => {
         console.log(response);
         if (response.status === 200 && response.data.result === '00000000') {
